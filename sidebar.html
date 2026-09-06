@@ -245,6 +245,92 @@
       .sidebar.collapsed {
         width: 100% !important;
       }
+
+      /* ========== MAIN WRAPPER & HEADER ========== */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .top-header {
+      background: #fff;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .search-box {
+      background: #f1f5f9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 240px;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+    }
+
+    .notification-icon {
+      position: relative;
+      font-size: 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .notification-icon .badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 7px;
+      height: 7px;
+      background: #ef4444;
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .user-profile img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info { text-align: right; }
+    .user-info h4 { font-size: 13px; font-weight: 700; }
+    .user-info p { font-size: 11px; color: var(--text-muted); }
     }
   </style>
 </head>
@@ -362,6 +448,35 @@
     </div>
 
   </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-title">Reservation</div>
+      
+      <div class="header-right">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="notification-icon">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge"></span>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-info">
+            <h4>Elle Dela Cruz</h4>
+            <p>Tenant</p>
+          </div>
+          <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+        </div>
+      </div>
+    </header>
 
   <script>
     const sidebar = document.getElementById('sidebar');

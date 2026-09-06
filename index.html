@@ -9,321 +9,360 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    :root {
-      --bg-dark: #001636;
-      --bg-dark-light: #0d2347;
-      --bg-light: #f4f6f9;
-      --card-bg: #ffffff;
-      --primary-orange: #f56c00;
-      --primary-green: #00a86b;
-      --light-green: #e6f7f0;
-      --light-yellow: #fffdf0;
-      --light-pink: #fde8eb;
-      --text-dark: #1e293b;
-      --text-muted: #64748b;
-      --border-color: #e2e8f0;
-      --sidebar-width: 260px;
-    }
+    /* ========== ROOT VARIABLES ========== */
+:root {
+  --bg-dark: #02122c;
+  --bg-dark-light: #0d2347;
+  --primary-orange: #e06800;
+  --sidebar-width: 250px;
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --bg-app: #f8fafc;
+  --modal-overlay: rgba(15, 23, 42, 0.45);
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
+/* ========== RESET & BASE ========== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
 
-    body {
-      background-color: var(--bg-light);
-      color: var(--text-dark);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
+body {
+  background: var(--bg-app);
+  display: flex;
+  min-height: 100vh;
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
 
-    /* --- SIDEBAR --- */
-    .sidebar {
-      width: var(--sidebar-width);
-      background-color: var(--bg-dark);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      transition: width 0.3s ease;
-      z-index: 100;
-      overflow-x: hidden;
-    }
+/* ========== SIDEBAR CONTAINER ========== */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--bg-dark);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.3s ease;
+  min-height: 100vh;
+  z-index: 100;
+}
 
-    .sidebar.collapsed {
-      --sidebar-width: 80px;
-    }
+.sidebar.collapsed {
+  --sidebar-width: 80px;
+}
 
-    .brand-header {
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      white-space: nowrap;
-    }
+/* ========== BRAND HEADER ========== */
+.brand-header {
+  padding: 20px 18px 15px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
 
-    .sidebar.collapsed .brand-header {
-      justify-content: center;
-      padding: 20px 0;
-    }
+.sidebar.collapsed .brand-header {
+  justify-content: center;
+  padding: 20px 0;
+}
 
-    .brand-logo {
-      width: 40px;
-      height: 40px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary-orange);
-      font-size: 20px;
-      flex-shrink: 0;
-    }
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-orange);
+  font-size: 18px;
+  flex-shrink: 0;
+}
 
-    .brand-title {
-      transition: opacity 0.2s ease;
-    }
+.brand-title {
+  transition: opacity 0.2s ease;
+}
 
-    .brand-title h3 {
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.2;
-      color: #fff;
-    }
+.brand-title h3 {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+}
 
-    .brand-title p {
-      font-size: 11px;
-      color: #94a3b8;
-    }
+.brand-title p {
+  font-size: 11px;
+  color: #8fa0b5;
+}
 
-    .sidebar.collapsed .brand-title,
-    .sidebar.collapsed .user-pill span,
-    .sidebar.collapsed .nav-text,
-    .sidebar.collapsed .arrow-icon {
-      display: none;
-    }
+/* ========== USER PILL ========== */
+.user-pill {
+  background-color: var(--primary-orange);
+  margin: 5px 14px 15px 14px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #ffffff;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
 
-    .user-pill {
-      background-color: var(--primary-orange);
-      margin: 10px 16px;
-      padding: 10px 16px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      font-size: 14px;
-      white-space: nowrap;
-      transition: all 0.3s ease;
-    }
+.sidebar.collapsed .user-pill {
+  margin: 10px auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  justify-content: center;
+}
 
-    .sidebar.collapsed .user-pill {
-      margin: 10px auto;
-      width: 44px;
-      height: 44px;
-      padding: 0;
-      border-radius: 50%;
-      justify-content: center;
-    }
+.user-pill i {
+  font-size: 16px;
+}
 
-    .user-pill i {
-      font-size: 18px;
-    }
+/* ========== NAVIGATION MENU ========== */
+.nav-menu {
+  list-style: none;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
 
-    .nav-menu {
-      list-style: none;
-      padding: 10px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex-grow: 1;
-      overflow-y: auto;
-      transition: padding 0.3s ease;
-    }
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  color: #8fa0b5;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
 
-    .sidebar.collapsed .nav-menu {
-      padding: 10px 12px;
-    }
+.nav-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+}
 
-    .nav-item {
-      display: flex;
-      align-items: center;
-      color: #94a3b8;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s, color 0.2s;
-      white-space: nowrap;
-    }
+.nav-item:hover > .nav-item-header {
+  color: #fff;
+}
 
-    .nav-item > a,
-    .nav-item-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 12px 16px;
-      text-decoration: none;
-      color: inherit;
-    }
+.nav-item.active > .nav-item-header {
+  color: var(--primary-orange);
+}
 
-    .nav-item:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-      color: #fff;
-    }
+.nav-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-    .nav-item.active {
-      background-color: var(--bg-dark-light);
-      color: #fff;
-      border-left: 3px solid var(--primary-orange);
-    }
+.nav-item-left i {
+  width: 18px;
+  text-align: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
 
-    .nav-item-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.arrow-icon {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
 
-    .nav-item-left i {
-      width: 20px;
-      text-align: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
+/* SUB-MENU FOR SERVICES */
+.submenu {
+  list-style: none;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
 
-    .arrow-icon {
-      font-size: 10px;
-    }
+.submenu.hidden {
+  display: none;
+}
 
-    .sidebar.collapsed .nav-item {
-      justify-content: center;
-    }
+.submenu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  color: #8fa0b5;
+  text-decoration: none;
+  font-size: 13px;
+  border-radius: 8px;
+}
 
-    .sidebar.collapsed .nav-item > a,
-    .sidebar.collapsed .nav-item-content {
-      justify-content: center;
-      padding: 12px 0;
-    }
+.submenu-item:hover {
+  color: #fff;
+}
 
-    .sidebar.collapsed .nav-item-left {
-      gap: 0;
-      justify-content: center;
-    }
+.submenu-item.active {
+  background-color: var(--primary-orange);
+  color: #fff;
+  font-weight: 600;
+}
 
-    .sidebar.collapsed .nav-item.active {
-      border-left: none;
-      background-color: var(--primary-orange);
-    }
+/* COLLAPSED OVERRIDES */
+.sidebar.collapsed .brand-title,
+.sidebar.collapsed .user-pill span,
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .arrow-icon,
+.sidebar.collapsed .submenu {
+  display: none !important;
+}
 
-    .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+.sidebar.collapsed .nav-item-header {
+  justify-content: center;
+  padding: 12px 0;
+}
 
-    .sidebar.collapsed .sidebar-footer {
-      padding: 16px 12px;
-    }
+.sidebar.collapsed .nav-item-left {
+  gap: 0;
+}
 
-    /* --- MAIN CONTENT WRAPPER --- */
-    .main-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      overflow-y: auto;
-    }
+/* ========== SIDEBAR FOOTER ========== */
+.sidebar-footer {
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
-    /* --- TOP HEADER --- */
-    .top-header {
-      background: #fff;
-      padding: 16px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 90;
-    }
+/* ========== MAIN WRAPPER ========== */
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 
-    .header-title {
-      font-size: 22px;
-      font-weight: 700;
-    }
+/* ========== TOP HEADER ========== */
+.top-header {
+  background: #fff;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
+.header-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
 
-    .search-box {
-      background: #f1f5f9;
-      padding: 8px 16px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 280px;
-    }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
 
-    .search-box input {
-      border: none;
-      background: transparent;
-      outline: none;
-      width: 100%;
-      font-size: 13px;
-    }
+.search-box {
+  background: #f1f5f9;
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 250px;
+}
 
-    .notification-icon {
-      position: relative;
-      font-size: 18px;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 13px;
+  color: var(--text-dark);
+}
 
-    .notification-icon .badge {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      width: 8px;
-      height: 8px;
-      background: red;
-      border-radius: 50%;
-    }
+.notification-icon {
+  position: relative;
+  font-size: 16px;
+  color: #64748b;
+  cursor: pointer;
+}
 
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      border-left: 1px solid var(--border-color);
-      padding-left: 20px;
-    }
+.notification-icon .badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 6px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 50%;
+}
 
-    .user-profile img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
 
-    .user-info h4 {
-      font-size: 13px;
-      font-weight: 700;
-    }
+.user-profile img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-    .user-info p {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
+.user-info {
+  text-align: right;
+}
+
+.user-info h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.user-info p {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100% !important;
+    min-height: auto;
+  }
+  .sidebar.collapsed {
+    width: 100% !important;
+  }
+  .search-box {
+    display: none;
+  }
+}
 
     /* --- DASHBOARD GRID --- */
     .dashboard-container {
@@ -765,138 +804,170 @@
 </head>
 <body>
 
-  <!-- SIDEBAR NAVIGATION -->
-  <aside class="sidebar" id="sidebar">
-    <div class="brand-header">
-      <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
-      <div class="brand-title">
-        <h3>JLM Cozy Cabin</h3>
-        <p>Tenant Portal</p>
+ <!-- SIDEBAR NAVIGATION -->
+<aside class="sidebar" id="sidebar">
+
+  <div class="brand-header">
+    <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+    <div class="brand-title">
+      <h3>JLM Cozy Cabin</h3>
+      <p>Tenant Portal</p>
+    </div>
+  </div>
+
+  <div class="user-pill">
+    <i class="fa-regular fa-user-circle"></i>
+    <span>Elle Dela Cruz</span>
+  </div>
+
+  <ul class="nav-menu">
+    <li class="nav-item">
+      <a href="index.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-border-all"></i>
+          <span class="nav-text">Dashboard</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- SERVICES SUBMENU NAVIGATION -->
+    <li class="nav-item active">
+      <div class="nav-item-header" id="servicesToggle">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-wrench"></i>
+          <span class="nav-text">Services</span>
+        </div>
+        <i class="fa-solid fa-chevron-up arrow-icon" id="servicesArrow"></i>
       </div>
+
+      <ul class="submenu" id="servicesSubmenu">
+        <li>
+          <a href="services/maintenance.html" class="submenu-item active">
+            <i class="fa-solid fa-wrench" style="font-size: 12px;"></i>
+            <span>Maintenance</span>
+          </a>
+        </li>
+        <li>
+          <a href="services/room-change.html" class="submenu-item">
+            <i class="fa-solid fa-house" style="font-size: 12px;"></i>
+            <span>Room Change</span>
+          </a>
+        </li>
+        <li>
+          <a href="services/stay-extension.html" class="submenu-item">
+            <i class="fa-regular fa-calendar" style="font-size: 12px;"></i>
+            <span>Stay Extension</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a href="billing.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-credit-card"></i>
+          <span class="nav-text">Billing</span>
+        </div>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="reservations.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span class="nav-text">Reservations</span>
+        </div>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="messages.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span class="nav-text">Messages</span>
+        </div>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="announcements.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span class="nav-text">Announcements</span>
+        </div>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="history.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span class="nav-text">History</span>
+        </div>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a href="settings.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-gear"></i>
+          <span class="nav-text">Settings</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="nav-item">
+      <a href="#" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="nav-text">Logout</span>
+        </div>
+      </a>
     </div>
 
-    <div class="user-pill">
-      <i class="fa-regular fa-user-circle"></i>
-      <span>Elle Dela Cruz</span>
-    </div>
-
-    <ul class="nav-menu">
-      <li class="nav-item active">
-        <a href="dashboard.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-border-all"></i>
-            <span class="nav-text">Dashboard</span>
-          </div>
-          <i class="fa-solid fa-chevron-right arrow-icon"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="services.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-wrench"></i>
-            <span class="nav-text">Services</span>
-          </div>
-          <i class="fa-solid fa-chevron-down arrow-icon"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="billing.html">
-          <div class="nav-item-left">
-            <i class="fa-regular fa-credit-card"></i>
-            <span class="nav-text">Billing</span>
-          </div>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="reservations.html">
-          <div class="nav-item-left">
-            <i class="fa-regular fa-calendar-check"></i>
-            <span class="nav-text">Reservations</span>
-          </div>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="messages.html">
-          <div class="nav-item-left">
-            <i class="fa-regular fa-comment-dots"></i>
-            <span class="nav-text">Messages</span>
-          </div>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="announcements.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-bullhorn"></i>
-            <span class="nav-text">Announcements</span>
-          </div>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="history.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <span class="nav-text">History</span>
-          </div>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="settings.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-gear"></i>
-            <span class="nav-text">Settings</span>
-          </div>
-        </a>
-      </li>
-    </ul>
-
-    <div class="sidebar-footer">
-      <div class="nav-item">
-        <a href="logout.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="nav-text">Logout</span>
-          </div>
-        </a>
-      </div>
-      <div class="nav-item" id="collapseBtn">
-        <div class="nav-item-content">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-bars"></i>
-            <span class="nav-text">Collapse Menu</span>
-          </div>
+    <div class="nav-item" id="collapseBtn">
+      <div class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bars"></i>
+          <span class="nav-text">Collapse Menu</span>
         </div>
       </div>
     </div>
-  </aside>
+  </div>
 
-  <!-- MAIN WRAPPER -->
-  <div class="main-wrapper">
+</aside>
 
-    <!-- TOP HEADER -->
-    <header class="top-header">
-      <div class="header-title">My Dashboard</div>
-      
-      <div class="header-right">
-        <div class="search-box">
-          <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8;"></i>
-          <input type="text" placeholder="Search...">
-        </div>
+<!-- MAIN WRAPPER -->
+<div class="main-wrapper">
 
-        <div class="notification-icon">
-          <i class="fa-regular fa-bell"></i>
-          <span class="badge"></span>
-        </div>
-
-        <div class="user-profile">
-          <div class="user-info" style="text-align: right;">
-            <h4>Elle Dela Cruz</h4>
-            <p>Tenant</p>
-          </div>
-          <img src="https://i.pravatar.cc/100?img=47" alt="Profile Avatar">
-          <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: #94a3b8;"></i>
-        </div>
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="header-title">Services</div>
+    
+    <div class="header-right">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
+        <input type="text" placeholder="Search...">
       </div>
-    </header>
+
+      <div class="notification-icon">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span class="badge"></span>
+      </div>
+
+      <div class="user-profile">
+        <div class="user-info">
+          <h4>Elle Dela Cruz</h4>
+          <p>Tenant</p>
+        </div>
+        <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+        <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+      </div>
+    </div>
+  </header>
+
 
     <!-- DASHBOARD CONTENT AREA -->
     <div class="dashboard-container">

@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services - Maintenance Requests</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ========== ROOT VARIABLES ========== */
+    :root {
+      --bg-dark: #02122c;
+      --bg-dark-light: #0d2347;
+      --primary-orange: #e06800;
+      --sidebar-width: 250px;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --bg-app: #f8fafc;
+      --modal-overlay: rgba(15, 23, 42, 0.45);
+    }
+
+    /* ========== RESET & BASE ========== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg-app);
+      display: flex;
+      min-height: 100vh;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ========== SIDEBAR CONTAINER ========== */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-dark);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.3s ease;
+      min-height: 100vh;
+      z-index: 100;
+    }
+
+    .sidebar.collapsed {
+      --sidebar-width: 80px;
+    }
+
+    /* ========== BRAND HEADER ========== */
+    .brand-header {
+      padding: 20px 18px 15px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .sidebar.collapsed .brand-header {
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-orange);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      transition: opacity 0.2s ease;
+    }
+
+    .brand-title h3 {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    .brand-title p {
+      font-size: 11px;
+      color: #8fa0b5;
+    }
+
+    /* ========== USER PILL ========== */
+    .user-pill {
+      background-color: var(--primary-orange);
+      margin: 5px 14px 15px 14px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #ffffff;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed .user-pill {
+      margin: 10px auto;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+    }
+
+    .user-pill i {
+      font-size: 16px;
+    }
+
+    /* ========== NAVIGATION MENU ========== */
+    .nav-menu {
+      list-style: none;
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      color: #8fa0b5;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 12px;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 8px;
+    }
+
+    .nav-item:hover > .nav-item-header {
+      color: #fff;
+    }
+
+    .nav-item.active > .nav-item-header {
+      color: var(--primary-orange);
+    }
+
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-item-left i {
+      width: 18px;
+      text-align: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .arrow-icon {
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    /* SUB-MENU FOR SERVICES */
+    .submenu {
+      list-style: none;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 2px;
+      margin-bottom: 5px;
+    }
+
+    .submenu.hidden {
+      display: none;
+    }
+
+    .submenu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      color: #8fa0b5;
+      text-decoration: none;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+
+    .submenu-item:hover {
+      color: #fff;
+    }
+
+    .submenu-item.active {
+      background-color: var(--primary-orange);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* COLLAPSED OVERRIDES */
+    .sidebar.collapsed .brand-title,
+    .sidebar.collapsed .user-pill span,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .arrow-icon,
+    .sidebar.collapsed .submenu {
+      display: none !important;
+    }
+
+    .sidebar.collapsed .nav-item-header {
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .sidebar.collapsed .nav-item-left {
+      gap: 0;
+    }
+
+    /* ========== SIDEBAR FOOTER ========== */
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* ========== MAIN WRAPPER ========== */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* ========== TOP HEADER ========== */
+    .top-header {
+      background: #fff;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .search-box {
+      background: #f1f5f9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 250px;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+      color: var(--text-dark);
+    }
+
+    .notification-icon {
+      position: relative;
+      font-size: 16px;
+      color: #64748b;
+      cursor: pointer;
+    }
+
+    .notification-icon .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 6px;
+      height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .user-profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info { text-align: right; }
+    .user-info h4 { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+    .user-info p { font-size: 11px; color: var(--text-muted); }
+
+    /* ========== DASHBOARD CONTENT ========== */
+    .content-container {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 1200px;
+    }
+
+    .page-title-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .title-icon {
+      width: 44px;
+      height: 44px;
+      background: #fef3c7;
+      color: #d97706;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .title-text h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .title-text p {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* NOTE BANNER */
+    .info-banner {
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #2563eb;
+      font-size: 13px;
+    }
+
+    .info-banner span {
+      color: #1d4ed8;
+    }
+
+    .info-banner strong {
+      color: #1d4ed8;
+    }
+
+    /* CARD CONTAINER */
+    .card-box {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      padding: 20px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .card-header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .request-count {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .btn-primary {
+      background-color: #02122c;
+      color: #ffffff;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background-color: #0d2347;
+    }
+
+    /* TABLE DESIGN */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .custom-table th {
+      color: #475569;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 12px 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .custom-table td {
+      padding: 16px 8px;
+      font-size: 13px;
+      vertical-align: middle;
+      border-bottom: 1px solid #f8fafc;
+    }
+
+    .req-title {
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .req-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .badge-pending {
+      background-color: #fef3c7;
+      color: #d97706;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #94a3b8;
+    }
+
+    .table-actions i {
+      cursor: pointer;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .table-actions i:hover {
+      color: #475569;
+    }
+
+    /* ========== MODAL COMPONENT ========== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--modal-overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      padding: 24px;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .close-modal {
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .modal-alert {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #d97706;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .form-group label span {
+      color: #ef4444;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      color: #1e293b;
+    }
+
+    .form-control::placeholder {
+      color: #94a3b8;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: none;
+      color: #475569;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    .btn-cancel-req {
+      border: 1px solid #fca5a5;
+      background: #fff;
+      color: #ef4444;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* VIEW DETAILS GRID IN MODAL */
+    .details-subtext {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: -10px;
+      margin-bottom: 14px;
+    }
+
+    .details-desc-box {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #334155;
+      margin-bottom: 16px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .grid-card {
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+
+    .grid-card label {
+      font-size: 10px;
+      color: #94a3b8;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .grid-card p {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .badge-medium {
+      background: #fef3c7;
+      color: #d97706;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100% !important;
+        min-height: auto;
+      }
+      .sidebar.collapsed {
+        width: 100% !important;
+      }
+      .search-box {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand-header">
+      <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="brand-title">
+        <h3>JLM Cozy Cabin</h3>
+        <p>Tenant Portal</p>
+      </div>
+    </div>
+
+    <div class="user-pill">
+      <i class="fa-regular fa-user-circle"></i>
+      <span>Elle Dela Cruz</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="../index.html" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-border-all"></i>
+            <span class="nav-text">Dashboard</span>
+          </div>
+        </a>
+      </li>
+
+      <!-- SERVICES SUBMENU NAVIGATION -->
+      <li class="nav-item active">
+        <div class="nav-item-header" id="servicesToggle">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-wrench"></i>
+            <span class="nav-text">Services</span>
+          </div>
+          <i class="fa-solid fa-chevron-up arrow-icon" id="servicesArrow"></i>
+        </div>
+
+        <ul class="submenu" id="servicesSubmenu">
+          <li>
+            <a href="../services/maintenance.html" class="submenu-item active">
+              <i class="fa-solid fa-wrench" style="font-size: 12px;"></i>
+              <span>Maintenance</span>
+            </a>
+          </li>
+          <li>
+            <a href="../services/room-change.html" class="submenu-item">
+              <i class="fa-solid fa-house" style="font-size: 12px;"></i>
+              <span>Room Change</span>
+            </a>
+          </li>
+          <li>
+            <a href="../services/stay-extension.html" class="submenu-item">
+              <i class="fa-regular fa-calendar" style="font-size: 12px;"></i>
+              <span>Stay Extension</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="../billing.html" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-credit-card"></i>
+            <span class="nav-text">Billing</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="../reservations.html" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span class="nav-text">Reservations</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="../messages.html" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span class="nav-text">Messages</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="../announcements.html" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="nav-text">Announcements</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="../history.html" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="nav-text">History</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="../settings.html" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-gear"></i>
+            <span class="nav-text">Settings</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="nav-item">
+        <a href="#" class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="nav-text">Logout</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-item" id="collapseBtn">
+        <div class="nav-item-header">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bars"></i>
+            <span class="nav-text">Collapse Menu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <div class="main-wrapper">
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-title">Services</div>
+      
+      <div class="header-right">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="notification-icon">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span class="badge"></span>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-info">
+            <h4>Elle Dela Cruz</h4>
+            <p>Tenant</p>
+          </div>
+          <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN BODY SECTION -->
+    <main class="content-container">
+      
+      <div class="page-title-section">
+        <div class="title-icon">
+          <i class="fa-solid fa-wrench"></i>
+        </div>
+        <div class="title-text">
+          <h2>Maintenance Requests</h2>
+          <p>Submit and track maintenance issues</p>
+        </div>
+      </div>
+
+      <div class="info-banner">
+        <i class="fa-regular fa-circle-info"></i>
+        <div><strong>Note:</strong> You can cancel a request while it is <strong>Pending</strong>. Once approved or in progress, it becomes view-only.</div>
+      </div>
+
+      <div class="card-box">
+        <div class="card-header-actions">
+          <div class="request-count">2 request(s)</div>
+          <button class="btn-primary" id="openNewRequestBtn">
+            <i class="fa-solid fa-plus"></i>
+            <span>New Request</span>
+          </button>
+        </div>
+
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th style="width: 35%;">Request</th>
+              <th style="width: 20%;">Assigned Staff</th>
+              <th style="width: 15%;">Status</th>
+              <th style="width: 18%;">Date</th>
+              <th style="width: 12%;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="req-title">Leaky Faucet</div>
+                <div class="req-desc">Kitchen sink is dripping constantly.</div>
+              </td>
+              <td style="color:#94a3b8;">—</td>
+              <td>
+                <span class="badge-pending"><i class="fa-regular fa-clock"></i> Pending</span>
+              </td>
+              <td style="color:#475569;">Mar 20, 2026</td>
+              <td>
+                <div class="table-actions">
+                  <i class="fa-regular fa-eye view-details-btn" title="View"></i>
+                  <i class="fa-regular fa-circle-xmark" title="Cancel"></i>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="req-title">Broken Window Lock</div>
+                <div class="req-desc">Bedroom window lock is stuck.</div>
+              </td>
+              <td style="color:#94a3b8;">—</td>
+              <td>
+                <span class="badge-pending"><i class="fa-regular fa-clock"></i> Pending</span>
+              </td>
+              <td style="color:#475569;">Mar 20, 2026</td>
+              <td>
+                <div class="table-actions">
+                  <i class="fa-regular fa-eye view-details-btn" title="View"></i>
+                  <i class="fa-regular fa-circle-xmark" title="Cancel"></i>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL 1: SUBMIT MAINTENANCE REQUEST -->
+  <div class="modal-overlay" id="newRequestModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Submit Maintenance Request</h3>
+        <i class="fa-solid fa-xmark close-modal" id="closeNewRequestModal"></i>
+      </div>
+
+      <div class="modal-alert">
+        <i class="fa-regular fa-circle-info" style="margin-top:2px;"></i>
+        <span>Describe the maintenance issue clearly so our team can assist you promptly.</span>
+      </div>
+
+      <form id="requestForm">
+        <div class="form-group">
+          <label>Issue Title <span>*</span></label>
+          <input type="text" class="form-control" placeholder="e.g. Leaky Faucet in Kitchen">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select class="form-control">
+              <option>General</option>
+              <option>Plumbing</option>
+              <option>Electrical</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Priority</label>
+            <select class="form-control">
+              <option>Critical</option>
+              <option>Medium</option>
+              <option>Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description <span>*</span></label>
+          <textarea class="form-control" placeholder="Describe the problem in detail..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelNewRequestBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: MAINTENANCE REQUEST DETAILS -->
+  <div class="modal-overlay" id="viewDetailsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Maintenance Request Details</h3>
+        <i class="fa-solid fa-xmark close-modal" id="closeViewDetailsModal"></i>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
+        <h4 style="font-size: 15px; font-weight:700;">Leaky Faucet</h4>
+        <span class="badge-pending"><i class="fa-regular fa-clock"></i> Pending</span>
+      </div>
+      <div class="details-subtext">sr-1</div>
+
+      <div class="details-desc-box">
+        Kitchen sink is dripping constantly.
+      </div>
+
+      <div class="details-grid">
+        <div class="grid-card">
+          <label>Category</label>
+          <p>Plumbing</p>
+        </div>
+        <div class="grid-card">
+          <label>Priority</label>
+          <span class="badge-medium">MEDIUM</span>
+        </div>
+        <div class="grid-card">
+          <label>Submitted</label>
+          <p>Mar 20, 2026</p>
+        </div>
+        <div class="grid-card">
+          <label>Assigned Staff</label>
+          <p>Not Yet Assigned</p>
+        </div>
+        <div class="grid-card">
+          <label>Scheduled</label>
+          <p style="color:#94a3b8;">—</p>
+        </div>
+        <div class="grid-card">
+          <label>Unit</label>
+          <p>Room 101</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-cancel-req">
+          <i class="fa-regular fa-circle-xmark"></i>
+          <span>Cancel Request</span>
+        </button>
+        <button type="button" class="btn-primary" id="closeDetailsBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE JS -->
+  <script>
+    // Sidebar Collapse
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('collapseBtn');
+
+    collapseBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // Submenu Toggle for Services
+    const servicesToggle = document.getElementById('servicesToggle');
+    const servicesSubmenu = document.getElementById('servicesSubmenu');
+    const servicesArrow = document.getElementById('servicesArrow');
+
+    servicesToggle.addEventListener('click', () => {
+      servicesSubmenu.classList.toggle('hidden');
+      if (servicesSubmenu.classList.contains('hidden')) {
+        servicesArrow.className = 'fa-solid fa-chevron-down arrow-icon';
+      } else {
+        servicesArrow.className = 'fa-solid fa-chevron-up arrow-icon';
+      }
+    });
+
+    // Modals Handling
+    const newRequestModal = document.getElementById('newRequestModal');
+    const viewDetailsModal = document.getElementById('viewDetailsModal');
+
+    const openNewRequestBtn = document.getElementById('openNewRequestBtn');
+    const closeNewRequestModal = document.getElementById('closeNewRequestModal');
+    const cancelNewRequestBtn = document.getElementById('cancelNewRequestBtn');
+
+    const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
+    const closeViewDetailsModal = document.getElementById('closeViewDetailsModal');
+    const closeDetailsBtn = document.getElementById('closeDetailsBtn');
+
+    // Open/Close New Request Modal
+    openNewRequestBtn.addEventListener('click', () => {
+      newRequestModal.classList.add('active');
+    });
+
+    const hideNewModal = () => newRequestModal.classList.remove('active');
+    closeNewRequestModal.addEventListener('click', hideNewModal);
+    cancelNewRequestBtn.addEventListener('click', hideNewModal);
+
+    // Open/Close View Details Modal
+    viewDetailsBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewDetailsModal.classList.add('active');
+      });
+    });
+
+    const hideViewModal = () => viewDetailsModal.classList.remove('active');
+    closeViewDetailsModal.addEventListener('click', hideViewModal);
+    closeDetailsBtn.addEventListener('click', hideViewModal);
+
+    // Close Modals on Overlay Click
+    window.addEventListener('click', (e) => {
+      if (e.target === newRequestModal) hideNewModal();
+      if (e.target === viewDetailsModal) hideViewModal();
+    });
+  </script>
+
+</body>
+</html>

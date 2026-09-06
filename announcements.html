@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements - JLM Cozy Cabin</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ========== ROOT VARIABLES ========== */
+    :root {
+      --bg-dark: #001636;
+      --bg-dark-light: #0d2347;
+      --primary-orange: #f56c00;
+      --sidebar-width: 260px;
+      --border-color: #e2e8f0;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --bg-main: #f4f6f9;
+    }
+
+    /* ========== RESET & BASE ========== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg-main);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ========== SIDEBAR CONTAINER ========== */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-dark);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.3s ease;
+      overflow-x: hidden;
+      min-height: 100vh;
+      border-radius: 0px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+    }
+
+    /* ========== COLLAPSED STATE ========== */
+    .sidebar.collapsed {
+      --sidebar-width: 80px;
+    }
+
+    /* ========== BRAND HEADER ========== */
+    .brand-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .sidebar.collapsed .brand-header {
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-orange);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      transition: opacity 0.2s ease;
+    }
+
+    .brand-title h3 {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    .brand-title p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* ========== USER PILL ========== */
+    .user-pill {
+      background-color: var(--primary-orange);
+      margin: 10px 16px;
+      padding: 10px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed .user-pill {
+      margin: 10px auto;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+    }
+
+    .user-pill i {
+      font-size: 18px;
+    }
+
+    /* ========== NAVIGATION MENU ========== */
+    .nav-menu {
+      list-style: none;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-grow: 1;
+      overflow-y: auto;
+      transition: padding 0.3s ease;
+    }
+
+    .sidebar.collapsed .nav-menu {
+      padding: 10px 12px;
+    }
+
+    /* ========== NAV ITEM ========== */
+    .nav-item {
+      display: flex;
+      align-items: center;
+      color: #94a3b8;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-item > a, 
+    .nav-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background-color: var(--bg-dark-light);
+      color: #fff;
+      border-left: 3px solid var(--primary-orange);
+    }
+
+    .nav-item.active .nav-text,
+    .nav-item.active i {
+      color: var(--primary-orange);
+    }
+
+    /* ========== NAV ITEM LEFT (Icon + Label) ========== */
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-item-left i {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ========== ARROW ICON ========== */
+    .arrow-icon {
+      font-size: 10px;
+    }
+
+    /* ========== COLLAPSED OVERRIDES FOR NAV ITEMS ========== */
+    .sidebar.collapsed .brand-title,
+    .sidebar.collapsed .user-pill span,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .arrow-icon {
+      display: none;
+    }
+
+    .sidebar.collapsed .nav-item {
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .nav-item > a,
+    .sidebar.collapsed .nav-item-content {
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .sidebar.collapsed .nav-item-left {
+      gap: 0;
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .nav-item.active {
+      border-left: none;
+      background-color: var(--primary-orange);
+    }
+
+    .sidebar.collapsed .nav-item.active .nav-text,
+    .sidebar.collapsed .nav-item.active i {
+      color: #fff;
+    }
+
+    /* ========== SIDEBAR FOOTER ========== */
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar.collapsed .sidebar-footer {
+      padding: 16px 12px;
+    }
+
+    /* ========== MAIN WRAPPER & HEADER ========== */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+      background: #f8fafc;
+    }
+
+    .top-header {
+      background: #fff;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .search-box {
+      background: #f1f5f9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 240px;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+    }
+
+    .notification-icon {
+      position: relative;
+      font-size: 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .notification-icon .badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 7px;
+      height: 7px;
+      background: #ef4444;
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding-left: 10px;
+      border-left: 1px solid #e2e8f0;
+    }
+
+    .user-profile img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info { text-align: right; }
+    .user-info h4 { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+    .user-info p { font-size: 11px; color: var(--text-muted); }
+
+    /* ========== CONTENT AREA (ANNOUNCEMENTS UI) ========== */
+    .content-container {
+      padding: 28px 32px;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Page Banner/Header */
+    .page-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .banner-icon {
+      width: 44px;
+      height: 44px;
+      background-color: #dbeafe;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2563eb;
+      font-size: 18px;
+    }
+
+    .banner-text h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .banner-text p {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* Metric Cards */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+
+    .metric-card .label {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .metric-card .value {
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 4px;
+      line-height: 1;
+    }
+
+    .metric-card.total .value { color: #0f172a; }
+    .metric-card.pinned .value { color: #4f46e5; }
+    .metric-card.urgent .value { color: #dc2626; }
+
+    /* Filter Bar */
+    .filter-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      align-items: center;
+    }
+
+    .search-announcements {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-announcements i {
+      position: absolute;
+      left: 14px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .search-announcements input {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      padding: 10px 14px 10px 38px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      color: #334155;
+    }
+
+    .priority-select {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #334155;
+      outline: none;
+      cursor: pointer;
+      min-width: 140px;
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Announcement Cards */
+    .announcements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .announcement-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      border-left: 5px solid #6366f1;
+    }
+
+    .announcement-card.notice-only {
+      border-left-color: #6366f1;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-pinned {
+      background: #e0e7ff;
+      color: #4338ca;
+    }
+
+    .badge-important {
+      background: #fef3c7;
+      color: #d97706;
+      text-transform: uppercase;
+    }
+
+    .badge-notice {
+      background: #f1f5f9;
+      color: #475569;
+      text-transform: uppercase;
+    }
+
+    .post-date {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .card-footer {
+      font-size: 12px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100% !important;
+        min-height: auto;
+      }
+      .sidebar.collapsed {
+        width: 100% !important;
+      }
+      .search-box {
+        display: none;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      .content-container {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand-header">
+      <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="brand-title">
+        <h3>JLM Cozy Cabin</h3>
+        <p>Tenant Portal</p>
+      </div>
+    </div>
+
+    <div class="user-pill">
+      <i class="fa-regular fa-user-circle"></i>
+      <span>Elle Dela Cruz</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="index.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-border-all"></i>
+            <span class="nav-text">Dashboard</span>
+          </div>
+          <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="services.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-wrench"></i>
+            <span class="nav-text">Services</span>
+          </div>
+          <i class="fa-solid fa-chevron-down arrow-icon"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="billing.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-credit-card"></i>
+            <span class="nav-text">Billing</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="reservations.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span class="nav-text">Reservations</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="messages.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span class="nav-text">Messages</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item active">
+        <a href="announcements.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="nav-text">Announcements</span>
+          </div>
+          <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="history.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="nav-text">History</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="settings.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-gear"></i>
+            <span class="nav-text">Settings</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="nav-item">
+        <a href="logout.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="nav-text">Logout</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-item" id="collapseBtn">
+        <div class="nav-item-content">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bars"></i>
+            <span class="nav-text">Collapse Menu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-title">Announcements</div>
+      
+      <div class="header-right">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="notification-icon">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span class="badge"></span>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-info">
+            <h4>Elle Dela Cruz</h4>
+            <p>Tenant</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Elle Dela Cruz">
+          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="content-container">
+
+      <!-- BANNER -->
+      <div class="page-banner">
+        <div class="banner-icon">
+          <i class="fa-solid fa-bullhorn"></i>
+        </div>
+        <div class="banner-text">
+          <h2>Announcements</h2>
+          <p>Official notices from building management</p>
+        </div>
+      </div>
+
+      <!-- METRIC CARDS -->
+      <div class="metrics-grid">
+        <div class="metric-card total">
+          <div class="label">Total</div>
+          <div class="value">3</div>
+        </div>
+        <div class="metric-card pinned">
+          <div class="label">Pinned</div>
+          <div class="value">2</div>
+        </div>
+        <div class="metric-card urgent">
+          <div class="label">Urgent</div>
+          <div class="value">0</div>
+        </div>
+      </div>
+
+      <!-- SEARCH & FILTER -->
+      <div class="filter-card">
+        <div class="search-announcements">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search announcements...">
+        </div>
+        <select class="priority-select" id="prioritySelect">
+          <option value="all">All Priorities</option>
+          <option value="important">Important</option>
+          <option value="notice">Notice</option>
+        </select>
+      </div>
+
+      <!-- PINNED ANNOUNCEMENTS -->
+      <div class="section-title">
+        <i class="fa-solid fa-thumbtack" style="font-size:10px;"></i>
+        <span>Pinned Announcements</span>
+      </div>
+
+      <div class="announcements-list">
+        
+        <!-- CARD 1 -->
+        <div class="announcement-card">
+          <div class="card-top">
+            <div class="badges">
+              <span class="badge-tag badge-pinned"><i class="fa-solid fa-thumbtack" style="font-size:9px;"></i> Pinned</span>
+              <span class="badge-tag badge-important"><i class="fa-solid fa-circle-exclamation" style="font-size:10px;"></i> IMPORTANT</span>
+            </div>
+            <span class="post-date">Mar 24, 2026</span>
+          </div>
+          <h3 class="card-title">Water Maintenance Scheduled</h3>
+          <p class="card-desc">Water supply will be interrupted on Saturday, March 25 from 8 AM to 12 PM for routine maintenance. Please store water in advance.</p>
+          <div class="card-footer">
+            <i class="fa-regular fa-globe"></i>
+            <span>Posted by Alice Administrator</span>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="announcement-card">
+          <div class="card-top">
+            <div class="badges">
+              <span class="badge-tag badge-pinned"><i class="fa-solid fa-thumbtack" style="font-size:9px;"></i> Pinned</span>
+              <span class="badge-tag badge-notice"><i class="fa-solid fa-circle-info" style="font-size:10px;"></i> NOTICE</span>
+            </div>
+            <span class="post-date">Mar 18, 2026</span>
+          </div>
+          <h3 class="card-title">Gym Renovation Notice</h3>
+          <p class="card-desc">The gym facility will be closed for renovation from March 28 to April 5. We apologize for the inconvenience.</p>
+          <div class="card-footer">
+            <i class="fa-regular fa-globe"></i>
+            <span>Posted by Alice Administrator</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ALL ANNOUNCEMENTS -->
+      <div class="section-title">
+        <span>All Announcements</span>
+      </div>
+
+      <div class="announcements-list">
+        
+        <!-- CARD 3 -->
+        <div class="announcement-card notice-only">
+          <div class="card-top">
+            <div class="badges">
+              <span class="badge-tag badge-notice"><i class="fa-solid fa-circle-info" style="font-size:10px;"></i> NOTICE</span>
+            </div>
+            <span class="post-date">Mar 22, 2026</span>
+          </div>
+          <h3 class="card-title">Welcome New Residents!</h3>
+          <p class="card-desc">Please join us in welcoming our newest residents to JLM Cozy Cabin. Community gathering at the lobby on Friday at 6 PM.</p>
+          <div class="card-footer">
+            <i class="fa-regular fa-globe"></i>
+            <span>Alice Administrator</span>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    // Sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('collapseBtn');
+
+    collapseBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // Simple Filter & Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const prioritySelect = document.getElementById('prioritySelect');
+    const cards = document.querySelectorAll('.announcement-card');
+
+    function filterAnnouncements() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedPriority = prioritySelect.value.toLowerCase();
+
+      cards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+        const hasImportant = card.querySelector('.badge-important') !== null;
+        const hasNotice = card.querySelector('.badge-notice') !== null;
+
+        let matchesSearch = title.includes(searchTerm) || desc.includes(searchTerm);
+        let matchesPriority = true;
+
+        if (selectedPriority === 'important') {
+          matchesPriority = hasImportant;
+        } else if (selectedPriority === 'notice') {
+          matchesPriority = hasNotice;
+        }
+
+        if (matchesSearch && matchesPriority) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', filterAnnouncements);
+    prioritySelect.addEventListener('change', filterAnnouncements);
+  </script>
+
+</body>
+</html>
