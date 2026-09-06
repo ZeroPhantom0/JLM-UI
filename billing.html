@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JLM Cozy Cabin - My Billing</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-dark: #001636;
+      --bg-dark-light: #0d2347;
+      --bg-light: #f4f6f9;
+      --card-bg: #ffffff;
+      --primary-orange: #f56c00;
+      --primary-green: #00a86b;
+      --light-green: #e6f7f0;
+      --light-red: #fde8eb;
+      --light-yellow: #fefce8;
+      --blue-banner: #2563eb;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --sidebar-width: 260px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-dark);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.3s ease;
+      z-index: 100;
+      overflow-x: hidden;
+    }
+
+    .sidebar.collapsed {
+      --sidebar-width: 80px;
+    }
+
+    .brand-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .sidebar.collapsed .brand-header {
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-orange);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      transition: opacity 0.2s ease;
+    }
+
+    .brand-title h3 {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    .brand-title p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .sidebar.collapsed .brand-title,
+    .sidebar.collapsed .user-pill span,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .arrow-icon {
+      display: none;
+    }
+
+    .user-pill {
+      background-color: var(--primary-orange);
+      margin: 10px 16px;
+      padding: 10px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed .user-pill {
+      margin: 10px auto;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+    }
+
+    .user-pill i {
+      font-size: 18px;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-grow: 1;
+      overflow-y: auto;
+      transition: padding 0.3s ease;
+    }
+
+    .sidebar.collapsed .nav-menu {
+      padding: 10px 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      color: #94a3b8;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-item > a,
+    .nav-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background-color: var(--bg-dark-light);
+      color: #fff;
+      border-left: 3px solid var(--primary-orange);
+    }
+
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-item-left i {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .arrow-icon {
+      font-size: 10px;
+    }
+
+    .sidebar.collapsed .nav-item {
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .nav-item > a,
+    .sidebar.collapsed .nav-item-content {
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .sidebar.collapsed .nav-item-left {
+      gap: 0;
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .nav-item.active {
+      border-left: none;
+      background-color: var(--primary-orange);
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar.collapsed .sidebar-footer {
+      padding: 16px 12px;
+    }
+
+    /* --- MAIN CONTENT --- */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    /* --- TOP HEADER --- */
+    .top-header {
+      background: #fff;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .search-box {
+      background: #f1f5f9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 280px;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+    }
+
+    .notification-icon {
+      position: relative;
+      font-size: 18px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .notification-icon .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 8px;
+      height: 8px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      border-left: 1px solid var(--border-color);
+      padding-left: 20px;
+    }
+
+    .user-profile img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info h4 {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .user-info p {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* --- BILLING PAGE CONTENT --- */
+    .billing-container {
+      padding: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .page-title-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .title-icon {
+      width: 44px;
+      height: 44px;
+      background: #dcfce7;
+      color: var(--primary-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .title-text h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .title-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* SUMMARY CARDS ROW */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .summary-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .summary-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .summary-icon.red { background: #ffe4e6; color: #e11d48; }
+    .summary-icon.yellow { background: #fef9c3; color: #d97706; }
+    .summary-icon.green { background: #dcfce7; color: var(--primary-green); }
+
+    .summary-content span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .summary-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .summary-content h3.red-text { color: #e11d48; }
+    .summary-content h3.green-text { color: #047857; }
+
+    /* GCASH INSTRUCTIONS CARD */
+    .instruction-card {
+      background: #1d61f2;
+      color: white;
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(29, 97, 242, 0.15);
+    }
+
+    .instruction-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .instruction-header-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .instruction-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .instruction-header p {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    .instruction-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .step-badge {
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .number-box {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 6px;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    /* PENDING PAYMENTS SECTION */
+    .pending-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      overflow: hidden;
+    }
+
+    .pending-header {
+      background: #fff5f5;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #ffe4e6;
+    }
+
+    .pending-header h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #991b1b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pending-count-badge {
+      background: #ef4444;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pending-body {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pending-info-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pending-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pending-title-row h4 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .status-unpaid {
+      background: #fef3c7;
+      color: #d97706;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pending-subtext {
+      font-size: 12px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pending-info-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .pending-amount {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .btn-pay-now {
+      background: var(--primary-green);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-pay-now:hover {
+      background: #008f5a;
+    }
+
+    /* --- MODAL --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: white;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      padding: 24px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .modal-amount-box {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-amount-box span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .modal-amount-box h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 2px 0;
+    }
+
+    .modal-amount-box p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .method-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    /* PAYMENT METHOD TABS */
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .method-btn {
+      border: 1px solid var(--border-color);
+      background: white;
+      border-radius: 10px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .method-btn i {
+      font-size: 18px;
+    }
+
+    .method-btn.active {
+      border-color: #3b82f6;
+      color: #2563eb;
+      background: #eff6ff;
+    }
+
+    /* DYNAMIC PAYMENT CONTENT */
+    .payment-info-box {
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .gcash-info-title {
+      font-size: 11px;
+      color: #2563eb;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .gcash-number {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1d4ed8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gcash-info-sub {
+      font-size: 11px;
+      color: #3b82f6;
+      margin-top: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-dark);
+    }
+
+    .form-group label span {
+      color: #e11d48;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: #3b82f6;
+    }
+
+    .upload-area {
+      border: 1px dashed var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .notice-box {
+      background: #eff6ff;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 11px;
+      color: #2563eb;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .counter-notice {
+      background: #f0fdf4;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 11px;
+      color: #166534;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn-cancel {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background: var(--bg-dark);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+        overflow: auto;
+      }
+
+      .sidebar {
+        width: 100% !important;
+        height: auto;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pending-body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .pending-info-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .billing-container {
+        padding: 16px;
+      }
+
+      .search-box {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-header">
+      <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="brand-title">
+        <h3>JLM Cozy Cabin</h3>
+        <p>Tenant Portal</p>
+      </div>
+    </div>
+
+    <div class="user-pill">
+      <i class="fa-regular fa-user-circle"></i>
+      <span>Elle Dela Cruz</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="dashboard.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-border-all"></i>
+            <span class="nav-text">Dashboard</span>
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="services.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-wrench"></i>
+            <span class="nav-text">Services</span>
+          </div>
+          <i class="fa-solid fa-chevron-down arrow-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a href="billing.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-credit-card"></i>
+            <span class="nav-text">Billing</span>
+          </div>
+          <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="reservations.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span class="nav-text">Reservations</span>
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="messages.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span class="nav-text">Messages</span>
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="announcements.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="nav-text">Announcements</span>
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="history.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="nav-text">History</span>
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="settings.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-gear"></i>
+            <span class="nav-text">Settings</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="nav-item">
+        <a href="logout.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="nav-text">Logout</span>
+          </div>
+        </a>
+      </div>
+      <div class="nav-item" id="collapseBtn">
+        <div class="nav-item-content">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bars"></i>
+            <span class="nav-text">Collapse Menu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+      <div class="header-title">My Billing</div>
+      
+      <div class="header-right">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8;"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="notification-icon">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge"></span>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-info" style="text-align: right;">
+            <h4>Elle Dela Cruz</h4>
+            <p>Tenant</p>
+          </div>
+          <img src="https://i.pravatar.cc/100?img=47" alt="Profile Avatar">
+          <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: #94a3b8;"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- BILLING CONTENT AREA -->
+    <div class="billing-container">
+
+      <!-- Title & Subtitle -->
+      <div class="page-title-section">
+        <div class="title-icon">₱</div>
+        <div class="title-text">
+          <h2>Billing & Payments</h2>
+          <p>Track your rent payments and receipts</p>
+        </div>
+      </div>
+
+      <!-- 3 Summary Cards -->
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-icon red">
+            <i class="fa-solid fa-exclamation"></i>
+          </div>
+          <div class="summary-content">
+            <span>Total Amount Due</span>
+            <h3 class="red-text">₱600</h3>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon yellow">
+            <i class="fa-regular fa-clock"></i>
+          </div>
+          <div class="summary-content">
+            <span>Payment Status</span>
+            <h3>Unpaid</h3>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon green">
+            <i class="fa-regular fa-circle-check"></i>
+          </div>
+          <div class="summary-content">
+            <span>Due Date Reminder</span>
+            <h3 class="green-text">March 22, 2026</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- GCash Instructions Banner -->
+      <div class="instruction-card">
+        <div class="instruction-header">
+          <div class="instruction-header-icon">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <div>
+            <h3>GCash Payment Instructions</h3>
+            <p>Follow these steps to pay your rent via GCash</p>
+          </div>
+        </div>
+
+        <div class="instruction-steps">
+          <div class="step-item">
+            <span class="step-badge">1</span>
+            <span>Transfer to GCash number:</span>
+            <span class="number-box">
+              0917-123-4567
+              <button class="copy-btn" title="Copy Number"><i class="fa-regular fa-copy"></i></button>
+            </span>
+          </div>
+
+          <div class="step-item">
+            <span class="step-badge">2</span>
+            <span>Screenshot your GCash receipt</span>
+          </div>
+
+          <div class="step-item">
+            <span class="step-badge">3</span>
+            <span>Upload the screenshot using the "Pay Now" button on your invoice below</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Payments Card -->
+      <div class="pending-card">
+        <div class="pending-header">
+          <i class="fa-solid fa-exclamation-circle" style="color:#ef4444;"></i>
+          <h4>Pending Payments <span class="pending-count-badge">1</span></h4>
+        </div>
+
+        <div class="pending-body">
+          <div class="pending-info-left">
+            <div class="pending-title-row">
+              <h4>Rent - March 2026</h4>
+              <span class="status-unpaid"><i class="fa-regular fa-clock"></i> Unpaid</span>
+            </div>
+            <div class="pending-subtext">
+              <i class="fa-regular fa-calendar"></i>
+              <span>Due: Mar 30, 2026 inv-101</span>
+            </div>
+          </div>
+
+          <div class="pending-info-right">
+            <div class="pending-amount">₱600</div>
+            <button class="btn-pay-now" id="openModalBtn">
+              <i class="fa-regular fa-credit-card"></i> Pay Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SUBMIT PAYMENT MODAL -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      
+      <h3 class="modal-title">Submit Payment</h3>
+
+      <div class="modal-amount-box">
+        <span>Rent - March 2026</span>
+        <h2>₱600</h2>
+        <p>Due: Mar 30, 2026</p>
+      </div>
+
+      <div class="method-label">Payment Method</div>
+
+      <!-- Method Switcher -->
+      <div class="method-grid">
+        <button class="method-btn active" data-method="gcash">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span>GCash</span>
+        </button>
+        <button class="method-btn" data-method="bank">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>Bank Transfer</span>
+        </button>
+        <button class="method-btn" data-method="counter">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Counter</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Content Area -->
+      <div id="paymentDynamicContent">
+        
+        <!-- GCash Specific Number Box (shown only in GCash) -->
+        <div class="payment-info-box" id="gcashNumberBox">
+          <div class="gcash-info-title">GCash Number:</div>
+          <div class="gcash-number">
+            0917-123-4567
+            <i class="fa-regular fa-copy" style="font-size:14px; cursor:pointer;" title="Copy"></i>
+          </div>
+          <div class="gcash-info-sub">Send ₱4,500 then enter the reference number below.</div>
+        </div>
+
+        <!-- Counter Notice Box (shown only in Counter) -->
+        <div class="counter-notice" id="counterNoticeBox" style="display: none;">
+          <i class="fa-solid fa-circle-info" style="margin-top:2px;"></i>
+          <span>Over-the-counter payments will be marked as paid by the admin when confirmed.</span>
+        </div>
+
+        <!-- Reference Field -->
+        <div class="form-group" id="refGroup">
+          <label>Reference / Transaction Number <span>*</span></label>
+          <input type="text" class="input-field" id="refInput" placeholder="e.g. GC-20260323-12345">
+        </div>
+
+        <!-- Upload Field -->
+        <div class="form-group" id="uploadGroup">
+          <label>Upload Receipt Screenshot <span style="color:#94a3b8; font-weight:normal;">(optional)</span></label>
+          <div class="upload-area">
+            <i class="fa-solid fa-arrow-up-from-bracket" style="margin-right:6px;"></i> Click to upload screenshot
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Admin Review Notice -->
+      <div class="notice-box">
+        <i class="fa-solid fa-circle-info" style="margin-top: 2px;"></i>
+        <span>Your payment will be reviewed by the admin. You'll be notified once verified.</span>
+      </div>
+
+      <!-- Modal Footer Action Buttons -->
+      <div class="modal-actions">
+        <button class="btn-cancel" id="cancelModalBtn">Cancel</button>
+        <button class="btn-submit"><i class="fa-solid fa-check"></i> Submit Payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Sidebar Toggle
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('collapseBtn');
+    collapseBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // Modal Controls
+    const paymentModal = document.getElementById('paymentModal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+
+    openModalBtn.addEventListener('click', () => paymentModal.classList.add('active'));
+    closeModalBtn.addEventListener('click', () => paymentModal.classList.remove('active'));
+    cancelModalBtn.addEventListener('click', () => paymentModal.classList.remove('active'));
+
+    // Close on outside click
+    paymentModal.addEventListener('click', (e) => {
+      if (e.target === paymentModal) paymentModal.classList.remove('active');
+    });
+
+    // Payment Method Switcher Logic
+    const methodBtns = document.querySelectorAll('.method-btn');
+    const gcashNumberBox = document.getElementById('gcashNumberBox');
+    const counterNoticeBox = document.getElementById('counterNoticeBox');
+    const refGroup = document.getElementById('refGroup');
+    const uploadGroup = document.getElementById('uploadGroup');
+    const refInput = document.getElementById('refInput');
+
+    methodBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        methodBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const method = btn.getAttribute('data-method');
+
+        if (method === 'gcash') {
+          gcashNumberBox.style.display = 'block';
+          counterNoticeBox.style.display = 'none';
+          refGroup.style.display = 'block';
+          uploadGroup.style.display = 'block';
+          refInput.placeholder = 'e.g. GC-20260323-12345';
+        } else if (method === 'bank') {
+          gcashNumberBox.style.display = 'none';
+          counterNoticeBox.style.display = 'none';
+          refGroup.style.display = 'block';
+          uploadGroup.style.display = 'block';
+          refInput.placeholder = 'e.g. BT-20260323-78901';
+        } else if (method === 'counter') {
+          gcashNumberBox.style.display = 'none';
+          counterNoticeBox.style.display = 'flex';
+          refGroup.style.display = 'none';
+          uploadGroup.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

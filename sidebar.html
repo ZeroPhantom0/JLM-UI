@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidebar Navigation Only</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ========== ROOT VARIABLES ========== */
+    :root {
+      --bg-dark: #001636;
+      --bg-dark-light: #0d2347;
+      --primary-orange: #f56c00;
+      --sidebar-width: 260px;
+    }
+
+    /* ========== RESET & BASE ========== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* ========== SIDEBAR CONTAINER ========== */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-dark);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.3s ease;
+      overflow-x: hidden;
+      min-height: 100vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ========== COLLAPSED STATE ========== */
+    .sidebar.collapsed {
+      --sidebar-width: 80px;
+    }
+
+    /* ========== BRAND HEADER ========== */
+    .brand-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .sidebar.collapsed .brand-header {
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-orange);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      transition: opacity 0.2s ease;
+    }
+
+    .brand-title h3 {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    .brand-title p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* ========== USER PILL ========== */
+    .user-pill {
+      background-color: var(--primary-orange);
+      margin: 10px 16px;
+      padding: 10px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed .user-pill {
+      margin: 10px auto;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+    }
+
+    .user-pill i {
+      font-size: 18px;
+    }
+
+    /* ========== NAVIGATION MENU ========== */
+    .nav-menu {
+      list-style: none;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-grow: 1;
+      overflow-y: auto;
+      transition: padding 0.3s ease;
+    }
+
+    .sidebar.collapsed .nav-menu {
+      padding: 10px 12px;
+    }
+
+    /* ========== NAV ITEM ========== */
+    .nav-item {
+      display: flex;
+      align-items: center;
+      color: #94a3b8;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-item > a, 
+    .nav-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 16px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background-color: var(--bg-dark-light);
+      color: #fff;
+      border-left: 3px solid var(--primary-orange);
+    }
+
+    /* ========== NAV ITEM LEFT (Icon + Label) ========== */
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-item-left i {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ========== ARROW ICON ========== */
+    .arrow-icon {
+      font-size: 10px;
+    }
+
+    /* ========== COLLAPSED OVERRIDES FOR NAV ITEMS ========== */
+    .sidebar.collapsed .brand-title,
+    .sidebar.collapsed .user-pill span,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .arrow-icon {
+      display: none;
+    }
+
+    .sidebar.collapsed .nav-item {
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .nav-item > a,
+    .sidebar.collapsed .nav-item-content {
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .sidebar.collapsed .nav-item-left {
+      gap: 0;
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .nav-item.active {
+      border-left: none; /* Prevents center alignment shift */
+      background-color: var(--primary-orange); /* Highlights active icon cleanly when collapsed */
+    }
+
+    /* ========== SIDEBAR FOOTER ========== */
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar.collapsed .sidebar-footer {
+      padding: 16px 12px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100% !important;
+        min-height: auto;
+        border-radius: 0;
+      }
+      .sidebar.collapsed {
+        width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand-header">
+      <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="brand-title">
+        <h3>JLM Cozy Cabin</h3>
+        <p>Tenant Portal</p>
+      </div>
+    </div>
+
+    <div class="user-pill">
+      <i class="fa-regular fa-user-circle"></i>
+      <span>Elle Dela Cruz</span>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item active">
+        <a href="dashboard.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-border-all"></i>
+            <span class="nav-text">Dashboard</span>
+          </div>
+          <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="services.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-wrench"></i>
+            <span class="nav-text">Services</span>
+          </div>
+          <i class="fa-solid fa-chevron-down arrow-icon"></i>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="billing.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-credit-card"></i>
+            <span class="nav-text">Billing</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="reservations.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span class="nav-text">Reservations</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="messages.html">
+          <div class="nav-item-left">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span class="nav-text">Messages</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="announcements.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="nav-text">Announcements</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="history.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="nav-text">History</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="settings.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-gear"></i>
+            <span class="nav-text">Settings</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="nav-item">
+        <a href="logout.html">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="nav-text">Logout</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-item" id="collapseBtn">
+        <div class="nav-item-content">
+          <div class="nav-item-left">
+            <i class="fa-solid fa-bars"></i>
+            <span class="nav-text">Collapse Menu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('collapseBtn');
+
+    collapseBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+  </script>
+
+</body>
+</html>
