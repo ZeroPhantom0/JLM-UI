@@ -45,30 +45,25 @@
       min-height: 100vh;
     }
 
-    /* ========== SIDEBAR CONTAINER ========== */
+    /* ========== SIDEBAR ========== */
     .sidebar {
       width: var(--sidebar-width);
-      background-color: var(--bg-dark);
+      background-color: #02122c;
       color: #fff;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
       transition: width 0.3s ease;
-      overflow-x: hidden;
       min-height: 100vh;
-      border-radius: 0;
-      box-shadow: none;
-      z-index: 10;
+      z-index: 100;
     }
 
-    /* ========== COLLAPSED STATE ========== */
     .sidebar.collapsed {
       --sidebar-width: 80px;
     }
 
-    /* ========== BRAND HEADER ========== */
     .brand-header {
-      padding: 20px;
+      padding: 20px 18px 15px 18px;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -81,115 +76,102 @@
     }
 
     .brand-logo {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       background: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-orange);
-      font-size: 20px;
+      color: #e06800;
+      font-size: 18px;
       flex-shrink: 0;
     }
 
     .brand-title {
       transition: opacity 0.2s ease;
     }
-
     .brand-title h3 {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 1.2;
       color: #fff;
     }
-
     .brand-title p {
       font-size: 11px;
-      color: #94a3b8;
+      color: #8fa0b5;
     }
 
-    /* ========== USER PILL ========== */
     .user-pill {
-      background-color: var(--primary-orange);
-      margin: 10px 16px;
-      padding: 10px 16px;
+      background-color: #e06800;
+      margin: 5px 14px 15px 14px;
+      padding: 8px 14px;
       border-radius: 20px;
       display: flex;
       align-items: center;
       gap: 10px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
+      color: #ffffff;
       white-space: nowrap;
       transition: all 0.3s ease;
-      color: #fff;
     }
 
     .sidebar.collapsed .user-pill {
       margin: 10px auto;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       padding: 0;
       border-radius: 50%;
       justify-content: center;
     }
+    .sidebar.collapsed .user-pill span {
+      display: none !important;
+    }
 
     .user-pill i {
-      font-size: 18px;
+      font-size: 16px;
     }
 
-    /* ========== NAVIGATION MENU ========== */
     .nav-menu {
       list-style: none;
-      padding: 10px 16px;
+      padding: 0 12px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
       flex-grow: 1;
       overflow-y: auto;
-      transition: padding 0.3s ease;
     }
 
-    .sidebar.collapsed .nav-menu {
-      padding: 10px 12px;
-    }
-
-    /* ========== NAV ITEM ========== */
     .nav-item {
       display: flex;
-      align-items: center;
-      color: #94a3b8;
+      flex-direction: column;
+      color: #8fa0b5;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 500;
       cursor: pointer;
       transition: background-color 0.2s, color 0.2s;
-      white-space: nowrap;
     }
 
-    .nav-item > a, 
-    .nav-item-content {
+    .nav-item-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 12px 16px;
+      padding: 10px 12px;
       text-decoration: none;
       color: inherit;
+      border-radius: 8px;
     }
 
-    .nav-item:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+    .nav-item:hover > .nav-item-header {
       color: #fff;
     }
-
-    .nav-item.active {
-      background-color: var(--bg-dark-light);
-      color: #fff;
-      border-left: 3px solid var(--primary-orange);
+    .nav-item.active > .nav-item-header {
+      color: #e06800;
     }
 
-    /* ========== NAV ITEM LEFT (Icon + Label) ========== */
     .nav-item-left {
       display: flex;
       align-items: center;
@@ -197,63 +179,40 @@
     }
 
     .nav-item-left i {
-      width: 20px;
+      width: 18px;
       text-align: center;
-      font-size: 16px;
+      font-size: 15px;
       flex-shrink: 0;
     }
 
-    /* ========== ARROW ICON ========== */
-    .arrow-icon {
-      font-size: 10px;
-    }
-
-    /* ========== COLLAPSED OVERRIDES FOR NAV ITEMS ========== */
     .sidebar.collapsed .brand-title,
-    .sidebar.collapsed .user-pill span,
     .sidebar.collapsed .nav-text,
     .sidebar.collapsed .arrow-icon {
-      display: none;
+      display: none !important;
     }
 
-    .sidebar.collapsed .nav-item {
-      justify-content: center;
-    }
-
-    .sidebar.collapsed .nav-item > a,
-    .sidebar.collapsed .nav-item-content {
+    .sidebar.collapsed .nav-item-header {
       justify-content: center;
       padding: 12px 0;
     }
-
     .sidebar.collapsed .nav-item-left {
       gap: 0;
-      justify-content: center;
     }
 
-    .sidebar.collapsed .nav-item.active {
-      border-left: none;
-      background-color: var(--primary-orange);
-    }
-
-    /* ========== SIDEBAR FOOTER ========== */
     .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
 
-    .sidebar.collapsed .sidebar-footer {
-      padding: 16px 12px;
-    }
-
-    /* ========== MAIN WRAPPER & HEADER ========== */
+    /* ========== MAIN WRAPPER & TOP HEADER ========== */
     .main-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-width: 0;
       height: 100vh;
       overflow-y: auto;
     }
@@ -264,7 +223,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid #e2e8f0;
       position: sticky;
       top: 0;
       z-index: 90;
@@ -273,13 +232,13 @@
     .header-title {
       font-size: 20px;
       font-weight: 700;
-      color: var(--text-dark);
+      color: #1e293b;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
     }
 
     .search-box {
@@ -289,30 +248,29 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      width: 240px;
+      width: 250px;
     }
-
     .search-box input {
       border: none;
       background: transparent;
       outline: none;
       width: 100%;
       font-size: 13px;
+      color: #1e293b;
     }
 
     .notification-icon {
       position: relative;
       font-size: 16px;
-      color: var(--text-muted);
+      color: #64748b;
       cursor: pointer;
     }
-
     .notification-icon .badge {
       position: absolute;
-      top: -3px;
-      right: -3px;
-      width: 7px;
-      height: 7px;
+      top: -2px;
+      right: -2px;
+      width: 6px;
+      height: 6px;
       background: #ef4444;
       border-radius: 50%;
     }
@@ -323,17 +281,24 @@
       gap: 10px;
       cursor: pointer;
     }
-
     .user-profile img {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
     }
-
-    .user-info { text-align: right; }
-    .user-info h4 { font-size: 13px; font-weight: 700; }
-    .user-info p { font-size: 11px; color: var(--text-muted); }
+    .user-info {
+      text-align: right;
+    }
+    .user-info h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .user-info p {
+      font-size: 11px;
+      color: #64748b;
+    }
 
     /* ========== CONTENT CONTAINER ========== */
     .content-container {
@@ -343,7 +308,6 @@
       margin: 0 auto;
     }
 
-    /* Section Header */
     .section-header {
       display: flex;
       justify-content: space-between;
@@ -372,7 +336,7 @@
     }
 
     .btn-new-message {
-      background-color: var(--btn-navy);
+      background-color: #041d40;
       color: #ffffff;
       border: none;
       padding: 10px 18px;
@@ -390,7 +354,6 @@
       background-color: #0d2a52;
     }
 
-    /* Summary Bar */
     .messages-summary {
       display: flex;
       justify-content: space-between;
@@ -404,11 +367,10 @@
     }
 
     .unread-text {
-      color: var(--primary-orange);
+      color: #e06800;
       font-weight: 700;
     }
 
-    /* Messages Card Container */
     .messages-card {
       background: #ffffff;
       border: 1px solid var(--border-color);
@@ -442,7 +404,6 @@
       font-size: 14px;
     }
 
-    /* List Items */
     .message-item {
       padding: 20px;
       border-bottom: 1px solid #f1f5f9;
@@ -467,7 +428,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--btn-navy);
+      color: #041d40;
       font-size: 18px;
       flex-shrink: 0;
     }
@@ -518,7 +479,7 @@
     }
 
     .badge-new {
-      background-color: var(--primary-orange);
+      background-color: #e06800;
       color: #ffffff;
       font-size: 11px;
       font-weight: 600;
@@ -526,7 +487,6 @@
       border-radius: 12px;
     }
 
-    /* ========== NEW MESSAGE FORM VIEW ========== */
     .new-message-view {
       display: none;
     }
@@ -618,7 +578,7 @@
     }
 
     .btn-send {
-      background-color: var(--btn-navy);
+      background-color: #041d40;
       color: #ffffff;
       border: none;
       padding: 10px 20px;
@@ -631,7 +591,6 @@
       gap: 8px;
     }
 
-    /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
       .app-container {
         flex-direction: column;
@@ -644,9 +603,9 @@
         width: 100% !important;
       }
       .top-header {
-        padding: 0 16px;
+        padding: 14px 16px;
       }
-      .search-bar-header {
+      .search-box {
         display: none;
       }
       .content-container {
@@ -660,9 +619,9 @@
 </head>
 <body>
 
-  <div class="app-container">
-    
-    <!-- SIDEBAR NAVIGATION -->
+<div class="app-container">
+  
+  <!-- ===== NEW SIDEBAR with Messages active + chevron-right ===== -->
   <aside class="sidebar" id="sidebar">
     <div class="brand-header">
       <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
@@ -678,18 +637,19 @@
     </div>
 
     <ul class="nav-menu">
+      <!-- Dashboard -->
       <li class="nav-item">
-        <a href="index.html">
+        <a href="index.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-border-all"></i>
             <span class="nav-text">Dashboard</span>
           </div>
-          <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </a>
       </li>
 
+      <!-- Services -->
       <li class="nav-item">
-        <a href="services.html">
+        <a href="services/maintenance.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-wrench"></i>
             <span class="nav-text">Services</span>
@@ -698,8 +658,9 @@
         </a>
       </li>
 
+      <!-- Billing -->
       <li class="nav-item">
-        <a href="billing.html">
+        <a href="billing.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-regular fa-credit-card"></i>
             <span class="nav-text">Billing</span>
@@ -707,8 +668,9 @@
         </a>
       </li>
 
+      <!-- Reservations -->
       <li class="nav-item">
-        <a href="reservations.html">
+        <a href="reservations.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-regular fa-calendar-check"></i>
             <span class="nav-text">Reservations</span>
@@ -716,17 +678,20 @@
         </a>
       </li>
 
+      <!-- Messages (active) with chevron-right -->
       <li class="nav-item active">
-        <a href="messages.html">
+        <a href="messages.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-regular fa-comment-dots"></i>
             <span class="nav-text">Messages</span>
           </div>
+          <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </a>
       </li>
 
+      <!-- Announcements -->
       <li class="nav-item">
-        <a href="announcements.html">
+        <a href="announcements.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-bullhorn"></i>
             <span class="nav-text">Announcements</span>
@@ -734,8 +699,9 @@
         </a>
       </li>
 
+      <!-- History -->
       <li class="nav-item">
-        <a href="history.html">
+        <a href="history.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span class="nav-text">History</span>
@@ -743,8 +709,9 @@
         </a>
       </li>
 
+      <!-- Settings -->
       <li class="nav-item">
-        <a href="settings.html">
+        <a href="settings.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-gear"></i>
             <span class="nav-text">Settings</span>
@@ -755,7 +722,7 @@
 
     <div class="sidebar-footer">
       <div class="nav-item">
-        <a href="logout.html">
+        <a href="#" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span class="nav-text">Logout</span>
@@ -764,7 +731,7 @@
       </div>
 
       <div class="nav-item" id="collapseBtn">
-        <div class="nav-item-content">
+        <div class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-bars"></i>
             <span class="nav-text">Collapse Menu</span>
@@ -774,12 +741,12 @@
     </div>
   </aside>
 
-    <!-- MAIN CONTENT WRAPPER -->
-    <div class="main-wrapper">
-      
-      <!-- TOP HEADER -->
+  <!-- ===== MAIN WRAPPER ===== -->
+  <div class="main-wrapper">
+    
+    <!-- ===== NEW TOP HEADER ===== -->
     <header class="top-header">
-      <div class="header-title">Reservation</div>
+      <div class="header-title">Messages</div>
       
       <div class="header-right">
         <div class="search-box">
@@ -803,197 +770,196 @@
       </div>
     </header>
 
-      <!-- PAGE CONTENT -->
-      <main class="content-container">
-        
-        <!-- SECTION TITLE & ACTION BUTTON -->
-        <div class="section-header">
-          <div>
-            <div class="messages-heading-title">
-              <i class="fa-regular fa-comment-dots"></i>
-              <span>Messages</span>
-            </div>
-            <p class="messages-subtitle">Communicate with building management</p>
+    <!-- ===== MESSAGES CONTENT ===== -->
+    <main class="content-container">
+      
+      <div class="section-header">
+        <div>
+          <div class="messages-heading-title">
+            <i class="fa-regular fa-comment-dots"></i>
+            <span>Messages</span>
           </div>
-
-          <button class="btn-new-message" id="newMessageBtn">
-            <i class="fa-solid fa-pen"></i>
-            <span>New Message</span>
-          </button>
+          <p class="messages-subtitle">Communicate with building management</p>
         </div>
 
-        <!-- 1. MESSAGES LIST VIEW -->
-        <div id="messagesListView">
-          <div class="messages-summary">
-            <span class="count-text">4 conversation(s)</span>
-            <span class="unread-text">1 unread message(s)</span>
-          </div>
+        <button class="btn-new-message" id="newMessageBtn">
+          <i class="fa-solid fa-pen"></i>
+          <span>New Message</span>
+        </button>
+      </div>
 
-          <div class="messages-card">
-            <div class="messages-search-bar">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" placeholder="Search messages...">
-            </div>
-
-            <div class="message-list">
-              
-              <!-- Item 1: Unread -->
-              <div class="message-item unread">
-                <div class="message-icon-box">
-                  <i class="fa-regular fa-envelope"></i>
-                </div>
-                <div class="message-content">
-                  <div class="message-header-line">
-                    <span class="message-subject">Upcoming Building Maintenance</span>
-                    <span class="message-date">Apr 30</span>
-                  </div>
-                  <div class="message-body">
-                    Dear Elle, this is to inform you that we will be conducting routine building maintenance on May 15, 2026 from 9:00 AM to 3:00 PM. There may be temporary interruptions to water and electricity during this period. We recommend
-                  </div>
-                  <div class="message-footer-line">
-                    <span class="message-sender">Admin</span>
-                    <span class="badge-new">1 new</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 2 -->
-              <div class="message-item">
-                <div class="message-icon-box">
-                  <i class="fa-regular fa-envelope"></i>
-                </div>
-                <div class="message-content">
-                  <div class="message-header-line">
-                    <span class="message-subject">Request for Payment Extension</span>
-                    <span class="message-date">Apr 29</span>
-                  </div>
-                  <div class="message-body">
-                    Hello Elle, I hope your family member recovers soon. We understand that emergencies happen. Your request for a 3-day payment extension has been approved. Your new payment deadline is May 10, 2026. Please ensure payment
-                  </div>
-                  <div class="message-footer-line">
-                    <span class="message-sender">Admin</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 3 -->
-              <div class="message-item">
-                <div class="message-icon-box">
-                  <i class="fa-regular fa-envelope"></i>
-                </div>
-                <div class="message-content">
-                  <div class="message-header-line">
-                    <span class="message-subject">Parking Space Issue</span>
-                    <span class="message-date">Apr 27</span>
-                  </div>
-                  <div class="message-body">
-                    Hi Elle, thank you for bringing this to our attention. We apologize for the inconvenience. Our security team has been notified and they will monitor the parking area more closely. If you see the unauthorized vehicle again, please take a
-                  </div>
-                  <div class="message-footer-line">
-                    <span class="message-sender">Admin</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 4 -->
-              <div class="message-item">
-                <div class="message-icon-box">
-                  <i class="fa-regular fa-envelope"></i>
-                </div>
-                <div class="message-content">
-                  <div class="message-header-line">
-                    <span class="message-subject">Question About Rooftop Access</span>
-                    <span class="message-date">Apr 22</span>
-                  </div>
-                  <div class="message-body">
-                    Hello Elle Yes, all tenants have access to the rooftop area. Operating hours are from 6:00 AM to 10:00 PM daily. Please observe the following rules: 1) Keep noise levels down especially after 8 PM, 2) No smoking in covered areas,
-                  </div>
-                  <div class="message-footer-line">
-                    <span class="message-sender">Admin</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+      <!-- MESSAGES LIST VIEW -->
+      <div id="messagesListView">
+        <div class="messages-summary">
+          <span class="count-text">4 conversation(s)</span>
+          <span class="unread-text">1 unread message(s)</span>
         </div>
 
-        <!-- 2. NEW MESSAGE FORM VIEW -->
-        <div id="newMessageView" class="new-message-view">
-          <div class="messages-card">
+        <div class="messages-card">
+          <div class="messages-search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search messages...">
+          </div>
+
+          <div class="message-list">
             
-            <div class="form-header-bar">
-              <button class="btn-back" id="backBtn">
-                <i class="fa-solid fa-arrow-left"></i>
-              </button>
-              <h4>New Message</h4>
+            <!-- Item 1: Unread -->
+            <div class="message-item unread">
+              <div class="message-icon-box">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+              <div class="message-content">
+                <div class="message-header-line">
+                  <span class="message-subject">Upcoming Building Maintenance</span>
+                  <span class="message-date">Apr 30</span>
+                </div>
+                <div class="message-body">
+                  Dear Elle, this is to inform you that we will be conducting routine building maintenance on May 15, 2026 from 9:00 AM to 3:00 PM. There may be temporary interruptions to water and electricity during this period. We recommend
+                </div>
+                <div class="message-footer-line">
+                  <span class="message-sender">Admin</span>
+                  <span class="badge-new">1 new</span>
+                </div>
+              </div>
             </div>
 
-            <form class="form-body" onsubmit="event.preventDefault();">
-              <div class="form-group">
-                <label>To</label>
-                <div class="form-control-static">Building Management</div>
+            <!-- Item 2 -->
+            <div class="message-item">
+              <div class="message-icon-box">
+                <i class="fa-regular fa-envelope"></i>
               </div>
+              <div class="message-content">
+                <div class="message-header-line">
+                  <span class="message-subject">Request for Payment Extension</span>
+                  <span class="message-date">Apr 29</span>
+                </div>
+                <div class="message-body">
+                  Hello Elle, I hope your family member recovers soon. We understand that emergencies happen. Your request for a 3-day payment extension has been approved. Your new payment deadline is May 10, 2026. Please ensure payment
+                </div>
+                <div class="message-footer-line">
+                  <span class="message-sender">Admin</span>
+                </div>
+              </div>
+            </div>
 
-              <div class="form-group">
-                <label>Subject *</label>
-                <input type="text" class="form-control" placeholder="Enter message subject...">
+            <!-- Item 3 -->
+            <div class="message-item">
+              <div class="message-icon-box">
+                <i class="fa-regular fa-envelope"></i>
               </div>
+              <div class="message-content">
+                <div class="message-header-line">
+                  <span class="message-subject">Parking Space Issue</span>
+                  <span class="message-date">Apr 27</span>
+                </div>
+                <div class="message-body">
+                  Hi Elle, thank you for bringing this to our attention. We apologize for the inconvenience. Our security team has been notified and they will monitor the parking area more closely. If you see the unauthorized vehicle again, please take a
+                </div>
+                <div class="message-footer-line">
+                  <span class="message-sender">Admin</span>
+                </div>
+              </div>
+            </div>
 
-              <div class="form-group">
-                <label>Message *</label>
-                <textarea class="form-control" placeholder="Type your message..."></textarea>
+            <!-- Item 4 -->
+            <div class="message-item">
+              <div class="message-icon-box">
+                <i class="fa-regular fa-envelope"></i>
               </div>
-
-              <div class="form-actions">
-                <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
-                <button type="submit" class="btn-send">
-                  <i class="fa-regular fa-paper-plane"></i>
-                  <span>Send Message</span>
-                </button>
+              <div class="message-content">
+                <div class="message-header-line">
+                  <span class="message-subject">Question About Rooftop Access</span>
+                  <span class="message-date">Apr 22</span>
+                </div>
+                <div class="message-body">
+                  Hello Elle Yes, all tenants have access to the rooftop area. Operating hours are from 6:00 AM to 10:00 PM daily. Please observe the following rules: 1) Keep noise levels down especially after 8 PM, 2) No smoking in covered areas,
+                </div>
+                <div class="message-footer-line">
+                  <span class="message-sender">Admin</span>
+                </div>
               </div>
-            </form>
+            </div>
 
           </div>
         </div>
+      </div>
 
-      </main>
+      <!-- NEW MESSAGE FORM VIEW -->
+      <div id="newMessageView" class="new-message-view">
+        <div class="messages-card">
+          
+          <div class="form-header-bar">
+            <button class="btn-back" id="backBtn">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h4>New Message</h4>
+          </div>
 
-    </div>
+          <form class="form-body" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label>To</label>
+              <div class="form-control-static">Building Management</div>
+            </div>
+
+            <div class="form-group">
+              <label>Subject *</label>
+              <input type="text" class="form-control" placeholder="Enter message subject...">
+            </div>
+
+            <div class="form-group">
+              <label>Message *</label>
+              <textarea class="form-control" placeholder="Type your message..."></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
+              <button type="submit" class="btn-send">
+                <i class="fa-regular fa-paper-plane"></i>
+                <span>Send Message</span>
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </main>
 
   </div>
 
-  <script>
-    // Sidebar collapse functionality
-    const sidebar = document.getElementById('sidebar');
-    const collapseBtn = document.getElementById('collapseBtn');
+</div>
 
-    collapseBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-    });
+<script>
+  // Sidebar collapse
+  const sidebar = document.getElementById('sidebar');
+  const collapseBtn = document.getElementById('collapseBtn');
 
-    // Toggle view state functionality (New Message / List)
-    const newMessageBtn = document.getElementById('newMessageBtn');
-    const backBtn = document.getElementById('backBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    
-    const messagesListView = document.getElementById('messagesListView');
-    const newMessageView = document.getElementById('newMessageView');
+  collapseBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+  });
 
-    function showNewMessageForm() {
-      messagesListView.style.display = 'none';
-      newMessageView.style.display = 'block';
-    }
+  // Toggle view state (New Message / List)
+  const newMessageBtn = document.getElementById('newMessageBtn');
+  const backBtn = document.getElementById('backBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+  
+  const messagesListView = document.getElementById('messagesListView');
+  const newMessageView = document.getElementById('newMessageView');
 
-    function showMessagesList() {
-      newMessageView.style.display = 'none';
-      messagesListView.style.display = 'block';
-    }
+  function showNewMessageForm() {
+    messagesListView.style.display = 'none';
+    newMessageView.style.display = 'block';
+  }
 
-    newMessageBtn.addEventListener('click', showNewMessageForm);
-    backBtn.addEventListener('click', showMessagesList);
-    cancelBtn.addEventListener('click', showMessagesList);
-  </script>
+  function showMessagesList() {
+    newMessageView.style.display = 'none';
+    messagesListView.style.display = 'block';
+  }
+
+  newMessageBtn.addEventListener('click', showNewMessageForm);
+  backBtn.addEventListener('click', showMessagesList);
+  cancelBtn.addEventListener('click', showMessagesList);
+</script>
 
 </body>
 </html>

@@ -42,35 +42,31 @@
     }
 
     body {
-      background-color: var(--bg-light);
+      background-color: #f8fafc;
       color: var(--text-dark);
       display: flex;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
     }
 
-    /* ========== SIDEBAR CONTAINER ========== */
+    /* ========== SIDEBAR (NEW) ========== */
     .sidebar {
       width: var(--sidebar-width);
-      background-color: var(--bg-dark);
+      background-color: #02122c;
       color: #fff;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
       transition: width 0.3s ease;
-      overflow-x: hidden;
-      height: 100vh;
+      min-height: 100vh;
       z-index: 100;
     }
 
-    /* COLLAPSED STATE */
     .sidebar.collapsed {
       --sidebar-width: 80px;
     }
 
-    /* BRAND HEADER */
     .brand-header {
-      padding: 20px;
+      padding: 20px 18px 15px 18px;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -83,101 +79,100 @@
     }
 
     .brand-logo {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       background: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary-orange);
-      font-size: 20px;
+      color: #e06800;
+      font-size: 18px;
       flex-shrink: 0;
     }
 
+    .brand-title {
+      transition: opacity 0.2s ease;
+    }
     .brand-title h3 {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 1.2;
       color: #fff;
     }
-
     .brand-title p {
       font-size: 11px;
-      color: #94a3b8;
+      color: #8fa0b5;
     }
 
-    /* USER PILL */
     .user-pill {
-      background-color: var(--primary-orange);
-      margin: 10px 16px;
-      padding: 10px 16px;
+      background-color: #e06800;
+      margin: 5px 14px 15px 14px;
+      padding: 8px 14px;
       border-radius: 20px;
       display: flex;
       align-items: center;
       gap: 10px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
+      color: #ffffff;
       white-space: nowrap;
       transition: all 0.3s ease;
     }
 
     .sidebar.collapsed .user-pill {
       margin: 10px auto;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       padding: 0;
       border-radius: 50%;
       justify-content: center;
     }
+    .sidebar.collapsed .user-pill span {
+      display: none !important;
+    }
 
-    .user-pill i { font-size: 18px; }
+    .user-pill i {
+      font-size: 16px;
+    }
 
-    /* NAVIGATION MENU */
     .nav-menu {
       list-style: none;
-      padding: 10px 16px;
+      padding: 0 12px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
       flex-grow: 1;
       overflow-y: auto;
     }
 
-    .sidebar.collapsed .nav-menu { padding: 10px 12px; }
-
     .nav-item {
       display: flex;
-      align-items: center;
-      color: #94a3b8;
+      flex-direction: column;
+      color: #8fa0b5;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 500;
       cursor: pointer;
       transition: background-color 0.2s, color 0.2s;
-      white-space: nowrap;
     }
 
-    .nav-item > a, 
-    .nav-item-content {
+    .nav-item-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 12px 16px;
+      padding: 10px 12px;
       text-decoration: none;
       color: inherit;
+      border-radius: 8px;
     }
 
-    .nav-item:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+    .nav-item:hover > .nav-item-header {
       color: #fff;
     }
-
-    .nav-item.active {
-      background-color: var(--bg-dark-light);
-      color: #fff;
-      border-left: 3px solid var(--primary-orange);
+    .nav-item.active > .nav-item-header {
+      color: #e06800;
     }
 
     .nav-item-left {
@@ -187,54 +182,40 @@
     }
 
     .nav-item-left i {
-      width: 20px;
+      width: 18px;
       text-align: center;
-      font-size: 16px;
+      font-size: 15px;
       flex-shrink: 0;
     }
 
-    .arrow-icon { font-size: 10px; }
-
     .sidebar.collapsed .brand-title,
-    .sidebar.collapsed .user-pill span,
     .sidebar.collapsed .nav-text,
     .sidebar.collapsed .arrow-icon {
-      display: none;
+      display: none !important;
     }
 
-    .sidebar.collapsed .nav-item { justify-content: center; }
-
-    .sidebar.collapsed .nav-item > a,
-    .sidebar.collapsed .nav-item-content {
+    .sidebar.collapsed .nav-item-header {
       justify-content: center;
       padding: 12px 0;
     }
-
     .sidebar.collapsed .nav-item-left {
       gap: 0;
-      justify-content: center;
-    }
-
-    .sidebar.collapsed .nav-item.active {
-      border-left: none;
-      background-color: var(--primary-orange);
     }
 
     .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
 
-    .sidebar.collapsed .sidebar-footer { padding: 16px 12px; }
-
-    /* ========== MAIN WRAPPER & HEADER ========== */
+    /* ========== MAIN WRAPPER & TOP HEADER ========== */
     .main-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-width: 0;
       height: 100vh;
       overflow-y: auto;
     }
@@ -245,7 +226,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid #e2e8f0;
       position: sticky;
       top: 0;
       z-index: 90;
@@ -254,13 +235,13 @@
     .header-title {
       font-size: 20px;
       font-weight: 700;
-      color: var(--text-dark);
+      color: #1e293b;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
     }
 
     .search-box {
@@ -270,30 +251,29 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      width: 240px;
+      width: 250px;
     }
-
     .search-box input {
       border: none;
       background: transparent;
       outline: none;
       width: 100%;
       font-size: 13px;
+      color: #1e293b;
     }
 
     .notification-icon {
       position: relative;
       font-size: 16px;
-      color: var(--text-muted);
+      color: #64748b;
       cursor: pointer;
     }
-
     .notification-icon .badge {
       position: absolute;
-      top: -3px;
-      right: -3px;
-      width: 7px;
-      height: 7px;
+      top: -2px;
+      right: -2px;
+      width: 6px;
+      height: 6px;
       background: #ef4444;
       border-radius: 50%;
     }
@@ -304,19 +284,26 @@
       gap: 10px;
       cursor: pointer;
     }
-
     .user-profile img {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
     }
+    .user-info {
+      text-align: right;
+    }
+    .user-info h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .user-info p {
+      font-size: 11px;
+      color: #64748b;
+    }
 
-    .user-info { text-align: right; }
-    .user-info h4 { font-size: 13px; font-weight: 700; }
-    .user-info p { font-size: 11px; color: var(--text-muted); }
-
-    /* ========== CONTENT AREA ========== */
+    /* ========== RESERVATIONS CONTENT ========== */
     .content-container {
       padding: 24px 32px;
       max-width: 1200px;
@@ -371,7 +358,6 @@
 
     .info-box p strong { color: #1d4ed8; }
 
-    /* ========== FILTERS & CARDS GRID ========== */
     .section-header {
       display: flex;
       align-items: center;
@@ -410,7 +396,6 @@
       margin-bottom: 30px;
     }
 
-    /* ROOM CARD */
     .room-card {
       background: white;
       border-radius: 14px;
@@ -566,7 +551,7 @@
       text-align: center;
     }
 
-    /* ========== MODALS ========== */
+    /* MODALS */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -619,7 +604,6 @@
       z-index: 10;
     }
 
-    /* DETAILS MODAL CONTENT */
     .details-header-title {
       font-size: 18px;
       font-weight: 700;
@@ -640,7 +624,6 @@
       object-fit: cover;
     }
 
-    /* EXACT MATCH FOR ESTIMATED AVAILABILITY BADGE */
     .est-avail-tag {
       position: absolute;
       bottom: 12px;
@@ -722,7 +705,7 @@
       cursor: pointer;
     }
 
-    /* RESERVE MODAL CONTENT */
+    /* RESERVE MODAL */
     .reserve-header-card {
       background: #ecfdf5;
       border-radius: 12px;
@@ -917,7 +900,6 @@
       margin-top: 10px;
     }
 
-    /* IMPORTANT REMINDERS BOX */
     .important-reminders-box {
       background: #eff6ff;
       border-radius: 12px;
@@ -964,7 +946,6 @@
       font-weight: 700;
     }
 
-    /* FORM SUBMIT ACTIONS ROW */
     .modal-submit-actions {
       display: flex;
       align-items: center;
@@ -984,7 +965,7 @@
     }
 
     .btn-submit-reservation {
-      background: var(--bg-dark);
+      background: #02122c;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -994,10 +975,10 @@
       cursor: pointer;
     }
 
-    /* RESPONSIVE OVERRIDES */
     @media (max-width: 768px) {
-      body { flex-direction: column; overflow: auto; }
-      .sidebar { width: 100% !important; height: auto; }
+      body { flex-direction: column; }
+      .sidebar { width: 100% !important; min-height: auto; }
+      .sidebar.collapsed { width: 100% !important; }
       .rooms-grid { grid-template-columns: 1fr; }
       .search-box { display: none; }
       .content-container { padding: 16px; }
@@ -1007,765 +988,774 @@
 </head>
 <body>
 
-  <!-- SIDEBAR NAVIGATION -->
-  <aside class="sidebar" id="sidebar">
-    <div class="brand-header">
-      <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
-      <div class="brand-title">
-        <h3>JLM Cozy Cabin</h3>
-        <p>Tenant Portal</p>
-      </div>
-    </div>
+<!-- ===== SIDEBAR (NEW) with Reservations active + chevron-right ===== -->
+<aside class="sidebar" id="sidebar">
 
-    <div class="user-pill">
-      <i class="fa-regular fa-user-circle"></i>
-      <span>Elle Dela Cruz</span>
-    </div>
-
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <a href="index.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-border-all"></i>
-            <span class="nav-text">Dashboard</span>
-          </div>
-          <i class="fa-solid fa-chevron-right arrow-icon"></i>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="services.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-wrench"></i>
-            <span class="nav-text">Services</span>
-          </div>
-          <i class="fa-solid fa-chevron-down arrow-icon"></i>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="billing.html">
-          <div class="nav-item-left">
-            <i class="fa-regular fa-credit-card"></i>
-            <span class="nav-text">Billing</span>
-          </div>
-        </a>
-      </li>
-
-      <li class="nav-item active">
-        <a href="reservations.html">
-          <div class="nav-item-left">
-            <i class="fa-regular fa-calendar-check"></i>
-            <span class="nav-text">Reservations</span>
-          </div>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="messages.html">
-          <div class="nav-item-left">
-            <i class="fa-regular fa-comment-dots"></i>
-            <span class="nav-text">Messages</span>
-          </div>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="announcements.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-bullhorn"></i>
-            <span class="nav-text">Announcements</span>
-          </div>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="history.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <span class="nav-text">History</span>
-          </div>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="settings.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-gear"></i>
-            <span class="nav-text">Settings</span>
-          </div>
-        </a>
-      </li>
-    </ul>
-
-    <div class="sidebar-footer">
-      <div class="nav-item">
-        <a href="logout.html">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="nav-text">Logout</span>
-          </div>
-        </a>
-      </div>
-
-      <div class="nav-item" id="collapseBtn">
-        <div class="nav-item-content">
-          <div class="nav-item-left">
-            <i class="fa-solid fa-bars"></i>
-            <span class="nav-text">Collapse Menu</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- MAIN WRAPPER -->
-  <div class="main-wrapper">
-
-    <!-- TOP HEADER -->
-    <header class="top-header">
-      <div class="header-title">Reservation</div>
-      
-      <div class="header-right">
-        <div class="search-box">
-          <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
-          <input type="text" placeholder="Search...">
-        </div>
-
-        <div class="notification-icon">
-          <i class="fa-regular fa-bell"></i>
-          <span class="badge"></span>
-        </div>
-
-        <div class="user-profile">
-          <div class="user-info">
-            <h4>Elle Dela Cruz</h4>
-            <p>Tenant</p>
-          </div>
-          <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
-          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
-        </div>
-      </div>
-    </header>
-
-    <!-- CONTENT AREA -->
-    <div class="content-container">
-
-      <!-- BANNER TITLE -->
-      <div class="page-title-banner">
-        <div class="banner-icon"><i class="fa-regular fa-calendar-plus"></i></div>
-        <div class="banner-text">
-          <h2>Reserve a Room</h2>
-          <p>Browse available rooms and submit a reservation request</p>
-        </div>
-      </div>
-
-      <!-- HOW RESERVATIONS WORK BOX -->
-      <div class="info-box">
-        <i class="fa-solid fa-circle-info"></i>
-        <p>
-          <strong>How Reservations Work</strong><br>
-          Browse available rooms below, view the 360° virtual tour, then submit your reservation details. <strong>Your reservation will be reviewed by the admin. You'll be notified once approved.</strong>
-        </p>
-      </div>
-
-      <!-- AVAILABLE ROOMS FILTER ROW -->
-      <div class="section-header">
-        <h3>Available Rooms</h3>
-        <div class="filter-group">
-          <select class="filter-select">
-            <option>All Status</option>
-          </select>
-          <select class="filter-select">
-            <option>Select Capacity</option>
-          </select>
-          <select class="filter-select">
-            <option>Select Room Type</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- ROOM CARDS GRID -->
-      <div class="rooms-grid">
-
-        <!-- ROOM 101 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80" alt="Room 101">
-            <span class="badge-status occupied">Occupied</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num">ROOM 101</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Solo Room - Standard</h4>
-              <div class="room-price">₱600<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 1-2 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 1 bed</span>
-              <span><i class="fa-solid fa-bath"></i> 1 bath</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Fan</span>
-              <span class="tag">Private CR</span>
-              <span class="tag">TV</span>
-              <span class="tag">+1</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Solo Room - Standard', 'ROOM 101', 'Occupied', '₱600', 'March 25, 2026', 'Approx. 2 days')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-not-available" disabled>Not Available</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOM 102 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80" alt="Room 102">
-            <span class="badge-status available">Available</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num">ROOM 102</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Solo Room - Deluxe</h4>
-              <div class="room-price">₱950<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 1-2 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 1 bed</span>
-              <span><i class="fa-solid fa-bath"></i> 1 bath</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Aircon</span>
-              <span class="tag">Fan</span>
-              <span class="tag">Private CR</span>
-              <span class="tag">+2</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Solo Room - Deluxe', 'ROOM 102', 'Available', '₱950')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-reserve" onclick="openReserveModal('Solo Room - Deluxe', 'Floor 2 · Room 102', '₱950.00/day')">
-                <i class="fa-regular fa-calendar-check"></i> Reserve
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOM 103 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80" alt="Room 103">
-            <span class="badge-status available">Available</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num" style="color:#ec4899; background:#fce7f3;">ROOM 103</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Barkada Room - Standard</h4>
-              <div class="room-price">₱250<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 4-6 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 4 bed</span>
-              <span><i class="fa-solid fa-bath"></i> 1 bath</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Fan</span>
-              <span class="tag">TV</span>
-              <span class="tag">CR</span>
-              <span class="tag">+1</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Barkada Room - Standard', 'ROOM 103', 'Available', '₱250')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-reserve" onclick="openReserveModal('Barkada Room - Standard', 'Floor 1 · Room 103', '₱250.00/day')">
-                <i class="fa-regular fa-calendar-check"></i> Reserve
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOM 104 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=600&q=80" alt="Room 104">
-            <span class="badge-status reserved">Reserved</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num" style="color:#ec4899; background:#fce7f3;">ROOM 104</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Barkada Room - Premium</h4>
-              <div class="room-price">₱400<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 4-6 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 4 bed</span>
-              <span><i class="fa-solid fa-bath"></i> 1 bath</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Aircon</span>
-              <span class="tag">Fan</span>
-              <span class="tag">TV</span>
-              <span class="tag">+4</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Barkada Room - Premium', 'ROOM 104', 'Reserved', '₱400')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-not-available" disabled>Not Available</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOM 105 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80" alt="Room 105">
-            <span class="badge-status available">Available</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 105</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Bedspace - Standard</h4>
-              <div class="room-price">₱200<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 8 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 1 bed</span>
-              <span><i class="fa-solid fa-bath"></i> Shared CR</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Fan</span>
-              <span class="tag">Shared CR</span>
-              <span class="tag">Storage Locker</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Bedspace - Standard', 'ROOM 105', 'Available', '₱200')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-reserve" onclick="openReserveModal('Bedspace - Standard', 'Floor 1 · Room 105', '₱200.00/day')">
-                <i class="fa-regular fa-calendar-check"></i> Reserve
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOM 106 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80" alt="Room 106">
-            <span class="badge-status occupied">Occupied</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 106</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Bedspace - Premium</h4>
-              <div class="room-price">₱300<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 8 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 1 bed</span>
-              <span><i class="fa-solid fa-bath"></i> Shared CR</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Fan</span>
-              <span class="tag">Shared CR</span>
-              <span class="tag">Storage Locker</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Bedspace - Premium', 'ROOM 106', 'Occupied', '₱300')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-not-available" disabled>Not Available</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOM 107 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1540518614846-7ede433c5163?auto=format&fit=crop&w=600&q=80" alt="Room 107">
-            <span class="badge-status available">Available</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 107</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Bedspace - All Girls</h4>
-              <div class="room-price">₱300.00<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 10 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 1 bed</span>
-              <span><i class="fa-solid fa-bath"></i> Shared CR</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Fan</span>
-              <span class="tag">Shared CR</span>
-              <span class="tag">Storage Locker</span>
-              <span class="tag">+1</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Bedspace - All Girls', 'ROOM 107', 'Available', '₱300.00')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-reserve" onclick="openReserveModal('Bedspace - All Girls', 'Floor 2 · Room 107', '₱300.00/day')">
-                <i class="fa-regular fa-calendar-check"></i> Reserve
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROOM 108 -->
-        <div class="room-card">
-          <div class="room-image-wrap">
-            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80" alt="Room 108">
-            <span class="badge-status available">Available</span>
-            <span class="badge-tour">360° Tour</span>
-            <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 108</span>
-          </div>
-          <div class="room-details">
-            <div class="room-title-row">
-              <h4>Bedspace - All Boys</h4>
-              <div class="room-price">₱300.00<span>/day</span></div>
-            </div>
-            <div class="room-specs-line">
-              <span><i class="fa-solid fa-users"></i> 8 pax</span>
-              <span><i class="fa-solid fa-bed"></i> 1 bed</span>
-              <span><i class="fa-solid fa-bath"></i> Shared CR</span>
-            </div>
-            <div class="room-tags">
-              <span class="tag">Fan</span>
-              <span class="tag">Shared CR</span>
-              <span class="tag">Storage Locker</span>
-            </div>
-            <div class="room-actions">
-              <button class="btn-details" onclick="openDetailsModal('Bedspace - All Boys', 'ROOM 108', 'Available', '₱300.00')">
-                <i class="fa-regular fa-eye"></i> Details
-              </button>
-              <button class="btn-reserve" onclick="openReserveModal('Bedspace - All Boys', 'Floor 2 · Room 108', '₱300.00/day')">
-                <i class="fa-regular fa-calendar-check"></i> Reserve
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
+  <div class="brand-header">
+    <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+    <div class="brand-title">
+      <h3>JLM Cozy Cabin</h3>
+      <p>Tenant Portal</p>
     </div>
   </div>
 
-  <!-- DETAILS MODAL -->
-  <div class="modal-overlay" id="detailsModal">
-    <div class="modal-card">
-      <button class="modal-close-btn" onclick="closeModal('detailsModal')"><i class="fa-solid fa-xmark"></i></button>
-      
-      <h3 class="details-header-title" id="mDetailsTitle">Solo Room - Standard</h3>
+  <div class="user-pill">
+    <i class="fa-regular fa-user-circle"></i>
+    <span>Elle Dela Cruz</span>
+  </div>
 
-      <div class="details-img-box">
-        <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80" id="mDetailsImg" alt="Room Details">
-        <span class="badge-status occupied" id="mDetailsBadge" style="position:absolute; top:12px; left:12px;">Occupied</span>
-        <span class="badge-tour" style="position:absolute; top:12px; right:12px;">360° Tour</span>
-        <span class="badge-room-num" id="mDetailsRoomNum" style="position:absolute; bottom:12px; left:12px;">ROOM 101</span>
+  <ul class="nav-menu">
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a href="index.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-border-all"></i>
+          <span class="nav-text">Dashboard</span>
+        </div>
+      </a>
+    </li>
 
-        <div class="est-avail-tag" id="mDetailsEstAvail" style="display:none;">
-          <span>Estimated Availability: <strong id="mEstDate">March 25, 2026</strong></span>
-          <p id="mEstApprox">Approx. 2 days</p>
+    <!-- Services -->
+    <li class="nav-item">
+      <a href="services/maintenance.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-wrench"></i>
+          <span class="nav-text">Services</span>
+        </div>
+        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+      </a>
+    </li>
+
+    <!-- Billing -->
+    <li class="nav-item">
+      <a href="billing.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-credit-card"></i>
+          <span class="nav-text">Billing</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Reservations (active) with chevron-right -->
+    <li class="nav-item active">
+      <a href="reservations.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span class="nav-text">Reservations</span>
+        </div>
+        <i class="fa-solid fa-chevron-right arrow-icon"></i>
+      </a>
+    </li>
+
+    <!-- Messages -->
+    <li class="nav-item">
+      <a href="messages.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span class="nav-text">Messages</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Announcements -->
+    <li class="nav-item">
+      <a href="announcements.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span class="nav-text">Announcements</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- History -->
+    <li class="nav-item">
+      <a href="history.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span class="nav-text">History</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Settings -->
+    <li class="nav-item">
+      <a href="settings.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-gear"></i>
+          <span class="nav-text">Settings</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="nav-item">
+      <a href="#" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="nav-text">Logout</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="nav-item" id="collapseBtn">
+      <div class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bars"></i>
+          <span class="nav-text">Collapse Menu</span>
         </div>
       </div>
+    </div>
+  </div>
 
-      <p class="room-desc">
-        Cozy solo room with modern finishes, private CR and city views. Perfect for working professionals and students.
+</aside>
+
+<!-- ===== MAIN WRAPPER ===== -->
+<div class="main-wrapper">
+
+  <!-- TOP HEADER (NEW) -->
+  <header class="top-header">
+    <div class="header-title">Reservations</div>
+
+    <div class="header-right">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
+        <input type="text" placeholder="Search...">
+      </div>
+
+      <div class="notification-icon">
+        <i class="fa-regular fa-bell"></i>
+        <span class="badge"></span>
+      </div>
+
+      <div class="user-profile">
+        <div class="user-info">
+          <h4>Elle Dela Cruz</h4>
+          <p>Tenant</p>
+        </div>
+        <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+        <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== RESERVATIONS CONTENT AREA ===== -->
+  <div class="content-container">
+
+    <!-- BANNER TITLE -->
+    <div class="page-title-banner">
+      <div class="banner-icon"><i class="fa-regular fa-calendar-plus"></i></div>
+      <div class="banner-text">
+        <h2>Reserve a Room</h2>
+        <p>Browse available rooms and submit a reservation request</p>
+      </div>
+    </div>
+
+    <!-- HOW RESERVATIONS WORK BOX -->
+    <div class="info-box">
+      <i class="fa-solid fa-circle-info"></i>
+      <p>
+        <strong>How Reservations Work</strong><br>
+        Browse available rooms below, view the 360° virtual tour, then submit your reservation details. <strong>Your reservation will be reviewed by the admin. You'll be notified once approved.</strong>
       </p>
+    </div>
 
-      <div class="specs-grid-title">Room Specifications</div>
-
-      <div class="specs-grid">
-        <div class="spec-item">
-          <i class="fa-solid fa-layer-group"></i>
-          <span>ROOM TYPE</span>
-          <p>Solo Room</p>
-        </div>
-        <div class="spec-item">
-          <i class="fa-solid fa-users"></i>
-          <span>MAX CAPACITY</span>
-          <p>1-2 persons</p>
-        </div>
-        <div class="spec-item">
-          <i class="fa-solid fa-bed"></i>
-          <span>BEDS</span>
-          <p>1</p>
-        </div>
-        <div class="spec-item">
-          <i class="fa-solid fa-user-check"></i>
-          <span>AVAILABLE SLOTS</span>
-          <p id="mDetailsSlots">0</p>
-        </div>
-        <div class="spec-item">
-          <i class="fa-solid fa-peso-sign"></i>
-          <span>DAILY RENT</span>
-          <p id="mDetailsRent">₱600</p>
-        </div>
-        <div class="spec-item">
-          <i class="fa-solid fa-building"></i>
-          <span>FLOOR</span>
-          <p>1</p>
-        </div>
-      </div>
-
-      <div class="specs-grid-title">Room Features</div>
-      <div class="room-tags" style="margin-bottom: 20px;">
-        <span class="tag"><i class="fa-solid fa-fan"></i> Fan</span>
-        <span class="tag"><i class="fa-solid fa-bath"></i> Shared CR</span>
-        <span class="tag"><i class="fa-solid fa-lock"></i> Storage Locker</span>
-      </div>
-
-      <div class="modal-actions-row">
-        <button class="btn-close-modal" onclick="closeModal('detailsModal')">Close</button>
-        <button class="btn-not-available" id="mDetailsActionBtn" disabled>Not Available</button>
+    <!-- AVAILABLE ROOMS FILTER ROW -->
+    <div class="section-header">
+      <h3>Available Rooms</h3>
+      <div class="filter-group">
+        <select class="filter-select">
+          <option>All Status</option>
+        </select>
+        <select class="filter-select">
+          <option>Select Capacity</option>
+        </select>
+        <select class="filter-select">
+          <option>Select Room Type</option>
+        </select>
       </div>
     </div>
+
+    <!-- ROOM CARDS GRID -->
+    <div class="rooms-grid">
+
+      <!-- ROOM 101 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80" alt="Room 101">
+          <span class="badge-status occupied">Occupied</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num">ROOM 101</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Solo Room - Standard</h4>
+            <div class="room-price">₱600<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 1-2 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 1 bed</span>
+            <span><i class="fa-solid fa-bath"></i> 1 bath</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Fan</span>
+            <span class="tag">Private CR</span>
+            <span class="tag">TV</span>
+            <span class="tag">+1</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Solo Room - Standard', 'ROOM 101', 'Occupied', '₱600', 'March 25, 2026', 'Approx. 2 days')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-not-available" disabled>Not Available</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM 102 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80" alt="Room 102">
+          <span class="badge-status available">Available</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num">ROOM 102</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Solo Room - Deluxe</h4>
+            <div class="room-price">₱950<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 1-2 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 1 bed</span>
+            <span><i class="fa-solid fa-bath"></i> 1 bath</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Aircon</span>
+            <span class="tag">Fan</span>
+            <span class="tag">Private CR</span>
+            <span class="tag">+2</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Solo Room - Deluxe', 'ROOM 102', 'Available', '₱950')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-reserve" onclick="openReserveModal('Solo Room - Deluxe', 'Floor 2 · Room 102', '₱950.00/day')">
+              <i class="fa-regular fa-calendar-check"></i> Reserve
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM 103 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80" alt="Room 103">
+          <span class="badge-status available">Available</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num" style="color:#ec4899; background:#fce7f3;">ROOM 103</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Barkada Room - Standard</h4>
+            <div class="room-price">₱250<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 4-6 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 4 bed</span>
+            <span><i class="fa-solid fa-bath"></i> 1 bath</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Fan</span>
+            <span class="tag">TV</span>
+            <span class="tag">CR</span>
+            <span class="tag">+1</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Barkada Room - Standard', 'ROOM 103', 'Available', '₱250')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-reserve" onclick="openReserveModal('Barkada Room - Standard', 'Floor 1 · Room 103', '₱250.00/day')">
+              <i class="fa-regular fa-calendar-check"></i> Reserve
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM 104 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=600&q=80" alt="Room 104">
+          <span class="badge-status reserved">Reserved</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num" style="color:#ec4899; background:#fce7f3;">ROOM 104</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Barkada Room - Premium</h4>
+            <div class="room-price">₱400<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 4-6 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 4 bed</span>
+            <span><i class="fa-solid fa-bath"></i> 1 bath</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Aircon</span>
+            <span class="tag">Fan</span>
+            <span class="tag">TV</span>
+            <span class="tag">+4</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Barkada Room - Premium', 'ROOM 104', 'Reserved', '₱400')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-not-available" disabled>Not Available</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM 105 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80" alt="Room 105">
+          <span class="badge-status available">Available</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 105</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Bedspace - Standard</h4>
+            <div class="room-price">₱200<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 8 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 1 bed</span>
+            <span><i class="fa-solid fa-bath"></i> Shared CR</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Fan</span>
+            <span class="tag">Shared CR</span>
+            <span class="tag">Storage Locker</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Bedspace - Standard', 'ROOM 105', 'Available', '₱200')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-reserve" onclick="openReserveModal('Bedspace - Standard', 'Floor 1 · Room 105', '₱200.00/day')">
+              <i class="fa-regular fa-calendar-check"></i> Reserve
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM 106 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80" alt="Room 106">
+          <span class="badge-status occupied">Occupied</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 106</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Bedspace - Premium</h4>
+            <div class="room-price">₱300<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 8 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 1 bed</span>
+            <span><i class="fa-solid fa-bath"></i> Shared CR</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Fan</span>
+            <span class="tag">Shared CR</span>
+            <span class="tag">Storage Locker</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Bedspace - Premium', 'ROOM 106', 'Occupied', '₱300')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-not-available" disabled>Not Available</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM 107 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1540518614846-7ede433c5163?auto=format&fit=crop&w=600&q=80" alt="Room 107">
+          <span class="badge-status available">Available</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 107</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Bedspace - All Girls</h4>
+            <div class="room-price">₱300.00<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 10 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 1 bed</span>
+            <span><i class="fa-solid fa-bath"></i> Shared CR</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Fan</span>
+            <span class="tag">Shared CR</span>
+            <span class="tag">Storage Locker</span>
+            <span class="tag">+1</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Bedspace - All Girls', 'ROOM 107', 'Available', '₱300.00')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-reserve" onclick="openReserveModal('Bedspace - All Girls', 'Floor 2 · Room 107', '₱300.00/day')">
+              <i class="fa-regular fa-calendar-check"></i> Reserve
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROOM 108 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80" alt="Room 108">
+          <span class="badge-status available">Available</span>
+          <span class="badge-tour">360° Tour</span>
+          <span class="badge-room-num" style="color:#0d9488; background:#ccfbf1;">ROOM 108</span>
+        </div>
+        <div class="room-details">
+          <div class="room-title-row">
+            <h4>Bedspace - All Boys</h4>
+            <div class="room-price">₱300.00<span>/day</span></div>
+          </div>
+          <div class="room-specs-line">
+            <span><i class="fa-solid fa-users"></i> 8 pax</span>
+            <span><i class="fa-solid fa-bed"></i> 1 bed</span>
+            <span><i class="fa-solid fa-bath"></i> Shared CR</span>
+          </div>
+          <div class="room-tags">
+            <span class="tag">Fan</span>
+            <span class="tag">Shared CR</span>
+            <span class="tag">Storage Locker</span>
+          </div>
+          <div class="room-actions">
+            <button class="btn-details" onclick="openDetailsModal('Bedspace - All Boys', 'ROOM 108', 'Available', '₱300.00')">
+              <i class="fa-regular fa-eye"></i> Details
+            </button>
+            <button class="btn-reserve" onclick="openReserveModal('Bedspace - All Boys', 'Floor 2 · Room 108', '₱300.00/day')">
+              <i class="fa-regular fa-calendar-check"></i> Reserve
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
+</div>
 
-  <!-- RESERVE MODAL -->
-  <div class="modal-overlay" id="reserveModal">
-    <div class="modal-card">
-      <button class="modal-close-btn" onclick="closeModal('reserveModal')"><i class="fa-solid fa-xmark"></i></button>
+<!-- ===== DETAILS MODAL ===== -->
+<div class="modal-overlay" id="detailsModal">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('detailsModal')"><i class="fa-solid fa-xmark"></i></button>
+    
+    <h3 class="details-header-title" id="mDetailsTitle">Solo Room - Standard</h3>
 
-      <h3 class="details-header-title" id="mReserveTitle">Reserve - Solo Room (Deluxe)</h3>
+    <div class="details-img-box">
+      <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80" id="mDetailsImg" alt="Room Details">
+      <span class="badge-status occupied" id="mDetailsBadge" style="position:absolute; top:12px; left:12px;">Occupied</span>
+      <span class="badge-tour" style="position:absolute; top:12px; right:12px;">360° Tour</span>
+      <span class="badge-room-num" id="mDetailsRoomNum" style="position:absolute; bottom:12px; left:12px;">ROOM 101</span>
 
-      <div class="reserve-header-card">
-        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80" alt="Deluxe Room">
-        <div class="reserve-header-info">
-          <h4 id="mReserveRoomName">Solo Room - Deluxe</h4>
-          <p id="mReserveRoomLoc">Floor 2 · Room 102</p>
-          <h5 id="mReserveRoomRate">₱950.00/day</h5>
-        </div>
+      <div class="est-avail-tag" id="mDetailsEstAvail" style="display:none;">
+        <span>Estimated Availability: <strong id="mEstDate">March 25, 2026</strong></span>
+        <p id="mEstApprox">Approx. 2 days</p>
       </div>
+    </div>
 
-      <!-- TENANT DETAILS -->
+    <p class="room-desc">
+      Cozy solo room with modern finishes, private CR and city views. Perfect for working professionals and students.
+    </p>
+
+    <div class="specs-grid-title">Room Specifications</div>
+
+    <div class="specs-grid">
+      <div class="spec-item">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>ROOM TYPE</span>
+        <p>Solo Room</p>
+      </div>
+      <div class="spec-item">
+        <i class="fa-solid fa-users"></i>
+        <span>MAX CAPACITY</span>
+        <p>1-2 persons</p>
+      </div>
+      <div class="spec-item">
+        <i class="fa-solid fa-bed"></i>
+        <span>BEDS</span>
+        <p>1</p>
+      </div>
+      <div class="spec-item">
+        <i class="fa-solid fa-user-check"></i>
+        <span>AVAILABLE SLOTS</span>
+        <p id="mDetailsSlots">0</p>
+      </div>
+      <div class="spec-item">
+        <i class="fa-solid fa-peso-sign"></i>
+        <span>DAILY RENT</span>
+        <p id="mDetailsRent">₱600</p>
+      </div>
+      <div class="spec-item">
+        <i class="fa-solid fa-building"></i>
+        <span>FLOOR</span>
+        <p>1</p>
+      </div>
+    </div>
+
+    <div class="specs-grid-title">Room Features</div>
+    <div class="room-tags" style="margin-bottom: 20px;">
+      <span class="tag"><i class="fa-solid fa-fan"></i> Fan</span>
+      <span class="tag"><i class="fa-solid fa-bath"></i> Shared CR</span>
+      <span class="tag"><i class="fa-solid fa-lock"></i> Storage Locker</span>
+    </div>
+
+    <div class="modal-actions-row">
+      <button class="btn-close-modal" onclick="closeModal('detailsModal')">Close</button>
+      <button class="btn-not-available" id="mDetailsActionBtn" disabled>Not Available</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RESERVE MODAL ===== -->
+<div class="modal-overlay" id="reserveModal">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('reserveModal')"><i class="fa-solid fa-xmark"></i></button>
+
+    <h3 class="details-header-title" id="mReserveTitle">Reserve - Solo Room (Deluxe)</h3>
+
+    <div class="reserve-header-card">
+      <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80" alt="Deluxe Room">
+      <div class="reserve-header-info">
+        <h4 id="mReserveRoomName">Solo Room - Deluxe</h4>
+        <p id="mReserveRoomLoc">Floor 2 · Room 102</p>
+        <h5 id="mReserveRoomRate">₱950.00/day</h5>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Tenant Name</label>
+      <input type="text" class="form-input" value="Elle Dela Cruz" readonly>
+    </div>
+
+    <div class="form-grid-2">
       <div class="form-group">
-        <label>Tenant Name</label>
-        <input type="text" class="form-input" value="Elle Dela Cruz" readonly>
+        <label>Email Address</label>
+        <input type="text" class="form-input" value="elle.delacruz@gmail.com" readonly>
       </div>
-
-      <div class="form-grid-2">
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="text" class="form-input" value="elle.delacruz@gmail.com" readonly>
-        </div>
-        <div class="form-group">
-          <label>Contact Number</label>
-          <input type="text" class="form-input" value="09121450368" readonly>
-        </div>
-      </div>
-
-      <div class="form-section-title">Reservation Information</div>
-
-      <div class="form-grid-2">
-        <div class="form-group">
-          <label>Check-in Date <span>*</span></label>
-          <input type="text" class="form-input" placeholder="mm/dd/yyyy">
-        </div>
-        <div class="form-group">
-          <label>Check-in Time <span>*</span></label>
-          <input type="text" class="form-input" placeholder="00:00 AM/PM">
-        </div>
-      </div>
-
-      <div class="form-grid-2">
-        <div class="form-group">
-          <label>Check-out Date <span>*</span></label>
-          <input type="text" class="form-input" placeholder="mm/dd/yyyy">
-        </div>
-        <div class="form-group">
-          <label>Check-out Time <span>*</span></label>
-          <input type="text" class="form-input" placeholder="00:00 AM/PM">
-        </div>
-      </div>
-
-      <p style="font-size:11px; font-weight:700; color:#475569; margin-bottom:12px;">Total Stay Duration: 2 nights</p>
-
-      <div class="option-callout">
-        <div class="checkbox-row">
-          <input type="checkbox" id="companionCheck" checked>
-          <label for="companionCheck" style="margin:0; font-size:12px; font-weight:700; color:#1e40af;">Solo Room Options</label>
-        </div>
-        <p class="checkbox-sub">I will have a companion (max 2 persons total)<br>Extra mattress fee: ₱500.00 per companion</p>
-      </div>
-
       <div class="form-group">
-        <label>Purpose of Stay <span>*</span></label>
-        <input type="text" class="form-input" placeholder="Select purpose..">
+        <label>Contact Number</label>
+        <input type="text" class="form-input" value="09121450368" readonly>
+      </div>
+    </div>
+
+    <div class="form-section-title">Reservation Information</div>
+
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label>Check-in Date <span>*</span></label>
+        <input type="text" class="form-input" placeholder="mm/dd/yyyy">
+      </div>
+      <div class="form-group">
+        <label>Check-in Time <span>*</span></label>
+        <input type="text" class="form-input" placeholder="00:00 AM/PM">
+      </div>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label>Check-out Date <span>*</span></label>
+        <input type="text" class="form-input" placeholder="mm/dd/yyyy">
+      </div>
+      <div class="form-group">
+        <label>Check-out Time <span>*</span></label>
+        <input type="text" class="form-input" placeholder="00:00 AM/PM">
+      </div>
+    </div>
+
+    <p style="font-size:11px; font-weight:700; color:#475569; margin-bottom:12px;">Total Stay Duration: 2 nights</p>
+
+    <div class="option-callout">
+      <div class="checkbox-row">
+        <input type="checkbox" id="companionCheck" checked>
+        <label for="companionCheck" style="margin:0; font-size:12px; font-weight:700; color:#1e40af;">Solo Room Options</label>
+      </div>
+      <p class="checkbox-sub">I will have a companion (max 2 persons total)<br>Extra mattress fee: ₱500.00 per companion</p>
+    </div>
+
+    <div class="form-group">
+      <label>Purpose of Stay <span>*</span></label>
+      <input type="text" class="form-input" placeholder="Select purpose..">
+    </div>
+
+    <div class="form-section-title">Supporting Documents</div>
+
+    <div class="form-group">
+      <label>Valid ID Upload <span>*</span></label>
+      <div class="file-upload-box">
+        <button class="btn-choose-file">Choose File</button>
+        <span class="file-name">No file chosen</span>
+      </div>
+      <span style="font-size:10px; color:#94a3b8; display:block; margin-top:4px;">Upload a clear photo of your government-issued ID</span>
+    </div>
+
+    <div class="form-group">
+      <label>Additional Notes</label>
+      <textarea class="form-input" style="height:60px; resize:none;" placeholder="Any special requirements or questions for the admin..."></textarea>
+    </div>
+
+    <div class="charges-summary-card">
+      <div class="charges-title"><i class="fa-solid fa-peso-sign"></i> Summary of Charges</div>
+      <div class="charge-line">
+        <span>Total Rent:</span>
+        <strong>₱950.00</strong>
+      </div>
+      <div class="charge-line">
+        <span>Companion Fee:</span>
+        <strong>₱500.00</strong>
+      </div>
+      <div class="charge-line">
+        <span>Reservation Fee (Downpayment):</span>
+        <strong>₱100.00</strong>
+      </div>
+      <div class="charge-line highlight">
+        <span>Amount to Settle:</span>
+        <strong style="color:#059669; font-size:14px;">₱100.00</strong>
+      </div>
+      <div class="charge-line total-rem" style="margin-top:6px;">
+        <span>Remaining Balance:</span>
+        <strong>₱1,150.00</strong>
+      </div>
+    </div>
+
+    <div class="payment-verify-box">
+      <div class="verify-title"><i class="fa-solid fa-mobile-screen-button"></i> Payment Verification Required</div>
+      <div class="verify-sub"><strong>Reservation Fee: ₱100.00</strong><br>Pay via GCash to secure your reservation</div>
+
+      <div class="gcash-details-row">
+        <span>Account Name:</span>
+        <strong>Leah Agujar</strong>
+      </div>
+      <div class="gcash-details-row">
+        <span>GCash Number:</span>
+        <strong>0917-123-4567</strong>
       </div>
 
-      <div class="form-section-title">Supporting Documents</div>
+      <button class="btn-copy-gcash"><i class="fa-regular fa-copy"></i> Copy GCash Number</button>
 
-      <div class="form-group">
-        <label>Valid ID Upload <span>*</span></label>
-        <div class="file-upload-box">
+      <div class="form-group" style="margin:0;">
+        <label style="color:#854d0e;">Upload Proof of Payment <span>*</span></label>
+        <div class="file-upload-box" style="background:#fff;">
           <button class="btn-choose-file">Choose File</button>
           <span class="file-name">No file chosen</span>
         </div>
-        <span style="font-size:10px; color:#94a3b8; display:block; margin-top:4px;">Upload a clear photo of your government-issued ID</span>
+        <span style="font-size:10px; color:#a16207; display:block; margin-top:4px;"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload a screenshot of your GCash payment receipt</span>
       </div>
 
-      <div class="form-group">
-        <label>Additional Notes</label>
-        <textarea class="form-input" style="height:60px; resize:none;" placeholder="Any special requirements or questions for the admin..."></textarea>
+      <div class="important-notice">
+        <i class="fa-solid fa-circle-info" style="margin-top:2px;"></i>
+        <span><strong>Important:</strong> You must upload your payment proof before submitting your reservation. Your reservation will be marked as "Pending Verification" until the admin confirms your payment.</span>
       </div>
-
-      <!-- SUMMARY OF CHARGES -->
-      <div class="charges-summary-card">
-        <div class="charges-title"><i class="fa-solid fa-peso-sign"></i> Summary of Charges</div>
-        <div class="charge-line">
-          <span>Total Rent:</span>
-          <strong>₱950.00</strong>
-        </div>
-        <div class="charge-line">
-          <span>Companion Fee:</span>
-          <strong>₱500.00</strong>
-        </div>
-        <div class="charge-line">
-          <span>Reservation Fee (Downpayment):</span>
-          <strong>₱100.00</strong>
-        </div>
-        <div class="charge-line highlight">
-          <span>Amount to Settle:</span>
-          <strong style="color:#059669; font-size:14px;">₱100.00</strong>
-        </div>
-        <div class="charge-line total-rem" style="margin-top:6px;">
-          <span>Remaining Balance:</span>
-          <strong>₱1,150.00</strong>
-        </div>
-      </div>
-
-      <!-- PAYMENT VERIFICATION REQUIRED -->
-      <div class="payment-verify-box">
-        <div class="verify-title"><i class="fa-solid fa-mobile-screen-button"></i> Payment Verification Required</div>
-        <div class="verify-sub"><strong>Reservation Fee: ₱100.00</strong><br>Pay via GCash to secure your reservation</div>
-
-        <div class="gcash-details-row">
-          <span>Account Name:</span>
-          <strong>Leah Agujar</strong>
-        </div>
-        <div class="gcash-details-row">
-          <span>GCash Number:</span>
-          <strong>0917-123-4567</strong>
-        </div>
-
-        <button class="btn-copy-gcash"><i class="fa-regular fa-copy"></i> Copy GCash Number</button>
-
-        <div class="form-group" style="margin:0;">
-          <label style="color:#854d0e;">Upload Proof of Payment <span>*</span></label>
-          <div class="file-upload-box" style="background:#fff;">
-            <button class="btn-choose-file">Choose File</button>
-            <span class="file-name">No file chosen</span>
-          </div>
-          <span style="font-size:10px; color:#a16207; display:block; margin-top:4px;"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload a screenshot of your GCash payment receipt</span>
-        </div>
-
-        <div class="important-notice">
-          <i class="fa-solid fa-circle-info" style="margin-top:2px;"></i>
-          <span><strong>Important:</strong> You must upload your payment proof before submitting your reservation. Your reservation will be marked as "Pending Verification" until the admin confirms your payment.</span>
-        </div>
-      </div>
-
-      <!-- IMPORTANT REMINDERS BOX -->
-      <div class="important-reminders-box">
-        <div class="reminders-header">
-          <i class="fa-solid fa-circle-info"></i> Important Reminders:
-        </div>
-        <ul class="reminders-list">
-          <li><strong>Admin Verification:</strong> Your reservation and proof of payment will be reviewed within 12–24 hours. You will receive a notification once your payment has been verified.</li>
-          <li><strong>Strict Check-in Policy:</strong> You must check in on your scheduled reservation date. Failure to do so will result in an expired reservation, and you will be required to reserve the unit again.</li>
-          <li><strong>Non-Refundable:</strong> Please note that the reservation fee is non-refundable in the event of a "no-show."</li>
-        </ul>
-      </div>
-
-      <!-- SUBMIT / CANCEL BUTTONS -->
-      <div class="modal-submit-actions">
-        <button class="btn-cancel" onclick="closeModal('reserveModal')">Cancel</button>
-        <button class="btn-submit-reservation">Submit Reservation</button>
-      </div>
-
     </div>
-  </div>
 
-  <!-- JAVASCRIPT LOGIC -->
-  <script>
-    // Sidebar Collapse
+    <div class="important-reminders-box">
+      <div class="reminders-header">
+        <i class="fa-solid fa-circle-info"></i> Important Reminders:
+      </div>
+      <ul class="reminders-list">
+        <li><strong>Admin Verification:</strong> Your reservation and proof of payment will be reviewed within 12–24 hours. You will receive a notification once your payment has been verified.</li>
+        <li><strong>Strict Check-in Policy:</strong> You must check in on your scheduled reservation date. Failure to do so will result in an expired reservation, and you will be required to reserve the unit again.</li>
+        <li><strong>Non-Refundable:</strong> Please note that the reservation fee is non-refundable in the event of a "no-show."</li>
+      </ul>
+    </div>
+
+    <div class="modal-submit-actions">
+      <button class="btn-cancel" onclick="closeModal('reserveModal')">Cancel</button>
+      <button class="btn-submit-reservation">Submit Reservation</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  (function() {
+    // Sidebar collapse
     const sidebar = document.getElementById('sidebar');
     const collapseBtn = document.getElementById('collapseBtn');
-    collapseBtn.addEventListener('click', () => {
+
+    collapseBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
       sidebar.classList.toggle('collapsed');
     });
+  })();
 
-    // Modal Control Functions
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.remove('active');
+  // Modal Control Functions
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+  }
+
+  function openDetailsModal(title, roomNum, status, price, estDate, estApprox) {
+    document.getElementById('mDetailsTitle').innerText = title;
+    document.getElementById('mDetailsRoomNum').innerText = roomNum;
+    document.getElementById('mDetailsRent').innerText = price;
+    
+    const badge = document.getElementById('mDetailsBadge');
+    const estBox = document.getElementById('mDetailsEstAvail');
+    const actionBtn = document.getElementById('mDetailsActionBtn');
+    const slots = document.getElementById('mDetailsSlots');
+
+    badge.className = 'badge-status ' + status.toLowerCase();
+    badge.innerText = status;
+
+    if(status === 'Occupied') {
+      estBox.style.display = 'block';
+      document.getElementById('mEstDate').innerText = estDate || 'March 25, 2026';
+      document.getElementById('mEstApprox').innerText = estApprox || 'Approx. 2 days';
+      actionBtn.className = 'btn-not-available';
+      actionBtn.innerText = 'Not Available';
+      actionBtn.disabled = true;
+      slots.innerText = '0';
+    } else {
+      estBox.style.display = 'none';
+      actionBtn.className = 'btn-reserve';
+      actionBtn.innerText = 'Reserve Room';
+      actionBtn.disabled = false;
+      actionBtn.onclick = function() {
+        closeModal('detailsModal');
+        openReserveModal(title, 'Floor 2 · ' + roomNum, price + '/day');
+      };
+      slots.innerText = '1';
     }
 
-    function openDetailsModal(title, roomNum, status, price, estDate, estApprox) {
-      document.getElementById('mDetailsTitle').innerText = title;
-      document.getElementById('mDetailsRoomNum').innerText = roomNum;
-      document.getElementById('mDetailsRent').innerText = price;
-      
-      const badge = document.getElementById('mDetailsBadge');
-      const estBox = document.getElementById('mDetailsEstAvail');
-      const actionBtn = document.getElementById('mDetailsActionBtn');
-      const slots = document.getElementById('mDetailsSlots');
+    document.getElementById('detailsModal').classList.add('active');
+  }
 
-      badge.className = 'badge-status ' + status.toLowerCase();
-      badge.innerText = status;
+  function openReserveModal(title, loc, rate) {
+    document.getElementById('mReserveTitle').innerText = 'Reserve - ' + title;
+    document.getElementById('mReserveRoomName').innerText = title;
+    document.getElementById('mReserveRoomLoc').innerText = loc;
+    document.getElementById('mReserveRoomRate').innerText = rate;
+    document.getElementById('reserveModal').classList.add('active');
+  }
 
-      if(status === 'Occupied') {
-        estBox.style.display = 'block';
-        document.getElementById('mEstDate').innerText = estDate || 'March 25, 2026';
-        document.getElementById('mEstApprox').innerText = estApprox || 'Approx. 2 days';
-        actionBtn.className = 'btn-not-available';
-        actionBtn.innerText = 'Not Available';
-        actionBtn.disabled = true;
-        slots.innerText = '0';
-      } else {
-        estBox.style.display = 'none';
-        actionBtn.className = 'btn-reserve';
-        actionBtn.innerText = 'Reserve Room';
-        actionBtn.disabled = false;
-        actionBtn.onclick = function() {
-          closeModal('detailsModal');
-          openReserveModal(title, 'Floor 2 · ' + roomNum, price + '/day');
-        };
-        slots.innerText = '1';
-      }
-
-      document.getElementById('detailsModal').classList.add('active');
+  // Close on overlay click
+  window.onclick = function(event) {
+    if (event.target.classList.contains('modal-overlay')) {
+      event.target.classList.remove('active');
     }
-
-    function openReserveModal(title, loc, rate) {
-      document.getElementById('mReserveTitle').innerText = 'Reserve - ' + title;
-      document.getElementById('mReserveRoomName').innerText = title;
-      document.getElementById('mReserveRoomLoc').innerText = loc;
-      document.getElementById('mReserveRoomRate').innerText = rate;
-      document.getElementById('reserveModal').classList.add('active');
-    }
-
-    // Close on overlay click
-    window.onclick = function(event) {
-      if (event.target.classList.contains('modal-overlay')) {
-        event.target.classList.remove('active');
-      }
-    };
-  </script>
+  };
+</script>
 
 </body>
 </html>

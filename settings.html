@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JLM Cozy Cabin · Settings</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== ROOT ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f8fafc;
+      display: flex;
+      min-height: 100vh;
+      color: #1e293b;
+    }
+
+    /* ===== SIDEBAR ===== */
+    :root {
+      --sidebar-width: 250px;
+      --bg-dark: #02122c;
+      --primary-orange: #e06800;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-dark);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.3s ease;
+      min-height: 100vh;
+      z-index: 100;
+    }
+
+    .sidebar.collapsed {
+      --sidebar-width: 80px;
+    }
+
+    /* brand */
+    .brand-header {
+      padding: 20px 18px 15px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .sidebar.collapsed .brand-header {
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-orange);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      transition: opacity 0.2s ease;
+    }
+    .brand-title h3 {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+    .brand-title p {
+      font-size: 11px;
+      color: #8fa0b5;
+    }
+
+    /* user pill */
+    .user-pill {
+      background-color: var(--primary-orange);
+      margin: 5px 14px 15px 14px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #ffffff;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed .user-pill {
+      margin: 10px auto;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+    }
+    .sidebar.collapsed .user-pill span {
+      display: none !important;
+    }
+
+    .user-pill i {
+      font-size: 16px;
+    }
+
+    /* navigation */
+    .nav-menu {
+      list-style: none;
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      color: #8fa0b5;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 12px;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 8px;
+    }
+
+    .nav-item:hover > .nav-item-header {
+      color: #fff;
+    }
+    .nav-item.active > .nav-item-header {
+      color: var(--primary-orange);
+      background: rgba(224, 104, 0, 0.08);
+      border: 1px solid rgba(224, 104, 0, 0.2);
+    }
+
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-item-left i {
+      width: 18px;
+      text-align: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    /* collapse overrides */
+    .sidebar.collapsed .brand-title,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .arrow-icon {
+      display: none !important;
+    }
+
+    .sidebar.collapsed .nav-item-header {
+      justify-content: center;
+      padding: 12px 0;
+    }
+    .sidebar.collapsed .nav-item-left {
+      gap: 0;
+    }
+
+    /* sidebar footer */
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* ===== MAIN WRAPPER & TOP HEADER ===== */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .top-header {
+      background: #fff;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .search-box {
+      background: #f1f5f9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 250px;
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+      color: #1e293b;
+    }
+
+    .notification-icon {
+      position: relative;
+      font-size: 16px;
+      color: #64748b;
+      cursor: pointer;
+    }
+    .notification-icon .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 6px;
+      height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .user-profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .user-info {
+      text-align: right;
+    }
+    .user-info h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .user-info p {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    /* ===== SETTINGS PAGE CONTENT ===== */
+    .settings-container {
+      padding: 32px 36px;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .account-settings-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .header-icon-box {
+      width: 44px;
+      height: 44px;
+      background: #f1f5f9;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #475569;
+      font-size: 18px;
+    }
+
+    .header-text-group h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .header-text-group p {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* MAIN GRID LAYOUT */
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* TAB NAVIGATION MENU */
+    .settings-tabs {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #475569;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tab-btn i {
+      font-size: 14px;
+    }
+
+    .tab-btn:hover {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .tab-btn.active {
+      background: #02122c;
+      color: #ffffff;
+    }
+
+    .tab-btn .chevron {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    /* FORM CARD CONTAINER */
+    .settings-panel {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 28px 32px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      display: none;
+    }
+
+    .settings-panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      margin-bottom: 24px;
+    }
+
+    .panel-header h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .panel-header p {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* PROFILE PHOTO SECTION */
+    .profile-photo-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .profile-photo-row img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .photo-details h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .photo-details .role-text {
+      font-size: 12.5px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .photo-details .change-photo-btn {
+      color: #10b981;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* FORM ELEMENTS */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-control {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #f1f5f9;
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 13.5px;
+      color: #1e293b;
+      outline: none;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .input-control:focus {
+      border-color: #cbd5e1;
+      background: #ffffff;
+    }
+
+    .input-control[readonly] {
+      background: #f8fafc;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      color: #94a3b8;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* SUBMIT BUTTON GROUP */
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 28px;
+    }
+
+    .btn-submit {
+      background: #02122c;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #091e42;
+    }
+
+    /* PREFERENCES LIST & TOGGLES */
+    .preference-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid #f8fafc;
+    }
+
+    .preference-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .pref-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .pref-info i {
+      font-size: 16px;
+      color: #0f172a;
+      margin-top: 2px;
+    }
+
+    .pref-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .pref-status {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    /* TOGGLE SWITCH */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #e2e8f0;
+      transition: .3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #10b981;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .settings-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100% !important; min-height: auto; }
+      .sidebar.collapsed { width: 100% !important; }
+      .search-box { display: none; }
+      .settings-container { padding: 16px; }
+      .top-header { padding: 14px 16px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+
+  <div class="brand-header">
+    <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+    <div class="brand-title">
+      <h3>JLM Cozy Cabin</h3>
+      <p>Tenant Portal</p>
+    </div>
+  </div>
+
+  <div class="user-pill">
+    <i class="fa-regular fa-user-circle"></i>
+    <span>Elle Dela Cruz</span>
+  </div>
+
+  <ul class="nav-menu">
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a href="index.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-border-all"></i>
+          <span class="nav-text">Dashboard</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Services -->
+    <li class="nav-item">
+      <a href="services/maintenance.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-wrench"></i>
+          <span class="nav-text">Services</span>
+        </div>
+        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+      </a>
+    </li>
+
+    <!-- Billing -->
+    <li class="nav-item">
+      <a href="billing.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-credit-card"></i>
+          <span class="nav-text">Billing</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Reservations -->
+    <li class="nav-item">
+      <a href="reservations.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span class="nav-text">Reservations</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Messages -->
+    <li class="nav-item">
+      <a href="messages.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span class="nav-text">Messages</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Announcements -->
+    <li class="nav-item">
+      <a href="announcements.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span class="nav-text">Announcements</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- History -->
+    <li class="nav-item">
+      <a href="history.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span class="nav-text">History</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Settings (Active) -->
+    <li class="nav-item active">
+      <a href="settings.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-gear"></i>
+          <span class="nav-text">Settings</span>
+        </div>
+        <i class="fa-solid fa-chevron-right arrow-icon"></i>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="nav-item">
+      <a href="#" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="nav-text">Logout</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="nav-item" id="collapseBtn">
+      <div class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bars"></i>
+          <span class="nav-text">Collapse Menu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ===== MAIN WRAPPER ===== -->
+<div class="main-wrapper">
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="header-title">Settings</div>
+
+    <div class="header-right">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
+        <input type="text" placeholder="Search...">
+      </div>
+
+      <div class="notification-icon">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span class="badge"></span>
+      </div>
+
+      <div class="user-profile">
+        <div class="user-info">
+          <h4>Elle Dela Cruz</h4>
+          <p>Tenant</p>
+        </div>
+        <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+        <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- SETTINGS DASHBOARD CONTENT -->
+  <div class="settings-container">
+
+    <!-- PAGE HEADER -->
+    <div class="account-settings-header">
+      <div class="header-icon-box">
+        <i class="fa-solid fa-gear"></i>
+      </div>
+      <div class="header-text-group">
+        <h2>Account Settings</h2>
+        <p>Configure building management preferences</p>
+      </div>
+    </div>
+
+    <!-- MAIN SETTINGS LAYOUT -->
+    <div class="settings-layout">
+
+      <!-- LEFT TAB NAVIGATION -->
+      <div class="settings-tabs">
+        <button class="tab-btn active" data-tab="profile">
+          <div class="tab-btn-left">
+            <i class="fa-regular fa-user"></i>
+            <span>Profile</span>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </button>
+
+        <button class="tab-btn" data-tab="security">
+          <div class="tab-btn-left">
+            <i class="fa-solid fa-lock"></i>
+            <span>Security</span>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron" style="display: none;"></i>
+        </button>
+
+        <button class="tab-btn" data-tab="preferences">
+          <div class="tab-btn-left">
+            <i class="fa-solid fa-palette"></i>
+            <span>Preferences</span>
+          </div>
+          <i class="fa-solid fa-chevron-right chevron" style="display: none;"></i>
+        </button>
+      </div>
+
+      <!-- RIGHT CONTENT PANELS -->
+      <div class="settings-content-panels">
+
+        <!-- 1. PROFILE PANEL -->
+        <div class="settings-panel active" id="profile-panel">
+          <div class="panel-header">
+            <h3>Personal Information</h3>
+            <p>Update your profile details</p>
+          </div>
+
+          <div class="profile-photo-row">
+            <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+            <div class="photo-details">
+              <h4>Elle Dela Cruz</h4>
+              <div class="role-text">Tenant</div>
+              <a class="change-photo-btn">Change photo</a>
+            </div>
+          </div>
+
+          <form id="profileForm">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="input-control" value="Elle Dela Cruz">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" class="input-control" value="elledelacruz01@gmail.com">
+              </div>
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" class="input-control" value="09121409895">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Role</label>
+              <input type="text" class="input-control" value="Tenant" readonly>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-submit">
+                <i class="fa-regular fa-floppy-disk"></i>
+                <span>Save Profile</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 2. SECURITY PANEL -->
+        <div class="settings-panel" id="security-panel">
+          <div class="panel-header">
+            <h3>Change Password</h3>
+            <p>Update your account password</p>
+          </div>
+
+          <form id="securityForm">
+            <div class="form-group">
+              <label>Current Password</label>
+              <div class="input-wrapper">
+                <input type="password" class="input-control" value="123456789012">
+                <i class="fa-regular fa-eye password-toggle"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" class="input-control" placeholder="Min. 8 characters">
+            </div>
+
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" class="input-control" placeholder="Repeat new password">
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-submit">
+                <i class="fa-solid fa-lock"></i>
+                <span>Update Password</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 3. PREFERENCES PANEL -->
+        <div class="settings-panel" id="preferences-panel">
+          <div class="panel-header">
+            <h3>Preferences</h3>
+            <p>Customize your boarding house experience</p>
+          </div>
+
+          <div class="preferences-list">
+            <!-- Email Notifications -->
+            <div class="preference-item">
+              <div class="pref-info">
+                <i class="fa-regular fa-bell"></i>
+                <div>
+                  <div class="pref-title">Email Notifications</div>
+                  <div class="pref-status" id="email-status">Enabled</div>
+                </div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="email-toggle" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <!-- SMS Alerts -->
+            <div class="preference-item">
+              <div class="pref-info">
+                <i class="fa-regular fa-bell"></i>
+                <div>
+                  <div class="pref-title">SMS Alerts</div>
+                  <div class="pref-status" id="sms-status">Disabled</div>
+                </div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="sms-toggle">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <!-- Push Notifications -->
+            <div class="preference-item">
+              <div class="pref-info">
+                <i class="fa-regular fa-bell"></i>
+                <div>
+                  <div class="pref-title">Push Notifications</div>
+                  <div class="pref-status" id="push-status">Disabled</div>
+                </div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="push-toggle">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-submit">
+              <i class="fa-regular fa-floppy-disk"></i>
+              <span>Save Appearance</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  (function() {
+    // Sidebar collapse functionality
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('collapseBtn');
+
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('collapsed');
+      });
+    }
+
+    // Tab Switcher Logic
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.settings-panel');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetTab = button.getAttribute('data-tab');
+
+        // Update active tab button style
+        tabButtons.forEach(btn => {
+          btn.classList.remove('active');
+          const chevron = btn.querySelector('.chevron');
+          if (chevron) chevron.style.display = 'none';
+        });
+
+        button.classList.add('active');
+        const activeChevron = button.querySelector('.chevron');
+        if (activeChevron) activeChevron.style.display = 'inline-block';
+
+        // Display matching panel
+        panels.forEach(panel => {
+          panel.classList.remove('active');
+          if (panel.id === `${targetTab}-panel`) {
+            panel.classList.add('active');
+          }
+        });
+      });
+    });
+
+    // Toggle switch text updates dynamically
+    const updateToggleStatus = (toggleId, statusId) => {
+      const toggle = document.getElementById(toggleId);
+      const status = document.getElementById(statusId);
+      if (toggle && status) {
+        toggle.addEventListener('change', () => {
+          status.textContent = toggle.checked ? 'Enabled' : 'Disabled';
+        });
+      }
+    };
+
+    updateToggleStatus('email-toggle', 'email-status');
+    updateToggleStatus('sms-toggle', 'sms-status');
+    updateToggleStatus('push-toggle', 'push-status');
+  })();
+</script>
+
+</body>
+</html>

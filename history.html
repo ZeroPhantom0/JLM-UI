@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JLM Cozy Cabin · History</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== ROOT ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f8fafc;
+      display: flex;
+      min-height: 100vh;
+      color: #1e293b;
+    }
+
+    /* ===== SIDEBAR ===== */
+    :root {
+      --sidebar-width: 250px;
+      --bg-dark: #02122c;
+      --primary-orange: #e06800;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-dark);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.3s ease;
+      min-height: 100vh;
+      z-index: 100;
+    }
+
+    .sidebar.collapsed {
+      --sidebar-width: 80px;
+    }
+
+    /* brand */
+    .brand-header {
+      padding: 20px 18px 15px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+
+    .sidebar.collapsed .brand-header {
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-orange);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      transition: opacity 0.2s ease;
+    }
+    .brand-title h3 {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+    .brand-title p {
+      font-size: 11px;
+      color: #8fa0b5;
+    }
+
+    /* user pill */
+    .user-pill {
+      background-color: var(--primary-orange);
+      margin: 5px 14px 15px 14px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #ffffff;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.collapsed .user-pill {
+      margin: 10px auto;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+    }
+    .sidebar.collapsed .user-pill span {
+      display: none !important;
+    }
+
+    .user-pill i {
+      font-size: 16px;
+    }
+
+    /* navigation */
+    .nav-menu {
+      list-style: none;
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      color: #8fa0b5;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 12px;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 8px;
+    }
+
+    .nav-item:hover > .nav-item-header {
+      color: #fff;
+    }
+    .nav-item.active > .nav-item-header {
+      color: var(--primary-orange);
+      background: rgba(224, 104, 0, 0.08);
+    }
+
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-item-left i {
+      width: 18px;
+      text-align: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    /* collapse overrides */
+    .sidebar.collapsed .brand-title,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .arrow-icon {
+      display: none !important;
+    }
+
+    .sidebar.collapsed .nav-item-header {
+      justify-content: center;
+      padding: 12px 0;
+    }
+    .sidebar.collapsed .nav-item-left {
+      gap: 0;
+    }
+
+    /* sidebar footer */
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* ===== MAIN WRAPPER & TOP HEADER ===== */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .top-header {
+      background: #fff;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .search-box {
+      background: #f1f5f9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 250px;
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+      color: #1e293b;
+    }
+
+    .notification-icon {
+      position: relative;
+      font-size: 16px;
+      color: #64748b;
+      cursor: pointer;
+    }
+    .notification-icon .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 6px;
+      height: 6px;
+      background: #ef4444;
+      border-radius: 50%;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .user-profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .user-info {
+      text-align: right;
+    }
+    .user-info h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .user-info p {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    /* ===== HISTORY CONTENT STYLES ===== */
+    .history-container {
+      padding: 28px 36px 40px 36px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .page-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .page-header-title i {
+      color: #10b981;
+      font-size: 20px;
+    }
+
+    .page-subtext {
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    /* ===== SUMMARY CARDS ===== */
+    .summary-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .summary-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .summary-card.total-paid {
+      background: #022567;
+      color: #ffffff;
+      border: none;
+    }
+
+    .card-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .summary-card.total-paid .card-icon-box {
+      background: transparent;
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 300;
+    }
+
+    .card-icon-box.blue {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+
+    .card-icon-box.green {
+      background: #ecfdf5;
+      color: #10b981;
+    }
+
+    .card-content {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .card-text-group h4 {
+      font-size: 12px;
+      font-weight: 500;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .summary-card.total-paid .card-text-group h4 {
+      color: #93c5fd;
+    }
+
+    .card-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1;
+    }
+
+    .summary-card.total-paid .card-value {
+      color: #ffffff;
+    }
+
+    .card-subtext {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .summary-card.total-paid .card-subtext {
+      color: #93c5fd;
+    }
+
+    .card-number-right {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    /* ===== FILTER & SEARCH SECTION ===== */
+    .filter-section {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      margin-bottom: 24px;
+    }
+
+    .filter-top-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .filter-search-box {
+      flex: 1;
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-search-box i {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    .filter-search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 13px;
+      color: #1e293b;
+    }
+
+    .sort-dropdown {
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      min-width: 150px;
+      justify-content: space-between;
+    }
+
+    .sort-dropdown i {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .pill {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .pill.active {
+      background: #02122c;
+      color: #ffffff;
+    }
+
+    .pill i {
+      font-size: 13px;
+    }
+
+    /* ===== LIST META ===== */
+    .list-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .records-count {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .export-link {
+      color: #10b981;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* ===== HISTORY RECORDS LIST ===== */
+    .history-list {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      overflow: hidden;
+    }
+
+    .history-item {
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid #f8fafc;
+      transition: background 0.15s ease;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-item:hover {
+      background: #fafafa;
+    }
+
+    .item-left {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .item-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .item-icon.green-light { background: #dcfce7; color: #10b981; }
+    .item-icon.blue-light { background: #dbeafe; color: #2563eb; }
+    .item-icon.red-light { background: #fee2e2; color: #ef4444; }
+
+    .item-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .item-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .item-description {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .item-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .item-meta i {
+      font-size: 11px;
+    }
+
+    .item-amount {
+      color: #10b981;
+      font-weight: 700;
+    }
+
+    .item-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-badge.paid {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .status-badge.completed {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .status-badge.approved {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .status-badge.cancelled {
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+
+    .status-badge.rejected {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .status-badge.expired {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .expand-chevron {
+      color: #94a3b8;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .summary-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100% !important; min-height: auto; }
+      .sidebar.collapsed { width: 100% !important; }
+      .search-box { display: none; }
+      .history-container { padding: 16px; }
+      .top-header { padding: 14px 16px; }
+      .filter-top-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+
+  <div class="brand-header">
+    <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+    <div class="brand-title">
+      <h3>JLM Cozy Cabin</h3>
+      <p>Tenant Portal</p>
+    </div>
+  </div>
+
+  <div class="user-pill">
+    <i class="fa-regular fa-user-circle"></i>
+    <span>Elle Dela Cruz</span>
+  </div>
+
+  <ul class="nav-menu">
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a href="index.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-border-all"></i>
+          <span class="nav-text">Dashboard</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Services -->
+    <li class="nav-item">
+      <a href="services/maintenance.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-wrench"></i>
+          <span class="nav-text">Services</span>
+        </div>
+        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+      </a>
+    </li>
+
+    <!-- Billing -->
+    <li class="nav-item">
+      <a href="billing.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-credit-card"></i>
+          <span class="nav-text">Billing</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Reservations -->
+    <li class="nav-item">
+      <a href="reservations.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span class="nav-text">Reservations</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Messages -->
+    <li class="nav-item">
+      <a href="messages.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span class="nav-text">Messages</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- Announcements -->
+    <li class="nav-item">
+      <a href="announcements.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span class="nav-text">Announcements</span>
+        </div>
+      </a>
+    </li>
+
+    <!-- History (Active) -->
+    <li class="nav-item active">
+      <a href="history.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span class="nav-text">History</span>
+        </div>
+        <i class="fa-solid fa-chevron-right arrow-icon"></i>
+      </a>
+    </li>
+
+    <!-- Settings -->
+    <li class="nav-item">
+      <a href="settings.html" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-gear"></i>
+          <span class="nav-text">Settings</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="nav-item">
+      <a href="#" class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="nav-text">Logout</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="nav-item" id="collapseBtn">
+      <div class="nav-item-header">
+        <div class="nav-item-left">
+          <i class="fa-solid fa-bars"></i>
+          <span class="nav-text">Collapse Menu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ===== MAIN WRAPPER ===== -->
+<div class="main-wrapper">
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="header-title">History</div>
+
+    <div class="header-right">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
+        <input type="text" placeholder="Search...">
+      </div>
+
+      <div class="notification-icon">
+        <i class="fa-solid fa-bullhorn"></i>
+        <span class="badge"></span>
+      </div>
+
+      <div class="user-profile">
+        <div class="user-info">
+          <h4>Elle Dela Cruz</h4>
+          <p>Tenant</p>
+        </div>
+        <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+        <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- HISTORY DASHBOARD CONTENT -->
+  <div class="history-container">
+
+    <div class="page-header-title">
+      <i class="fa-solid fa-bolt-lightning"></i>
+      <span>Activity History</span>
+    </div>
+    <div class="page-subtext">Your complete transaction and service history</div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary-cards-grid">
+      <!-- Total Paid Card -->
+      <div class="summary-card total-paid">
+        <div class="card-icon-box">₱</div>
+        <div class="card-content">
+          <div class="card-text-group">
+            <h4>Total Paid</h4>
+            <div class="card-value">₱15,550</div>
+          </div>
+          <div class="card-subtext">7 transactions</div>
+        </div>
+      </div>
+
+      <!-- Past Reservations Card -->
+      <div class="summary-card">
+        <div class="card-icon-box blue">
+          <i class="fa-regular fa-calendar-check"></i>
+        </div>
+        <div class="card-content">
+          <div class="card-text-group">
+            <h4>Past Reservations</h4>
+            <div class="card-subtext">Completed reservations</div>
+          </div>
+          <div class="card-number-right">3</div>
+        </div>
+      </div>
+
+      <!-- Service Requests Card -->
+      <div class="summary-card">
+        <div class="card-icon-box green">
+          <i class="fa-regular fa-circle-check"></i>
+        </div>
+        <div class="card-content">
+          <div class="card-text-group">
+            <h4>Service Requests</h4>
+            <div class="card-subtext">Completed requests</div>
+          </div>
+          <div class="card-number-right">3</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTER & SEARCH BAR -->
+    <div class="filter-section">
+      <div class="filter-top-row">
+        <div class="filter-search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search history...">
+        </div>
+        <div class="sort-dropdown">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <i class="fa-regular fa-calendar"></i>
+            <span>Newest First</span>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+      </div>
+
+      <div class="filter-pills">
+        <div class="pill active" data-category="all">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>All History</span>
+        </div>
+        <div class="pill" data-category="payments">
+          <i class="fa-solid fa-peso-sign"></i>
+          <span>Payments</span>
+        </div>
+        <div class="pill" data-category="reservation">
+          <i class="fa-regular fa-calendar"></i>
+          <span>Reservation</span>
+        </div>
+        <div class="pill" data-category="maintenance">
+          <i class="fa-solid fa-wrench"></i>
+          <span>Maintenance</span>
+        </div>
+        <div class="pill" data-category="room-changes">
+          <i class="fa-solid fa-house"></i>
+          <span>Room Changes</span>
+        </div>
+        <div class="pill" data-category="stay-extensions">
+          <i class="fa-regular fa-calendar-plus"></i>
+          <span>Stay Extensions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIST META -->
+    <div class="list-meta">
+      <div class="records-count" id="recordsCount">Showing 12 of 12 total records</div>
+      <a href="#" class="export-link">
+        <i class="fa-solid fa-download"></i>
+        <span>Export History</span>
+      </a>
+    </div>
+
+    <!-- HISTORY RECORDS LIST -->
+    <div class="history-list" id="historyList">
+
+      <!-- Item 1 (Payment) -->
+      <div class="history-item" data-category="payments">
+        <div class="item-left">
+          <div class="item-icon green-light">
+            <i class="fa-solid fa-peso-sign"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Utility Bill - Feb 2026</div>
+            <div class="item-description">Payment of ₱500 via over the counter</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Apr 07, 2026 · 03:50 PM</span>
+              <span class="item-amount">₱500</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge paid">
+            <i class="fa-regular fa-circle-check"></i> Paid
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 2 (Maintenance) -->
+      <div class="history-item" data-category="maintenance">
+        <div class="item-left">
+          <div class="item-icon green-light">
+            <i class="fa-solid fa-wrench"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Clogged Shower Drain</div>
+            <div class="item-description">Bathroom shower draining very slowly.</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Mar 27, 2026 · 03:50 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge completed">
+            <i class="fa-regular fa-circle-check"></i> Completed
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 3 (Payment) -->
+      <div class="history-item" data-category="payments">
+        <div class="item-left">
+          <div class="item-icon green-light">
+            <i class="fa-solid fa-peso-sign"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Rent - February 2026</div>
+            <div class="item-description">Payment of ₱4,500 via gcash</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Mar 14, 2026 · 03:50 PM</span>
+              <span class="item-amount">₱4,500</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge paid">
+            <i class="fa-regular fa-circle-check"></i> Paid
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 4 (Maintenance) -->
+      <div class="history-item" data-category="maintenance">
+        <div class="item-left">
+          <div class="item-icon green-light">
+            <i class="fa-solid fa-wrench"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Paint Touch-up Request</div>
+            <div class="item-description">Wall paint chipped near entrance.</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Feb 10, 2026 · 03:50 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge cancelled">
+            <i class="fa-regular fa-circle-xmark"></i> Cancelled
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 5 (Room Changes) -->
+      <div class="history-item" data-category="room-changes">
+        <div class="item-left">
+          <div class="item-icon blue-light">
+            <i class="fa-solid fa-house"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Room Change: 103 → 101</div>
+            <div class="item-description">Wanted unit with better natural light.</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Oct 23, 2025 · 03:50 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge approved">
+            <i class="fa-regular fa-circle-check"></i> Approved
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 6 (Room Changes) -->
+      <div class="history-item" data-category="room-changes">
+        <div class="item-left">
+          <div class="item-icon red-light">
+            <i class="fa-solid fa-house"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Room Change: 103 → 201</div>
+            <div class="item-description">Requested higher floor for less noise.</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Oct 03, 2025 · 03:50 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge rejected">
+            <i class="fa-regular fa-circle-xmark"></i> Rejected
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 7 (Stay Extensions) -->
+      <div class="history-item" data-category="stay-extensions">
+        <div class="item-left">
+          <div class="item-icon blue-light">
+            <i class="fa-regular fa-calendar-check"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Stay Extension - Unit 101</div>
+            <div class="item-description">Work contract extended for 3 more months.</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Nov 02, 2025 · 03:50 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge approved">
+            <i class="fa-regular fa-circle-check"></i> Approved
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 8 (Stay Extensions) -->
+      <div class="history-item" data-category="stay-extensions">
+        <div class="item-left">
+          <div class="item-icon red-light">
+            <i class="fa-regular fa-calendar-check"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Stay Extension - Unit 103</div>
+            <div class="item-description">Requested short extension while house hunting.</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Jun 05, 2025 · 03:50 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge rejected">
+            <i class="fa-regular fa-circle-xmark"></i> Rejected
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 9 (Reservation) -->
+      <div class="history-item" data-category="reservation">
+        <div class="item-left">
+          <div class="item-icon blue-light">
+            <i class="fa-regular fa-calendar-check"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Reservation - Unit 101</div>
+            <div class="item-description">Solo Room reservation approved</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Mar 22, 2025 · 03:50 PM</span>
+              <span class="item-amount">₱4,500</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge approved">
+            <i class="fa-regular fa-circle-check"></i> Approved
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 10 (Reservation) -->
+      <div class="history-item" data-category="reservation">
+        <div class="item-left">
+          <div class="item-icon red-light">
+            <i class="fa-regular fa-calendar-check"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Reservation - Unit 201</div>
+            <div class="item-description">Solo Room reservation rejected</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Mar 02, 2025 · 03:50 PM</span>
+              <span class="item-amount">₱4,800</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge rejected">
+            <i class="fa-regular fa-circle-xmark"></i> Rejected
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 11 (Reservation) -->
+      <div class="history-item" data-category="reservation">
+        <div class="item-left">
+          <div class="item-icon red-light" style="background:#fef3c7; color:#d97706;">
+            <i class="fa-regular fa-calendar-check"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Reservation - Unit 103</div>
+            <div class="item-description">Bedspace reservation expired</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Oct 03, 2024 · 03:50 PM</span>
+              <span class="item-amount">₱2,500</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge expired">
+            <i class="fa-regular fa-clock"></i> Expired
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+      <!-- Item 12 (Payment) -->
+      <div class="history-item" data-category="payments">
+        <div class="item-left">
+          <div class="item-icon green-light">
+            <i class="fa-solid fa-peso-sign"></i>
+          </div>
+          <div class="item-details">
+            <div class="item-title">Security Deposit</div>
+            <div class="item-description">Payment of ₱10,000 via bank transfer</div>
+            <div class="item-meta">
+              <i class="fa-regular fa-clock"></i>
+              <span>Sep 15, 2024 · 10:15 AM</span>
+              <span class="item-amount">₱10,000</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="status-badge paid">
+            <i class="fa-regular fa-circle-check"></i> Paid
+          </div>
+          <i class="fa-solid fa-chevron-down expand-chevron"></i>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  (function() {
+    // Sidebar collapse functionality
+    const sidebar = document.getElementById('sidebar');
+    const collapseBtn = document.getElementById('collapseBtn');
+
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('collapsed');
+      });
+    }
+
+    // Filter and Search logic
+    const pills = document.querySelectorAll('.filter-pills .pill');
+    const items = document.querySelectorAll('.history-item');
+    const searchInput = document.getElementById('searchInput');
+    const recordsCount = document.getElementById('recordsCount');
+
+    let currentCategory = 'all';
+
+    function filterRecords() {
+      const query = searchInput.value.toLowerCase().trim();
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        const text = item.innerText.toLowerCase();
+
+        const matchesCategory = (currentCategory === 'all' || itemCategory === currentCategory);
+        const matchesSearch = text.includes(query);
+
+        if (matchesCategory && matchesSearch) {
+          item.style.display = 'flex';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Update count display string (e.g. "Showing 3 of 12 total records")
+      recordsCount.textContent = `Showing ${visibleCount} of ${items.length} total records`;
+    }
+
+    // Event listener for filter tabs
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentCategory = pill.getAttribute('data-category');
+        filterRecords();
+      });
+    });
+
+    // Event listener for search input
+    if (searchInput) {
+      searchInput.addEventListener('input', filterRecords);
+    }
+  })();
+</script>
+
+</body>
+</html>
