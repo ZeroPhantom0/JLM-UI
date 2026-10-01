@@ -46,9 +46,10 @@
       color: var(--text-dark);
       display: flex;
       min-height: 100vh;
+      position: relative;
     }
 
-    /* ========== SIDEBAR (NEW) ========== */
+    /* ========== SIDEBAR ========== */
     .sidebar {
       width: var(--sidebar-width);
       background-color: #02122c;
@@ -56,7 +57,7 @@
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      transition: width 0.3s ease;
+      transition: width 0.3s ease, transform 0.3s ease;
       min-height: 100vh;
       z-index: 100;
     }
@@ -232,6 +233,21 @@
       z-index: 90;
     }
 
+    .header-left-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: #1e293b;
+      cursor: pointer;
+    }
+
     .header-title {
       font-size: 20px;
       font-weight: 700;
@@ -278,11 +294,22 @@
       border-radius: 50%;
     }
 
+    /* PROFILE DROPDOWN WRAPPER */
+    .user-profile-wrapper {
+      position: relative;
+    }
+
     .user-profile {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .user-profile:hover {
+      background: #f1f5f9;
     }
     .user-profile img {
       width: 32px;
@@ -301,6 +328,73 @@
     .user-info p {
       font-size: 11px;
       color: #64748b;
+    }
+
+    /* Profile Dropdown Menu */
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 220px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      padding: 8px 0;
+      z-index: 100;
+    }
+
+    .profile-dropdown.show {
+      display: flex;
+    }
+
+    .dropdown-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .dropdown-header p {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .dropdown-header span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .dropdown-item:hover {
+      background: #f8fafc;
+      color: var(--primary-orange);
+    }
+
+    .dropdown-item i {
+      width: 16px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .dropdown-item:hover i {
+      color: var(--primary-orange);
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 4px 0;
     }
 
     /* ========== RESERVATIONS CONTENT ========== */
@@ -376,6 +470,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .filter-select {
@@ -567,6 +662,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
+      padding: 16px;
     }
 
     .modal-overlay.active {
@@ -975,20 +1071,106 @@
       cursor: pointer;
     }
 
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+
+    /* ========== RESPONSIVE MEDIA QUERIES ========== */
+    @media (max-width: 1024px) {
+      .rooms-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 768px) {
-      body { flex-direction: column; }
-      .sidebar { width: 100% !important; min-height: auto; }
-      .sidebar.collapsed { width: 100% !important; }
-      .rooms-grid { grid-template-columns: 1fr; }
-      .search-box { display: none; }
-      .content-container { padding: 16px; }
-      .form-grid-2 { grid-template-columns: 1fr; }
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+        z-index: 101;
+      }
+
+      .sidebar.mobile-active {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .top-header {
+        padding: 14px 16px;
+      }
+
+      .search-box {
+        display: none;
+      }
+
+      .user-info {
+        display: none;
+      }
+
+      .content-container {
+        padding: 16px;
+      }
+
+      .rooms-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      .filter-select {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 16px;
+      }
+
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-card {
+        padding: 16px;
+      }
+
+      .room-actions {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ===== SIDEBAR (NEW) with Reservations active + chevron-right ===== -->
+<!-- Sidebar Mobile Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ===== SIDEBAR ===== -->
 <aside class="sidebar" id="sidebar">
 
   <div class="brand-header">
@@ -1036,7 +1218,7 @@
       </a>
     </li>
 
-    <!-- Reservations (active) with chevron-right -->
+    <!-- Reservations (active) -->
     <li class="nav-item active">
       <a href="reservations.html" class="nav-item-header">
         <div class="nav-item-left">
@@ -1113,9 +1295,14 @@
 <!-- ===== MAIN WRAPPER ===== -->
 <div class="main-wrapper">
 
-  <!-- TOP HEADER (NEW) -->
+  <!-- TOP HEADER -->
   <header class="top-header">
-    <div class="header-title">Reservations</div>
+    <div class="header-left-group">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="header-title">Reservations</div>
+    </div>
 
     <div class="header-right">
       <div class="search-box">
@@ -1128,14 +1315,35 @@
         <span class="badge"></span>
       </div>
 
-      <div class="user-profile">
-        <div class="user-info">
-          <h4>Elle Dela Cruz</h4>
-          <p>Tenant</p>
+      <!-- PROFILE WITH DROPDOWN MENU -->
+      <div class="user-profile-wrapper">
+        <div class="user-profile" id="profileDropdownBtn">
+          <div class="user-info">
+            <h4>Elle Dela Cruz</h4>
+            <p>Tenant</p>
+          </div>
+          <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
         </div>
-        <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
-        <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="dropdown-header">
+            <p>Elle Dela Cruz</p>
+            <span>elle.delacruz@gmail.com</span>
+          </div>
+          <a href="profile.html" class="dropdown-item">
+            <i class="fa-regular fa-user"></i> My Profile
+          </a>
+          <a href="settings.html" class="dropdown-item">
+            <i class="fa-solid fa-gear"></i> Account Settings
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item" style="color: #ef4444;">
+            <i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Logout
+          </a>
+        </div>
       </div>
+
     </div>
   </header>
 
@@ -1690,13 +1898,43 @@
 <!-- ===== JAVASCRIPT ===== -->
 <script>
   (function() {
-    // Sidebar collapse
+    // Sidebar Desktop Collapse
     const sidebar = document.getElementById('sidebar');
     const collapseBtn = document.getElementById('collapseBtn');
 
     collapseBtn.addEventListener('click', function(e) {
       e.stopPropagation();
       sidebar.classList.toggle('collapsed');
+    });
+
+    // Mobile Sidebar Drawer Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    mobileMenuBtn.addEventListener('click', function() {
+      sidebar.classList.add('mobile-active');
+      sidebarOverlay.classList.add('active');
+    });
+
+    sidebarOverlay.addEventListener('click', function() {
+      sidebar.classList.remove('mobile-active');
+      sidebarOverlay.classList.remove('active');
+    });
+
+    // Profile Dropdown Toggle
+    const profileDropdownBtn = document.getElementById('profileDropdownBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    profileDropdownBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      profileDropdown.classList.toggle('show');
+    });
+
+    // Close Dropdown on Outside Click
+    document.addEventListener('click', function(e) {
+      if (!profileDropdown.contains(e.target) && !profileDropdownBtn.contains(e.target)) {
+        profileDropdown.classList.remove('show');
+      }
     });
   })();
 
@@ -1749,7 +1987,7 @@
     document.getElementById('reserveModal').classList.add('active');
   }
 
-  // Close on overlay click
+  // Close Modal on Overlay Click
   window.onclick = function(event) {
     if (event.target.classList.contains('modal-overlay')) {
       event.target.classList.remove('active');

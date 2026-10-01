@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ===== ROOT ===== */
+    /* ===== ROOT & GLOBAL ===== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -16,20 +16,21 @@
       font-family: 'Inter', sans-serif;
     }
 
-    body {
-      background: #f8fafc;
-      display: flex;
-      min-height: 100vh;
-      color: #1e293b;
-    }
-
-    /* ===== SIDEBAR (NEW) ===== */
     :root {
       --sidebar-width: 250px;
       --bg-dark: #02122c;
       --primary-orange: #e06800;
     }
 
+    body {
+      background: #f8fafc;
+      display: flex;
+      min-height: 100vh;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    /* ===== SIDEBAR ===== */
     .sidebar {
       width: var(--sidebar-width);
       background-color: var(--bg-dark);
@@ -37,7 +38,7 @@
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      transition: width 0.3s ease;
+      transition: all 0.3s ease;
       min-height: 100vh;
       z-index: 100;
     }
@@ -218,6 +219,21 @@
       z-index: 90;
     }
 
+    .header-left-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #1e293b;
+      cursor: pointer;
+      margin-right: 12px;
+    }
+
+    .header-title-container {
+      display: flex;
+      align-items: center;
+    }
+
     .header-title {
       font-size: 20px;
       font-weight: 700;
@@ -264,11 +280,17 @@
       border-radius: 50%;
     }
 
+    /* USER PROFILE & DROPDOWN */
+    .user-profile-wrapper {
+      position: relative;
+    }
+
     .user-profile {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      user-select: none;
     }
     .user-profile img {
       width: 32px;
@@ -289,7 +311,83 @@
       color: #64748b;
     }
 
-    /* ===== BILLING CONTENT (original) ===== */
+    /* Dropdown Menu Styles */
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      width: 220px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      padding: 8px 0;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .profile-dropdown.show {
+      display: flex;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dropdown-header-info {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .dropdown-header-info p.name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .dropdown-header-info p.email {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #475569;
+      text-decoration: none;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f8fafc;
+      color: var(--primary-orange);
+    }
+
+    .dropdown-item i {
+      width: 16px;
+      text-align: center;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background-color: #f1f5f9;
+      margin: 4px 0;
+    }
+
+    .dropdown-item.logout {
+      color: #ef4444;
+    }
+    .dropdown-item.logout:hover {
+      background-color: #fef2f2;
+      color: #dc2626;
+    }
+
+    /* ===== BILLING CONTENT ===== */
     .billing-container {
       padding: 32px;
       max-width: 1200px;
@@ -427,6 +525,7 @@
       align-items: center;
       gap: 12px;
       font-size: 13px;
+      flex-wrap: wrap;
     }
 
     .step-badge {
@@ -593,6 +692,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
+      padding: 16px;
     }
 
     .modal-overlay.active {
@@ -824,21 +924,94 @@
       gap: 8px;
     }
 
+    /* ===== RESPONSIVE MEDIA QUERIES ===== */
+    @media (max-width: 992px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 768px) {
-      body { flex-direction: column; }
-      .sidebar { width: 100% !important; min-height: auto; }
-      .sidebar.collapsed { width: 100% !important; }
-      .search-box { display: none; }
-      .summary-grid { grid-template-columns: 1fr; }
-      .pending-body { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .pending-info-right { width: 100%; justify-content: space-between; }
-      .billing-container { padding: 16px; }
+      body {
+        position: relative;
+      }
+
+      .header-left-toggle {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100vh;
+        z-index: 1000;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+        width: 250px !important;
+      }
+
+      .sidebar.mobile-open {
+        left: 0;
+      }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.4);
+        z-index: 999;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .top-header {
+        padding: 14px 16px;
+      }
+
+      .search-box {
+        display: none;
+      }
+
+      .user-info {
+        display: none;
+      }
+
+      .billing-container {
+        padding: 16px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pending-body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .pending-info-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .number-box {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ===== SIDEBAR (NEW, with Billing active + chevron-right) ===== -->
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ===== SIDEBAR ===== -->
 <aside class="sidebar" id="sidebar">
 
   <div class="brand-header">
@@ -876,7 +1049,7 @@
       </a>
     </li>
 
-    <!-- Billing (active) with chevron-right -->
+    <!-- Billing (active) -->
     <li class="nav-item active">
       <a href="billing.html" class="nav-item-header">
         <div class="nav-item-left">
@@ -965,7 +1138,12 @@
 
   <!-- TOP HEADER -->
   <header class="top-header">
-    <div class="header-title">My Billing</div>
+    <div class="header-title-container">
+      <button class="header-left-toggle" id="mobileToggleBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="header-title">My Billing</div>
+    </div>
 
     <div class="header-right">
       <div class="search-box">
@@ -978,18 +1156,41 @@
         <span class="badge"></span>
       </div>
 
-      <div class="user-profile">
-        <div class="user-info">
-          <h4>Elle Dela Cruz</h4>
-          <p>Tenant</p>
+      <!-- User Profile + Dropdown -->
+      <div class="user-profile-wrapper">
+        <div class="user-profile" id="profileDropdownBtn">
+          <div class="user-info">
+            <h4>Elle Dela Cruz</h4>
+            <p>Tenant</p>
+          </div>
+          <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
         </div>
-        <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
-        <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="dropdown-header-info">
+            <p class="name">Elle Dela Cruz</p>
+            <p class="email">elle.delacruz@example.com</p>
+          </div>
+          <a href="profile.html" class="dropdown-item">
+            <i class="fa-regular fa-user"></i>
+            <span>My Profile</span>
+          </a>
+          <a href="settings.html" class="dropdown-item">
+            <i class="fa-solid fa-gear"></i>
+            <span>Account Settings</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Log Out</span>
+          </a>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- BILLING CONTENT (exactly as before) -->
+  <!-- BILLING CONTENT -->
   <div class="billing-container">
 
     <div class="page-title-section">
@@ -1083,7 +1284,7 @@
   </div>
 </div>
 
-<!-- ===== MODAL (unchanged) ===== -->
+<!-- ===== MODAL ===== -->
 <div class="modal-overlay" id="paymentModal">
   <div class="modal-card">
     <button class="modal-close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
@@ -1152,15 +1353,44 @@
 <!-- ===== JAVASCRIPT ===== -->
 <script>
   (function() {
-    // 1. Sidebar collapse
+    // 1. Sidebar collapse (Desktop) & Mobile Sidebar Toggle
     const sidebar = document.getElementById('sidebar');
     const collapseBtn = document.getElementById('collapseBtn');
+    const mobileToggleBtn = document.getElementById('mobileToggleBtn');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
     collapseBtn.addEventListener('click', function(e) {
       e.stopPropagation();
       sidebar.classList.toggle('collapsed');
     });
 
-    // 2. Modal controls
+    mobileToggleBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      sidebar.classList.add('mobile-open');
+      sidebarOverlay.classList.add('active');
+    });
+
+    sidebarOverlay.addEventListener('click', function() {
+      sidebar.classList.remove('mobile-open');
+      sidebarOverlay.classList.remove('active');
+    });
+
+    // 2. Profile Dropdown Toggle
+    const profileDropdownBtn = document.getElementById('profileDropdownBtn');
+    const profileDropdown = document.getElementById('profileDropdown');
+
+    profileDropdownBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      profileDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!profileDropdown.contains(e.target) && !profileDropdownBtn.contains(e.target)) {
+        profileDropdown.classList.remove('show');
+      }
+    });
+
+    // 3. Modal controls
     const paymentModal = document.getElementById('paymentModal');
     const openModalBtn = document.getElementById('openModalBtn');
     const closeModalBtn = document.getElementById('closeModalBtn');
@@ -1174,7 +1404,7 @@
       if (e.target === paymentModal) paymentModal.classList.remove('active');
     });
 
-    // 3. Payment method switcher
+    // 4. Payment method switcher
     const methodBtns = document.querySelectorAll('.method-btn');
     const gcashNumberBox = document.getElementById('gcashNumberBox');
     const counterNoticeBox = document.getElementById('counterNoticeBox');

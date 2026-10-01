@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>JLM Cozy Cabin - Tenant Portal</title>
   <!-- Google Fonts & FontAwesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -33,20 +33,38 @@
       margin: 0;
       padding: 0;
       font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html, body {
       height: 100%;
-      overflow: hidden; /* prevent body scroll */
+      width: 100%;
+      background: var(--bg-app);
+      color: var(--text-dark);
+      overflow-x: hidden;
     }
 
     body {
-      background: var(--bg-app);
       display: flex;
-      color: var(--text-dark);
     }
 
-    /* ========== SIDEBAR - fixed height, no scroll ========== */
+    /* ========== SIDEBAR (Desktop Side Navigation / Mobile Drawer) ========== */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 18, 44, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     .sidebar {
       width: var(--sidebar-width);
       background-color: var(--bg-dark);
@@ -54,12 +72,13 @@
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
-      transition: width 0.3s ease;
+      transition: width 0.3s ease, transform 0.3s ease;
       height: 100vh;
-      overflow: hidden; /* no scroll */
-      z-index: 100;
+      height: 100dvh;
       position: sticky;
       top: 0;
+      z-index: 1001;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .sidebar.collapsed {
@@ -71,9 +90,15 @@
       padding: 20px 18px 15px 18px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
       white-space: nowrap;
       flex-shrink: 0;
+    }
+
+    .brand-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .sidebar.collapsed .brand-header {
@@ -108,6 +133,16 @@
     .brand-title p {
       font-size: 11px;
       color: #8fa0b5;
+    }
+
+    .close-sidebar-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #8fa0b5;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px;
     }
 
     /* ========== USER PILL ========== */
@@ -158,9 +193,6 @@
       background: rgba(255,255,255,0.2);
       border-radius: 10px;
     }
-    .nav-menu::-webkit-scrollbar-track {
-      background: transparent;
-    }
 
     .nav-item {
       display: flex;
@@ -191,6 +223,7 @@
 
     .nav-item.active > .nav-item-header {
       color: var(--primary-orange);
+      background-color: rgba(224, 104, 0, 0.1);
     }
 
     .nav-item-left {
@@ -238,13 +271,14 @@
       flex-shrink: 0;
     }
 
-    /* ========== MAIN WRAPPER - scrollable ========== */
+    /* ========== MAIN WRAPPER ========== */
     .main-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
       min-width: 0;
       height: 100vh;
+      height: 100dvh;
       overflow-y: auto;
     }
 
@@ -252,6 +286,7 @@
     .top-header {
       background: #fff;
       padding: 14px 32px;
+      padding-top: max(14px, env(safe-area-inset-top));
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -260,6 +295,27 @@
       top: 0;
       z-index: 90;
       flex-shrink: 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hamburger-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      color: var(--text-dark);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+    }
+
+    .hamburger-btn:hover {
+      background: #f1f5f9;
     }
 
     .header-title {
@@ -271,7 +327,7 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
     }
 
     .search-box {
@@ -281,7 +337,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      width: 250px;
+      width: 220px;
     }
 
     .search-box input {
@@ -298,16 +354,22 @@
       font-size: 16px;
       color: #64748b;
       cursor: pointer;
+      padding: 4px;
     }
 
     .notification-icon .badge {
       position: absolute;
-      top: -2px;
-      right: -2px;
+      top: 2px;
+      right: 2px;
       width: 6px;
       height: 6px;
       background: #ef4444;
       border-radius: 50%;
+    }
+
+    /* User Profile Dropdown Container */
+    .user-profile-container {
+      position: relative;
     }
 
     .user-profile {
@@ -315,11 +377,12 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      user-select: none;
     }
 
     .user-profile img {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       object-fit: cover;
     }
@@ -339,62 +402,116 @@
       color: var(--text-muted);
     }
 
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 768px) {
-      html, body {
-        overflow: auto;
-      }
-      body {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100% !important;
-        height: auto;
-        position: relative;
-        overflow: visible;
-      }
-      .sidebar.collapsed {
-        width: 100% !important;
-      }
-      .search-box {
-        display: none;
-      }
-      .main-wrapper {
-        height: auto;
-        overflow: visible;
-      }
+    /* Profile Dropdown Menu */
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      width: 240px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      border: 1px solid #f1f5f9;
+      padding: 12px;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      animation: fadeIn 0.15s ease-out;
     }
 
-    /* --- DASHBOARD GRID --- */
+    .profile-dropdown.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dropdown-user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+      margin-bottom: 6px;
+    }
+
+    .dropdown-user-info img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .dropdown-user-text h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .dropdown-user-text p {
+      font-size: 11px;
+      color: #94a3b8;
+      word-break: break-all;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      color: #475569;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .dropdown-item i {
+      font-size: 14px;
+      width: 18px;
+      text-align: center;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    .dropdown-item.logout {
+      color: #dc2626;
+    }
+
+    .dropdown-item.logout:hover {
+      background-color: #fef2f2;
+      color: #dc2626;
+    }
+
+    /* ========== DASHBOARD GRID ========== */
     .dashboard-container {
       padding: 24px 32px;
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 24px;
-      align-items: stretch;
+      align-items: start;
     }
 
     .left-column,
     .right-column {
       display: flex;
       flex-direction: column;
+      gap: 20px;
     }
 
     .card {
       background: var(--card-bg);
       border-radius: 12px;
       padding: 20px;
-      margin-bottom: 20px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
       border: 1px solid #edf2f7;
-    }
-
-    .service-card,
-    .announcements-card {
-      margin-bottom: 0;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
     }
 
     .welcome-card {
@@ -417,6 +534,7 @@
       justify-content: center;
       font-size: 24px;
       color: var(--primary-green);
+      flex-shrink: 0;
     }
 
     .welcome-text h2 {
@@ -433,6 +551,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
     .balance-left {
@@ -452,6 +572,7 @@
       color: #e11d48;
       font-size: 20px;
       font-weight: bold;
+      flex-shrink: 0;
     }
 
     .balance-info h3 {
@@ -464,6 +585,10 @@
       color: var(--text-muted);
     }
 
+    .balance-action {
+      text-align: right;
+    }
+
     .btn-pay {
       background: var(--primary-green);
       color: white;
@@ -473,9 +598,14 @@
       font-weight: 600;
       font-size: 13px;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-pay:hover {
+      background: #15803d;
     }
 
     .card-header {
@@ -508,6 +638,7 @@
       border-radius: 8px;
       font-size: 18px;
       font-weight: 700;
+      flex-shrink: 0;
     }
 
     .room-details h4 {
@@ -536,6 +667,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-width: 120px;
     }
 
     .stat-rent-card span {
@@ -616,7 +748,6 @@
       margin-top: 10px;
       display: flex;
       flex-direction: column;
-      flex: 1;
     }
 
     .activity-title {
@@ -678,7 +809,7 @@
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
+      gap: 6px;
       font-size: 12px;
     }
 
@@ -690,21 +821,19 @@
     }
 
     .day-number {
-      padding: 6px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 50%;
       cursor: pointer;
+      font-size: 12px;
     }
 
     .day-number.active {
       background: var(--primary-orange);
       color: white;
       font-weight: 700;
-    }
-
-    .announcements-content {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
     }
 
     .announcement-box {
@@ -754,42 +883,122 @@
       font-size: 11px;
       font-weight: 700;
       text-decoration: none;
-      margin-top: auto;
-      padding-top: 10px;
+      padding-top: 6px;
     }
 
-    @media (max-width: 992px) {
+    /* ========== RESPONSIVE BREAKPOINTS ========== */
+
+    /* Tablet & Medium Screens */
+    @media (max-width: 1024px) {
       .dashboard-container {
         grid-template-columns: 1fr;
+        padding: 20px;
       }
     }
 
+    /* Mobile Phones (Drawer / Burger Mode) */
     @media (max-width: 768px) {
+      .hamburger-btn {
+        display: block;
+      }
+
+      .close-sidebar-btn {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        height: 100dvh;
+        transform: translateX(-100%);
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+        width: 260px !important;
+      }
+
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      .search-box {
+        display: none;
+      }
+
+      .user-info {
+        display: none;
+      }
+
       .top-header {
         padding: 12px 16px;
       }
+
       .dashboard-container {
         padding: 16px;
+        gap: 16px;
       }
+
+      .balance-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .balance-action {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
       .room-stats-wrapper {
         flex-direction: column;
       }
+
+      .dates-container {
+        flex-direction: row;
+      }
+    }
+
+    /* Small Mobile Phones */
+    @media (max-width: 480px) {
       .dates-container {
         flex-direction: column;
+      }
+
+      .welcome-card {
+        padding: 16px;
+      }
+
+      .welcome-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      .room-box {
+        flex-direction: row;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- ========== MOBILE BACKDROP OVERLAY ========== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
   <!-- ========== SIDEBAR ========== -->
   <aside class="sidebar" id="sidebar">
     <div class="brand-header">
-      <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
-      <div class="brand-title">
-        <h3>JLM Cozy Cabin</h3>
-        <p>Tenant Portal</p>
+      <div class="brand-logo-group">
+        <div class="brand-logo"><i class="fa-solid fa-house-chimney"></i></div>
+        <div class="brand-title">
+          <h3>JLM Cozy Cabin</h3>
+          <p>Tenant Portal</p>
+        </div>
       </div>
+      <button class="close-sidebar-btn" id="closeSidebarBtn" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
 
     <div class="user-pill">
@@ -798,7 +1007,6 @@
     </div>
 
     <ul class="nav-menu">
-      <!-- Dashboard ACTIVE with chevron-right -->
       <li class="nav-item active">
         <a href="index.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -809,7 +1017,6 @@
         </a>
       </li>
 
-      <!-- Services -->
       <li class="nav-item">
         <a href="services/maintenance.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -820,7 +1027,6 @@
         </a>
       </li>
 
-      <!-- Billing -->
       <li class="nav-item">
         <a href="billing.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -830,7 +1036,6 @@
         </a>
       </li>
 
-      <!-- Reservations -->
       <li class="nav-item">
         <a href="reservations.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -840,7 +1045,6 @@
         </a>
       </li>
 
-      <!-- Messages -->
       <li class="nav-item">
         <a href="messages.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -850,7 +1054,6 @@
         </a>
       </li>
 
-      <!-- Announcements -->
       <li class="nav-item">
         <a href="announcements.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -860,7 +1063,6 @@
         </a>
       </li>
 
-      <!-- History -->
       <li class="nav-item">
         <a href="history.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -870,7 +1072,6 @@
         </a>
       </li>
 
-      <!-- Settings -->
       <li class="nav-item">
         <a href="settings.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -894,7 +1095,7 @@
       <div class="nav-item" id="collapseBtn">
         <div class="nav-item-header">
           <div class="nav-item-left">
-            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-bars-staggered"></i>
             <span class="nav-text">Collapse Menu</span>
           </div>
         </div>
@@ -902,12 +1103,18 @@
     </div>
   </aside>
 
-  <!-- ========== MAIN WRAPPER (scrollable) ========== -->
+  <!-- ========== MAIN WRAPPER ========== -->
   <div class="main-wrapper" id="mainWrapper">
 
     <!-- ========== TOP HEADER ========== -->
     <header class="top-header">
-      <div class="header-title">Dashboard</div>
+      <div class="header-left">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="header-title">Dashboard</div>
+      </div>
+
       <div class="header-right">
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:12px;"></i>
@@ -917,13 +1124,34 @@
           <i class="fa-solid fa-bullhorn"></i>
           <span class="badge"></span>
         </div>
-        <div class="user-profile">
-          <div class="user-info">
-            <h4>Elle Dela Cruz</h4>
-            <p>Tenant</p>
+        <div class="user-profile-container">
+          <div class="user-profile" id="userProfileBtn">
+            <div class="user-info">
+              <h4>Elle Dela Cruz</h4>
+              <p>Tenant</p>
+            </div>
+            <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+            <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
           </div>
-          <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
-          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:#94a3b8;"></i>
+
+          <!-- Profile Dropdown Menu -->
+          <div class="profile-dropdown" id="profileDropdown">
+            <div class="dropdown-user-info">
+              <img src="https://i.pravatar.cc/100?img=47" alt="Elle Dela Cruz">
+              <div class="dropdown-user-text">
+                <h4>Elle Dela Cruz</h4>
+                <p>elledelacruz@gmail.com</p>
+              </div>
+            </div>
+            <a href="settings.html" class="dropdown-item">
+              <i class="fa-solid fa-gear"></i>
+              <span>Account Settings</span>
+            </a>
+            <a href="#" class="dropdown-item logout">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Logout</span>
+            </a>
+          </div>
         </div>
       </div>
     </header>
@@ -954,7 +1182,7 @@
               <p>Outstanding Balance</p>
             </div>
           </div>
-          <div style="text-align: right;">
+          <div class="balance-action">
             <p style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">1 unpaid invoice(s)</p>
             <button class="btn-pay"><i class="fa-regular fa-credit-card"></i> Pay Now</button>
           </div>
@@ -987,14 +1215,14 @@
                   <i class="fa-regular fa-calendar" style="color: #60a5fa;"></i>
                   <span>Move-in Date</span>
                 </div>
-                <div class="date-card-val">Mar 20, 2023</div>
+                <div class="date-card-val">Mar 20, 2026</div>
               </div>
               <div class="date-card">
                 <div class="date-card-label">
                   <i class="fa-regular fa-calendar" style="color: #f87171;"></i>
                   <span>Move-out Date</span>
                 </div>
-                <div class="date-card-val">Mar 22, 2023</div>
+                <div class="date-card-val">Mar 22, 2026</div>
               </div>
             </div>
           </div>
@@ -1050,7 +1278,7 @@
           </div>
 
           <div class="calendar-grid">
-            <div class="day-name">SAN</div>
+            <div class="day-name">SUN</div>
             <div class="day-name">MON</div>
             <div class="day-name">TUE</div>
             <div class="day-name">WED</div>
@@ -1117,13 +1345,8 @@
             </div>
 
             <div class="announcement-item">
-              <h5>Welcome New Residents!</h5>
-              <p>Please join us in welcoming our newest residents to JLM Cozy Cabin. Community gathering at the lobby on Friday at 6 PM.</p>
-            </div>
-
-            <div class="announcement-item">
-              <h5>Welcome New Residents!</h5>
-              <p>Please join us in welcoming our newest residents to JLM Cozy Cabin. Community gathering at the lobby on Friday at 6 PM.</p>
+              <h5>Routine HVAC Inspection</h5>
+              <p>HVAC maintenance checks will be conducted tomorrow afternoon across floor 1 rooms.</p>
             </div>
 
             <a href="#" class="view-all-link">View all <i class="fa-solid fa-chevron-right" style="font-size:9px;"></i></a>
@@ -1140,10 +1363,13 @@
     (function() {
       "use strict";
 
-      // ----- SIDEBAR COLLAPSE -----
       const sidebar = document.getElementById('sidebar');
       const collapseBtn = document.getElementById('collapseBtn');
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
 
+      // ----- SIDEBAR DESKTOP COLLAPSE -----
       if (collapseBtn) {
         collapseBtn.addEventListener('click', function(e) {
           e.stopPropagation();
@@ -1151,8 +1377,54 @@
         });
       }
 
-      // ----- (Optional) click on Services – just a placeholder, no submenu logic needed -----
-      // The Services item is a flat link with a down arrow.
+      // ----- MOBILE SIDEBAR DRAWER TOGGLE -----
+      function openMobileSidebar() {
+        sidebar.classList.add('mobile-open');
+        sidebarOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileSidebar() {
+        sidebar.classList.remove('mobile-open');
+        sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', openMobileSidebar);
+      }
+
+      if (closeSidebarBtn) {
+        closeSidebarBtn.addEventListener('click', closeMobileSidebar);
+      }
+
+      if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeMobileSidebar);
+      }
+
+      // Close mobile navigation on screen resize if scaled up
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+          closeMobileSidebar();
+        }
+      });
+
+      // ----- USER PROFILE DROPDOWN -----
+      const userProfileBtn = document.getElementById('userProfileBtn');
+      const profileDropdown = document.getElementById('profileDropdown');
+
+      if (userProfileBtn && profileDropdown) {
+        userProfileBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          profileDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!profileDropdown.contains(e.target) && !userProfileBtn.contains(e.target)) {
+            profileDropdown.classList.remove('active');
+          }
+        });
+      }
 
     })();
   </script>
