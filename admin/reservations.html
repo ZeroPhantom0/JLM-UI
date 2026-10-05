@@ -5,17 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JLM Cozy Cabin - Reservations</title>
 
-    <!-- Google Fonts & FontAwesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
       :root {
@@ -31,7 +24,6 @@
         --sidebar-width: 250px;
         --sidebar-collapsed-width: 80px;
 
-        /* Reservation Status Colors */
         --pending-bg: #fef3c7;
         --pending-text: #d97706;
         --approved-bg: #dcfce7;
@@ -56,8 +48,7 @@
         -webkit-tap-highlight-color: transparent;
       }
 
-      html,
-      body {
+      html, body {
         height: 100%;
         width: 100%;
         background: var(--bg-app);
@@ -69,7 +60,6 @@
         display: flex;
       }
 
-      /* ========== SIDEBAR STYLES ========== */
       .sidebar {
         width: var(--sidebar-width);
         background-color: var(--bg-dark-sidebar);
@@ -85,7 +75,6 @@
         overflow-x: hidden;
       }
 
-      /* Collapsed Sidebar State */
       .sidebar.collapsed {
         width: var(--sidebar-collapsed-width);
       }
@@ -120,9 +109,7 @@
       }
 
       .brand-title {
-        transition:
-          opacity 0.2s ease,
-          max-width 0.3s ease;
+        transition: opacity 0.2s ease, max-width 0.3s ease;
         overflow: hidden;
       }
 
@@ -144,9 +131,7 @@
         cursor: pointer;
         padding: 6px;
         border-radius: 6px;
-        transition:
-          color 0.2s,
-          background-color 0.2s;
+        transition: color 0.2s, background-color 0.2s;
       }
 
       .menu-toggle-btn:hover {
@@ -154,7 +139,6 @@
         background-color: rgba(255, 255, 255, 0.1);
       }
 
-      /* Collapsed Sidebar Adjustments */
       .sidebar.collapsed .brand-title,
       .sidebar.collapsed .admin-pill span,
       .sidebar.collapsed .nav-text,
@@ -174,7 +158,6 @@
         display: none;
       }
 
-      /* Administrator Pill */
       .admin-pill {
         background-color: var(--primary-orange);
         margin: 4px 14px 16px 14px;
@@ -202,7 +185,6 @@
         font-size: 16px;
       }
 
-      /* Navigation Menu */
       .nav-menu {
         list-style: none;
         padding: 0 10px;
@@ -281,7 +263,6 @@
         color: #64748b;
       }
 
-      /* Sidebar Footer */
       .sidebar-footer {
         padding: 14px 14px;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -429,7 +410,6 @@
         background-color: #cbd5e1;
       }
 
-      /* Profile Section Header & Dropdown Trigger */
       .header-profile-trigger {
         display: flex;
         align-items: center;
@@ -478,7 +458,6 @@
         transform: rotate(180deg);
       }
 
-      /* ========== PROFILE DROPDOWN MENU ========== */
       .profile-dropdown-card {
         position: absolute;
         top: calc(100% + 12px);
@@ -487,9 +466,7 @@
         background: #ffffff;
         border-radius: 16px;
         border: 1px solid var(--border-color);
-        box-shadow:
-          0 10px 25px -5px rgba(0, 0, 0, 0.1),
-          0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
         display: none;
         flex-direction: column;
         z-index: 2000;
@@ -502,14 +479,8 @@
       }
 
       @keyframes fadeInDropdown {
-        from {
-          opacity: 0;
-          transform: translateY(-8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .dropdown-user-header {
@@ -609,7 +580,6 @@
         gap: 20px;
       }
 
-      /* Page Section Header */
       .page-banner {
         display: flex;
         align-items: center;
@@ -641,7 +611,6 @@
         margin-top: 2px;
       }
 
-      /* Metric Summary Row */
       .summary-cards-row {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
@@ -682,24 +651,11 @@
         font-weight: 800;
       }
 
-      .badge-circle.pending {
-        background: #fef3c7;
-        color: #d97706;
-      }
-      .badge-circle.approved {
-        background: #dcfce7;
-        color: #16a34a;
-      }
-      .badge-circle.rejected {
-        background: #fee2e2;
-        color: #dc2626;
-      }
-      .badge-circle.expired {
-        background: #f1f5f9;
-        color: #64748b;
-      }
+      .badge-circle.pending { background: #fef3c7; color: #d97706; }
+      .badge-circle.approved { background: #dcfce7; color: #16a34a; }
+      .badge-circle.rejected { background: #fee2e2; color: #dc2626; }
+      .badge-circle.expired { background: #f1f5f9; color: #64748b; }
 
-      /* Filter & Search Toolbar */
       .toolbar-card {
         background: #ffffff;
         border-radius: 16px;
@@ -754,7 +710,6 @@
         min-width: 160px;
       }
 
-      /* View Switcher Controls (Grid / List) */
       .view-switcher {
         display: flex;
         background: #f1f5f9;
@@ -783,14 +738,12 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
 
-      /* ========== RESERVATIONS GRID & CARDS ========== */
       .reservations-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
       }
 
-      /* List View Override */
       .reservations-grid.list-view {
         grid-template-columns: 1fr;
       }
@@ -854,24 +807,11 @@
         gap: 6px;
       }
 
-      .status-pill.pending {
-        background: var(--pending-bg);
-        color: var(--pending-text);
-      }
-      .status-pill.approved {
-        background: var(--approved-bg);
-        color: var(--approved-text);
-      }
-      .status-pill.rejected {
-        background: var(--rejected-bg);
-        color: var(--rejected-text);
-      }
-      .status-pill.expired {
-        background: var(--expired-bg);
-        color: var(--expired-text);
-      }
+      .status-pill.pending { background: var(--pending-bg); color: var(--pending-text); }
+      .status-pill.approved { background: var(--approved-bg); color: var(--approved-text); }
+      .status-pill.rejected { background: var(--rejected-bg); color: var(--rejected-text); }
+      .status-pill.expired { background: var(--expired-bg); color: var(--expired-text); }
 
-      /* Details List inside Card */
       .res-details-list {
         display: flex;
         flex-direction: column;
@@ -908,7 +848,6 @@
         font-size: 15px;
       }
 
-      /* Message Banner inside Card */
       .res-notice-box {
         background: #f0f9ff;
         border: 1px solid #e0f2fe;
@@ -926,7 +865,6 @@
         color: #ef4444;
       }
 
-      /* Buttons Group inside Card */
       .card-actions {
         display: flex;
         align-items: center;
@@ -951,37 +889,28 @@
         background: var(--btn-approve);
         color: #ffffff;
       }
-      .btn-approve:hover {
-        background: #047857;
-      }
+      .btn-approve:hover { background: #047857; }
 
       .btn-reject {
         background: var(--btn-reject-bg);
         color: var(--btn-reject-text);
       }
-      .btn-reject:hover {
-        background: #fde8e8;
-      }
+      .btn-reject:hover { background: #fde8e8; }
 
       .btn-details {
         background: var(--btn-details-bg);
         color: var(--btn-details-text);
         flex: 1;
       }
-      .btn-details:hover {
-        background: #e2e8f0;
-      }
+      .btn-details:hover { background: #e2e8f0; }
 
       .btn-details-full {
         width: 100%;
         background: var(--btn-details-bg);
         color: var(--btn-details-text);
       }
-      .btn-details-full:hover {
-        background: #e2e8f0;
-      }
+      .btn-details-full:hover { background: #e2e8f0; }
 
-      /* ========== RESERVATION DETAILS MODAL ========== */
       .modal-overlay {
         position: fixed;
         top: 0;
@@ -1016,14 +945,8 @@
       }
 
       @keyframes modalSlideUp {
-        from {
-          opacity: 0;
-          transform: translateY(12px) scale(0.98);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
+        from { opacity: 0; transform: translateY(12px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
       }
 
       .modal-header {
@@ -1144,7 +1067,6 @@
         margin-top: 4px;
       }
 
-      /* Proof of Payment Box */
       .proof-card {
         background: #d9f99d;
         border-radius: 12px;
@@ -1193,7 +1115,6 @@
         height: 60px;
       }
 
-      /* Modal Footer Buttons */
       .modal-footer {
         padding: 16px 24px 24px 24px;
         display: flex;
@@ -1222,7 +1143,6 @@
         cursor: pointer;
       }
 
-      /* Responsive Adjustments */
       @media (max-width: 900px) {
         .summary-cards-row {
           grid-template-columns: repeat(2, 1fr);
@@ -1255,7 +1175,6 @@
   <body>
     <!-- ========== SIDEBAR ========== -->
     <aside class="sidebar" id="sidebar">
-      <!-- Brand Header -->
       <div class="brand-header">
         <div class="brand-logo-group">
           <div class="brand-logo">
@@ -1266,23 +1185,16 @@
             <p>Admin Portal</p>
           </div>
         </div>
-        <!-- Toggle Hamburger Icon -->
-        <div
-          class="menu-toggle-btn"
-          id="sidebarToggleBtn"
-          title="Toggle Navigation"
-        >
+        <div class="menu-toggle-btn" id="sidebarToggleBtn" title="Toggle Navigation">
           <i class="fa-solid fa-bars"></i>
         </div>
       </div>
 
-      <!-- Administrator Orange Pill -->
       <div class="admin-pill">
         <i class="fa-solid fa-shield-halved"></i>
         <span>Administrator</span>
       </div>
 
-      <!-- Navigation Menu Items -->
       <ul class="nav-menu">
         <a href="dashboard.html" class="nav-item" title="Dashboard">
           <div class="nav-left">
@@ -1306,12 +1218,13 @@
           </div>
         </a>
 
-        <a href="#" class="nav-item" title="Services">
+        <!-- Services: direct link -->
+        <a href="services/maintenance.html" class="nav-item" title="Services">
           <div class="nav-left">
             <i class="fa-solid fa-wrench"></i>
             <span class="nav-text">Services</span>
           </div>
-          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          <i class="fa-solid fa-chevron-right nav-arrow"></i>
         </a>
 
         <a href="billing.html" class="nav-item" title="Billing">
@@ -1321,7 +1234,6 @@
           </div>
         </a>
 
-        <!-- Highlighted Reservations Nav Item -->
         <a href="reservations.html" class="nav-item active" title="Reservations">
           <div class="nav-left">
             <i class="fa-regular fa-calendar-check"></i>
@@ -1379,13 +1291,9 @@
         </a>
       </ul>
 
-      <!-- Sidebar Footer -->
       <div class="sidebar-footer">
         <div class="user-footer-info">
-          <img
-            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-            alt="Leah Agujar"
-          />
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Agujar" />
           <div class="user-footer-text">
             <h4>Leah Agujar</h4>
             <p>admin</p>
@@ -1399,20 +1307,17 @@
 
     <!-- ========== MAIN WRAPPER ========== -->
     <div class="main-wrapper">
-      <!-- Top Header -->
       <header class="top-header">
         <div class="header-left">
           <div class="header-title">Reservations</div>
         </div>
 
         <div class="header-right">
-          <!-- Search Bar -->
           <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Search..." />
           </div>
 
-          <!-- Notification Bell -->
           <div class="notification-bell">
             <i class="fa-solid fa-bell"></i>
             <span class="badge-dot"></span>
@@ -1420,26 +1325,18 @@
 
           <div class="header-divider"></div>
 
-          <!-- User Profile Header Trigger -->
           <div class="header-profile-trigger" id="profileTrigger">
             <div class="header-profile-text">
               <h4>Leah Administrator</h4>
               <p>Admin</p>
             </div>
-            <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-              alt="Leah Administrator"
-            />
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
             <i class="fa-solid fa-chevron-down"></i>
           </div>
 
-          <!-- PROFILE DROPDOWN FLOATING CARD MENU -->
           <div class="profile-dropdown-card" id="profileDropdown">
             <div class="dropdown-user-header">
-              <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-                alt="Leah Administrator"
-              />
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
               <div class="dropdown-user-info">
                 <h4>Leah Administrator</h4>
                 <p>leah.admin@jlmcozycabin.com</p>
@@ -1468,9 +1365,7 @@
         </div>
       </header>
 
-      <!-- ========== RESERVATIONS CONTENT ========== -->
       <div class="content-container">
-        <!-- Page Title Banner -->
         <div class="page-banner">
           <div class="banner-icon-box">
             <i class="fa-regular fa-calendar-check"></i>
@@ -1481,7 +1376,6 @@
           </div>
         </div>
 
-        <!-- Metric Cards Bar -->
         <div class="summary-cards-row">
           <div class="summary-card">
             <div class="title">Total</div>
@@ -1513,7 +1407,6 @@
           </div>
         </div>
 
-        <!-- Toolbar (Search & Filters + Grid/List Switcher) -->
         <div class="toolbar-card">
           <div class="toolbar-left">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -1529,7 +1422,6 @@
               <option>Expired</option>
             </select>
 
-            <!-- Grid or List Switcher Control -->
             <div class="view-switcher">
               <button class="view-btn active" id="btnGridView">
                 <i class="fa-solid fa-border-all"></i> Grid
@@ -1541,7 +1433,6 @@
           </div>
         </div>
 
-        <!-- RESERVATION CARDS CONTAINER -->
         <div class="reservations-grid" id="reservationsContainer">
           <!-- CARD 1: Maria Santos (Pending) -->
           <div class="res-card">
@@ -1592,10 +1483,7 @@
                 <button class="btn-action btn-reject">
                   <i class="fa-regular fa-circle-xmark"></i> Reject
                 </button>
-                <button
-                  class="btn-action btn-details"
-                  onclick="openModal('maria')"
-                >
+                <button class="btn-action btn-details" onclick="openModal('maria')">
                   <i class="fa-regular fa-eye"></i> Details
                 </button>
               </div>
@@ -1607,12 +1495,7 @@
             <div>
               <div class="res-card-top">
                 <div class="user-meta">
-                  <div
-                    class="avatar-circle"
-                    style="background: #e0f2fe; color: #0284c7"
-                  >
-                    R
-                  </div>
+                  <div class="avatar-circle" style="background: #e0f2fe; color: #0284c7">R</div>
                   <div class="user-info">
                     <h3>Ramon Bautista</h3>
                     <p>Mar 20, 2026</p>
@@ -1653,10 +1536,7 @@
                 Approved. ₱9,000/mo. Deposit confirmed.
               </div>
 
-              <button
-                class="btn-action btn-details-full"
-                onclick="openModal('ramon')"
-              >
+              <button class="btn-action btn-details-full" onclick="openModal('ramon')">
                 <i class="fa-regular fa-eye"></i> Details
               </button>
             </div>
@@ -1667,12 +1547,7 @@
             <div>
               <div class="res-card-top">
                 <div class="user-meta">
-                  <div
-                    class="avatar-circle"
-                    style="background: #e0f2fe; color: #0d9488"
-                  >
-                    J
-                  </div>
+                  <div class="avatar-circle" style="background: #e0f2fe; color: #0d9488">J</div>
                   <div class="user-info">
                     <h3>Jenny Villanueva</h3>
                     <p>Mar 15, 2026</p>
@@ -1713,10 +1588,7 @@
                 Rejected due to incomplete documents.
               </div>
 
-              <button
-                class="btn-action btn-details-full"
-                onclick="openModal('jenny')"
-              >
+              <button class="btn-action btn-details-full" onclick="openModal('jenny')">
                 <i class="fa-regular fa-eye"></i> Details
               </button>
             </div>
@@ -1727,12 +1599,7 @@
             <div>
               <div class="res-card-top">
                 <div class="user-meta">
-                  <div
-                    class="avatar-circle"
-                    style="background: #dcfce7; color: #16a34a"
-                  >
-                    L
-                  </div>
+                  <div class="avatar-circle" style="background: #dcfce7; color: #16a34a">L</div>
                   <div class="user-info">
                     <h3>Lito Cruz</h3>
                     <p>Mar 10, 2026</p>
@@ -1769,10 +1636,7 @@
                 <span class="res-fee-amount">₱500</span>
               </div>
 
-              <button
-                class="btn-action btn-details-full"
-                onclick="openModal('lito')"
-              >
+              <button class="btn-action btn-details-full" onclick="openModal('lito')">
                 <i class="fa-regular fa-eye"></i> Details
               </button>
             </div>
@@ -1783,12 +1647,7 @@
             <div>
               <div class="res-card-top">
                 <div class="user-meta">
-                  <div
-                    class="avatar-circle"
-                    style="background: #ccfbf1; color: #0d9488"
-                  >
-                    S
-                  </div>
+                  <div class="avatar-circle" style="background: #ccfbf1; color: #0d9488">S</div>
                   <div class="user-info">
                     <h3>Sofia Reyes</h3>
                     <p>Mar 24, 2026</p>
@@ -1832,10 +1691,7 @@
                 <button class="btn-action btn-reject">
                   <i class="fa-regular fa-circle-xmark"></i> Reject
                 </button>
-                <button
-                  class="btn-action btn-details"
-                  onclick="openModal('sofia')"
-                >
+                <button class="btn-action btn-details" onclick="openModal('sofia')">
                   <i class="fa-regular fa-eye"></i> Details
                 </button>
               </div>
@@ -1845,19 +1701,15 @@
       </div>
     </div>
 
-    <!-- ========== DYNAMIC RESERVATION DETAILS MODAL ========== -->
+    <!-- ========== RESERVATION DETAILS MODAL ========== -->
     <div class="modal-overlay" id="detailsModalOverlay">
       <div class="modal-card">
         <div class="modal-header">
           <h2>Reservation Details</h2>
-          <i
-            class="fa-solid fa-xmark modal-close-btn"
-            onclick="closeModal()"
-          ></i>
+          <i class="fa-solid fa-xmark modal-close-btn" onclick="closeModal()"></i>
         </div>
 
         <div class="modal-body">
-          <!-- Top Person Header -->
           <div class="modal-user-row">
             <div class="user-meta">
               <div class="avatar-circle" id="mAvatar">M</div>
@@ -1871,13 +1723,11 @@
             </div>
           </div>
 
-          <!-- Reservation Number Box -->
           <div>
             <div class="modal-section-title">RESERVATION NUMBER</div>
             <div class="modal-code-tag" id="mResNumber">RSV-2026-00005</div>
           </div>
 
-          <!-- Contact Information -->
           <div class="modal-section">
             <div class="modal-section-title">CONTACT INFORMATION</div>
             <div class="detail-row">
@@ -1890,14 +1740,11 @@
             </div>
           </div>
 
-          <!-- Reservation Details -->
           <div class="modal-section">
             <div class="modal-section-title">RESERVATION DETAILS</div>
             <div class="detail-row">
               <i class="fa-solid fa-house"></i>
-              <span id="mDesiredRoom"
-                >Desired Room: Room 101 — Bedspace</span
-              >
+              <span id="mDesiredRoom">Desired Room: Room 101 — Bedspace</span>
             </div>
             <div class="detail-row">
               <i class="fa-solid fa-bed"></i>
@@ -1913,19 +1760,13 @@
             </div>
           </div>
 
-          <!-- Request Details -->
           <div class="modal-section">
             <div class="modal-section-title">REQUEST DETAILS</div>
-            <p
-              id="mRequestDetails"
-              style="font-size: 13px; color: #334155; line-height: 1.4"
-            >
-              Looking for a quiet unit near the stairs. Prefers bedspace for 7
-              days.
+            <p id="mRequestDetails" style="font-size: 13px; color: #334155; line-height: 1.4">
+              Looking for a quiet unit near the stairs. Prefers bedspace for 7 days.
             </p>
           </div>
 
-          <!-- Financial Payment Cards Grid -->
           <div class="modal-grid-2">
             <div class="stat-box navy">
               <div class="lbl">Total Charges</div>
@@ -1937,23 +1778,16 @@
             </div>
             <div class="stat-box gray">
               <div class="lbl">Remaining</div>
-              <div class="val" style="color: #0f172a" id="mRemaining">
-                ₱500.00
-              </div>
+              <div class="val" style="color: #0f172a" id="mRemaining">₱500.00</div>
             </div>
             <div class="stat-box gray">
               <div class="lbl">Payment Method</div>
-              <div class="val" style="color: #0f172a" id="mPaymentMethod">
-                GCash
-              </div>
+              <div class="val" style="color: #0f172a" id="mPaymentMethod">GCash</div>
             </div>
           </div>
 
-          <!-- Uploaded Proof of Payment -->
           <div>
-            <div class="modal-section-title" style="margin-bottom: 8px">
-              UPLOADED PROOF OF PAYMENT
-            </div>
+            <div class="modal-section-title" style="margin-bottom: 8px">UPLOADED PROOF OF PAYMENT</div>
             <div class="proof-card">
               <div class="receipt-img-preview">
                 <h5>CASH RECEIPT</h5>
@@ -1965,15 +1799,9 @@
             </div>
           </div>
 
-          <!-- Admin Notes -->
           <div>
-            <div class="modal-section-title" style="margin-bottom: 8px">
-              ADMIN NOTES
-            </div>
-            <textarea
-              class="admin-note-textarea"
-              placeholder="Add notes..."
-            ></textarea>
+            <div class="modal-section-title" style="margin-bottom: 8px">ADMIN NOTES</div>
+            <textarea class="admin-note-textarea" placeholder="Add notes..."></textarea>
           </div>
         </div>
 
@@ -1990,126 +1818,80 @@
       </div>
     </div>
 
-    <!-- ========== JAVASCRIPT LOGIC ========== -->
     <script>
-      // Reservation Mock Data for Dynamic Modal Populating
       const reservationsData = {
         maria: {
-          avatar: "M",
-          bg: "#ccfbf1",
-          color: "#0d9488",
-          name: "Maria Santos",
-          subCode: "#RSV-1",
+          avatar: "M", bg: "#ccfbf1", color: "#0d9488",
+          name: "Maria Santos", subCode: "#RSV-1",
           resNumber: "RSV-2026-00005",
-          email: "maria@email.com",
-          phone: "09171112222",
+          email: "maria@email.com", phone: "09171112222",
           desiredRoom: "Desired Room: Room 101 — Bedspace",
           bedId: "Room/Bed ID: R101-B1-U",
           moveIn: "Move-in: October 10, 2026",
           submitted: "Submitted: September 29, 2026",
-          requestDetails:
-            "Looking for a quiet unit near the stairs. Prefers bedspace for 7 days.",
-          totalCharges: "₱1,000.00",
-          paymentOption: "Down Payment",
-          remaining: "₱500.00",
-          paymentMethod: "GCash",
-          statusClass: "pending",
-          statusText: "Pending",
-          statusIcon: "fa-regular fa-clock",
+          requestDetails: "Looking for a quiet unit near the stairs. Prefers bedspace for 7 days.",
+          totalCharges: "₱1,000.00", paymentOption: "Down Payment",
+          remaining: "₱500.00", paymentMethod: "GCash",
+          statusClass: "pending", statusText: "Pending", statusIcon: "fa-regular fa-clock",
         },
         ramon: {
-          avatar: "R",
-          bg: "#e0f2fe",
-          color: "#0284c7",
-          name: "Ramon Bautista",
-          subCode: "#RSV-2",
+          avatar: "R", bg: "#e0f2fe", color: "#0284c7",
+          name: "Ramon Bautista", subCode: "#RSV-2",
           resNumber: "RSV-2026-00005",
-          email: "ramon@email.com",
-          phone: "09182223333",
+          email: "ramon@email.com", phone: "09182223333",
           desiredRoom: "Desired Room: Room 104 — Barkada Room",
           bedId: "Room/Bed ID: R104-B1-L",
           moveIn: "Move-in: April 8, 2026",
           submitted: "Submitted: March 9, 2026",
-          requestDetails:
-            "Group of 4 friends starting April. Need barkada room for 1 week.",
-          totalCharges: "₱9,000.00",
-          paymentOption: "Full Payment",
-          remaining: "₱0.00",
-          paymentMethod: "Bank Transfer",
-          statusClass: "approved",
-          statusText: "Approved",
-          statusIcon: "fa-regular fa-circle-check",
+          requestDetails: "Group of 4 friends starting April. Need barkada room for 1 week.",
+          totalCharges: "₱9,000.00", paymentOption: "Full Payment",
+          remaining: "₱0.00", paymentMethod: "Bank Transfer",
+          statusClass: "approved", statusText: "Approved", statusIcon: "fa-regular fa-circle-check",
         },
         jenny: {
-          avatar: "J",
-          bg: "#e0f2fe",
-          color: "#0d9488",
-          name: "Jenny Villanueva",
-          subCode: "#RSV-3",
+          avatar: "J", bg: "#e0f2fe", color: "#0d9488",
+          name: "Jenny Villanueva", subCode: "#RSV-3",
           resNumber: "RSV-2026-00003",
-          email: "jenny@email.com",
-          phone: "09193334444",
+          email: "jenny@email.com", phone: "09193334444",
           desiredRoom: "Desired Room: Room 103 — Bedspace",
           bedId: "Room/Bed ID: R103-B2-U",
           moveIn: "Move-in: March 28, 2026",
           submitted: "Submitted: March 15, 2026",
-          requestDetails:
-            "Needs bedspace near window. Student with early class schedule.",
-          totalCharges: "₱1,000.00",
-          paymentOption: "Down Payment",
-          remaining: "₱500.00",
-          paymentMethod: "GCash",
-          statusClass: "rejected",
-          statusText: "Rejected",
-          statusIcon: "fa-regular fa-circle-xmark",
+          requestDetails: "Needs bedspace near window. Student with early class schedule.",
+          totalCharges: "₱1,000.00", paymentOption: "Down Payment",
+          remaining: "₱500.00", paymentMethod: "GCash",
+          statusClass: "rejected", statusText: "Rejected", statusIcon: "fa-regular fa-circle-xmark",
         },
         lito: {
-          avatar: "L",
-          bg: "#dcfce7",
-          color: "#16a34a",
-          name: "Lito Cruz",
-          subCode: "#RSV-4",
+          avatar: "L", bg: "#dcfce7", color: "#16a34a",
+          name: "Lito Cruz", subCode: "#RSV-4",
           resNumber: "RSV-2026-00002",
-          email: "lito@email.com",
-          phone: "09204445555",
+          email: "lito@email.com", phone: "09204445555",
           desiredRoom: "Desired Room: Room 202 — Solo Room",
           bedId: "Room/Bed ID: R202-S1",
           moveIn: "Move-in: March 22, 2026",
           submitted: "Submitted: March 10, 2026",
           requestDetails: "Requires solo room for work setup.",
-          totalCharges: "₱5,000.00",
-          paymentOption: "Full Payment",
-          remaining: "₱0.00",
-          paymentMethod: "Bank Transfer",
-          statusClass: "expired",
-          statusText: "Expired",
-          statusIcon: "fa-regular fa-clock",
+          totalCharges: "₱5,000.00", paymentOption: "Full Payment",
+          remaining: "₱0.00", paymentMethod: "Bank Transfer",
+          statusClass: "expired", statusText: "Expired", statusIcon: "fa-regular fa-clock",
         },
         sofia: {
-          avatar: "S",
-          bg: "#ccfbf1",
-          color: "#0d9488",
-          name: "Sofia Reyes",
-          subCode: "#RSV-5",
+          avatar: "S", bg: "#ccfbf1", color: "#0d9488",
+          name: "Sofia Reyes", subCode: "#RSV-5",
           resNumber: "RSV-2026-00001",
-          email: "sofia@email.com",
-          phone: "09155556666",
+          email: "sofia@email.com", phone: "09155556666",
           desiredRoom: "Desired Room: Room 303 — Barkada Room",
           bedId: "Room/Bed ID: R303-B1-L",
           moveIn: "Move-in: April 4, 2026",
           submitted: "Submitted: March 24, 2026",
           requestDetails: "Visiting for short term stay.",
-          totalCharges: "₱1,000.00",
-          paymentOption: "Down Payment",
-          remaining: "₱500.00",
-          paymentMethod: "GCash",
-          statusClass: "pending",
-          statusText: "Pending",
-          statusIcon: "fa-regular fa-clock",
+          totalCharges: "₱1,000.00", paymentOption: "Down Payment",
+          remaining: "₱500.00", paymentMethod: "GCash",
+          statusClass: "pending", statusText: "Pending", statusIcon: "fa-regular fa-clock",
         },
       };
 
-      // Modal Open/Close Logic
       function openModal(key) {
         const data = reservationsData[key];
         if (!data) return;
@@ -2127,32 +1909,24 @@
         document.getElementById("mBedId").innerText = data.bedId;
         document.getElementById("mMoveIn").innerText = data.moveIn;
         document.getElementById("mSubmitted").innerText = data.submitted;
-        document.getElementById("mRequestDetails").innerText =
-          data.requestDetails;
+        document.getElementById("mRequestDetails").innerText = data.requestDetails;
         document.getElementById("mTotalCharges").innerText = data.totalCharges;
-        document.getElementById("mPaymentOption").innerText =
-          data.paymentOption;
+        document.getElementById("mPaymentOption").innerText = data.paymentOption;
         document.getElementById("mRemaining").innerText = data.remaining;
-        document.getElementById("mPaymentMethod").innerText =
-          data.paymentMethod;
+        document.getElementById("mPaymentMethod").innerText = data.paymentMethod;
 
         const pill = document.getElementById("mStatusPill");
         pill.className = `status-pill ${data.statusClass}`;
         pill.innerHTML = `<i class="${data.statusIcon}"></i> ${data.statusText}`;
 
-        document
-          .getElementById("detailsModalOverlay")
-          .classList.add("show");
+        document.getElementById("detailsModalOverlay").classList.add("show");
       }
 
       function closeModal() {
-        document
-          .getElementById("detailsModalOverlay")
-          .classList.remove("show");
+        document.getElementById("detailsModalOverlay").classList.remove("show");
       }
 
       window.addEventListener("DOMContentLoaded", () => {
-        // Sidebar Toggle
         const sidebar = document.getElementById("sidebar");
         const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
         sidebarToggleBtn.addEventListener("click", (e) => {
@@ -2160,7 +1934,6 @@
           sidebar.classList.toggle("collapsed");
         });
 
-        // Top Profile Header Dropdown
         const profileTrigger = document.getElementById("profileTrigger");
         const profileDropdown = document.getElementById("profileDropdown");
         profileTrigger.addEventListener("click", (e) => {
@@ -2170,21 +1943,15 @@
         });
 
         document.addEventListener("click", (e) => {
-          if (
-            !profileDropdown.contains(e.target) &&
-            !profileTrigger.contains(e.target)
-          ) {
+          if (!profileDropdown.contains(e.target) && !profileTrigger.contains(e.target)) {
             profileTrigger.classList.remove("active");
             profileDropdown.classList.remove("show");
           }
         });
 
-        // Grid vs. List View Switching Controls
         const btnGridView = document.getElementById("btnGridView");
         const btnListView = document.getElementById("btnListView");
-        const reservationsContainer = document.getElementById(
-          "reservationsContainer"
-        );
+        const reservationsContainer = document.getElementById("reservationsContainer");
 
         btnGridView.addEventListener("click", () => {
           btnGridView.classList.add("active");

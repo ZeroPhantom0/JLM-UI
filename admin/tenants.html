@@ -5,17 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tenants - JLM Cozy Cabin Admin Portal</title>
 
-    <!-- Google Fonts & FontAwesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
       :root {
@@ -31,7 +24,6 @@
         --sidebar-width: 250px;
         --sidebar-collapsed-width: 80px;
 
-        /* Specific UI Colors from Design */
         --status-active-bg: #dcfce7;
         --status-active-text: #16a34a;
         --status-inactive-bg: #f1f5f9;
@@ -48,8 +40,7 @@
         -webkit-tap-highlight-color: transparent;
       }
 
-      html,
-      body {
+      html, body {
         height: 100%;
         width: 100%;
         background: var(--bg-app);
@@ -61,7 +52,6 @@
         display: flex;
       }
 
-      /* ========== SIDEBAR STYLES ========== */
       .sidebar {
         width: var(--sidebar-width);
         background-color: var(--bg-dark-sidebar);
@@ -232,7 +222,6 @@
         background-color: rgba(255, 255, 255, 0.06);
       }
 
-      /* Active Link highlight on Tenants */
       .nav-item.active {
         color: #ffaa6e;
         background-color: var(--bg-dark-nav-active);
@@ -324,7 +313,6 @@
         display: none;
       }
 
-      /* ========== MAIN WRAPPER & TOP HEADER ========== */
       .main-wrapper {
         flex: 1;
         display: flex;
@@ -455,7 +443,6 @@
         transform: rotate(180deg);
       }
 
-      /* Profile Dropdown Menu */
       .profile-dropdown-card {
         position: absolute;
         top: calc(100% + 12px);
@@ -464,8 +451,7 @@
         background: #ffffff;
         border-radius: 16px;
         border: 1px solid var(--border-color);
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
-          0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
         display: none;
         flex-direction: column;
         z-index: 2000;
@@ -478,14 +464,8 @@
       }
 
       @keyframes fadeInDropdown {
-        from {
-          opacity: 0;
-          transform: translateY(-8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .dropdown-user-header {
@@ -577,7 +557,6 @@
         color: #e11d48;
       }
 
-      /* ========== TENANTS CONTENT AREA ========== */
       .content-container {
         padding: 28px 32px;
         display: flex;
@@ -585,7 +564,6 @@
         gap: 20px;
       }
 
-      /* Title Banner Section */
       .page-header-row {
         display: flex;
         align-items: center;
@@ -641,7 +619,6 @@
         background: #f8fafc;
       }
 
-      /* Summary Cards Row */
       .tenant-stats-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -668,17 +645,10 @@
         margin-top: 4px;
       }
 
-      .stat-card.total .value {
-        color: #0f172a;
-      }
-      .stat-card.active .value {
-        color: #16a34a;
-      }
-      .stat-card.inactive .value {
-        color: #64748b;
-      }
+      .stat-card.total .value { color: #0f172a; }
+      .stat-card.active .value { color: #16a34a; }
+      .stat-card.inactive .value { color: #64748b; }
 
-      /* Table Container Card */
       .table-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
@@ -687,7 +657,6 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
       }
 
-      /* Filter Controls */
       .table-filter-bar {
         display: flex;
         align-items: center;
@@ -733,7 +702,6 @@
         min-width: 140px;
       }
 
-      /* Data Table */
       .tenants-table {
         width: 100%;
         border-collapse: collapse;
@@ -760,7 +728,6 @@
         border-bottom: none;
       }
 
-      /* Profile Avatar Cells */
       .name-cell {
         display: flex;
         align-items: center;
@@ -795,7 +762,6 @@
         line-height: 1.2;
       }
 
-      /* Contact Column */
       .contact-info {
         display: flex;
         flex-direction: column;
@@ -815,7 +781,6 @@
         width: 12px;
       }
 
-      /* Date Cells with calendar icon */
       .date-cell {
         font-size: 12px;
         color: #334155;
@@ -828,7 +793,6 @@
         margin-right: 3px;
       }
 
-      /* Badges */
       .badge-status {
         display: inline-block;
         padding: 4px 10px;
@@ -847,7 +811,6 @@
         color: var(--status-inactive-text);
       }
 
-      /* Action Buttons */
       .actions-cell {
         display: flex;
         align-items: center;
@@ -864,19 +827,10 @@
         transform: scale(1.15);
       }
 
-      .action-icon.view {
-        color: #10b981;
-      }
+      .action-icon.view { color: #10b981; }
+      .action-icon.edit { color: #334155; }
+      .action-icon.delete { color: #ef4444; }
 
-      .action-icon.edit {
-        color: #334155;
-      }
-
-      .action-icon.delete {
-        color: #ef4444;
-      }
-
-      /* ========== MODAL OVERLAY & BOXES ========== */
       .modal-overlay {
         position: fixed;
         top: 0;
@@ -901,22 +855,15 @@
         border-radius: 20px;
         width: 100%;
         max-width: 540px;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         overflow: hidden;
         animation: modalScaleUp 0.2s ease-out forwards;
         position: relative;
       }
 
       @keyframes modalScaleUp {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
       }
 
       .modal-header {
@@ -950,7 +897,6 @@
         gap: 16px;
       }
 
-      /* View Modal Card Sections */
       .view-user-card {
         background: #f8fafc;
         border-radius: 14px;
@@ -1070,7 +1016,6 @@
         margin-top: 4px;
       }
 
-      /* Edit Modal Form Fields */
       .form-group {
         display: flex;
         flex-direction: column;
@@ -1170,7 +1115,6 @@
     </style>
   </head>
   <body>
-    <!-- ========== SIDEBAR ========== -->
     <aside class="sidebar" id="sidebar">
       <div class="brand-header">
         <div class="brand-logo-group">
@@ -1182,11 +1126,7 @@
             <p>Admin Portal</p>
           </div>
         </div>
-        <div
-          class="menu-toggle-btn"
-          id="sidebarToggleBtn"
-          title="Toggle Navigation"
-        >
+        <div class="menu-toggle-btn" id="sidebarToggleBtn" title="Toggle Navigation">
           <i class="fa-solid fa-bars"></i>
         </div>
       </div>
@@ -1211,7 +1151,6 @@
           </div>
         </a>
 
-        <!-- Highlighted Active Page -->
         <a href="tenants.html" class="nav-item active" title="Tenants">
           <div class="nav-left">
             <i class="fa-solid fa-users"></i>
@@ -1220,12 +1159,13 @@
           <i class="fa-solid fa-chevron-right nav-arrow"></i>
         </a>
 
-        <a href="#" class="nav-item" title="Services">
+        <!-- Services: direct link -->
+        <a href="services/maintenance.html" class="nav-item" title="Services">
           <div class="nav-left">
             <i class="fa-solid fa-wrench"></i>
             <span class="nav-text">Services</span>
           </div>
-          <i class="fa-solid fa-chevron-down nav-arrow"></i>
+          <i class="fa-solid fa-chevron-right nav-arrow"></i>
         </a>
 
         <a href="billing.html" class="nav-item" title="Billing">
@@ -1294,10 +1234,7 @@
 
       <div class="sidebar-footer">
         <div class="user-footer-info">
-          <img
-            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-            alt="Leah Agujar"
-          />
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Agujar" />
           <div class="user-footer-text">
             <h4>Leah Agujar</h4>
             <p>admin</p>
@@ -1309,9 +1246,7 @@
       </div>
     </aside>
 
-    <!-- ========== MAIN WRAPPER ========== -->
     <div class="main-wrapper">
-      <!-- Top Header -->
       <header class="top-header">
         <div class="header-left">
           <div class="header-title">Tenants</div>
@@ -1335,20 +1270,13 @@
               <h4>Leah Administrator</h4>
               <p>Admin</p>
             </div>
-            <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-              alt="Leah Administrator"
-            />
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
             <i class="fa-solid fa-chevron-down"></i>
           </div>
 
-          <!-- Profile Dropdown Card -->
           <div class="profile-dropdown-card" id="profileDropdown">
             <div class="dropdown-user-header">
-              <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-                alt="Leah Administrator"
-              />
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
               <div class="dropdown-user-info">
                 <h4>Leah Administrator</h4>
                 <p>leah.admin@jlmcozycabin.com</p>
@@ -1377,9 +1305,7 @@
         </div>
       </header>
 
-      <!-- ========== TENANTS MAIN CONTENT ========== -->
       <main class="content-container">
-        <!-- Title & Export Row -->
         <div class="page-header-row">
           <div class="header-title-group">
             <div class="header-title-icon">
@@ -1395,7 +1321,6 @@
           </button>
         </div>
 
-        <!-- Metric Summary Cards -->
         <div class="tenant-stats-grid">
           <div class="stat-card total">
             <div class="label">Total</div>
@@ -1411,9 +1336,7 @@
           </div>
         </div>
 
-        <!-- Table Panel -->
         <div class="table-card">
-          <!-- Filters -->
           <div class="table-filter-bar">
             <div class="search-input-wrap">
               <i class="fa-solid fa-magnifying-glass"></i>
@@ -1426,7 +1349,6 @@
             </select>
           </div>
 
-          <!-- Table -->
           <table class="tenants-table">
             <thead>
               <tr>
@@ -1441,7 +1363,6 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Tenant 1 -->
               <tr>
                 <td>
                   <div class="name-cell">
@@ -1451,26 +1372,17 @@
                 </td>
                 <td>
                   <div class="contact-info">
-                    <div>
-                      <i class="fa-regular fa-envelope"></i
-                      >nicole@gmail.com
-                    </div>
-                    <div>
-                      <i class="fa-solid fa-phone"></i>09171234567
-                    </div>
+                    <div><i class="fa-regular fa-envelope"></i>nicole@gmail.com</div>
+                    <div><i class="fa-solid fa-phone"></i>09171234567</div>
                   </div>
                 </td>
                 <td style="font-weight: 500">Room 202</td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 20, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 20, 2026</div>
                   <div style="color: #64748b">6:00 PM</div>
                 </td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 22, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 22, 2026</div>
                   <div style="color: #64748b">6:00 PM</div>
                 </td>
                 <td style="font-weight: 600">₱1,900</td>
@@ -1484,7 +1396,6 @@
                 </td>
               </tr>
 
-              <!-- Tenant 2 -->
               <tr>
                 <td>
                   <div class="name-cell">
@@ -1494,26 +1405,17 @@
                 </td>
                 <td>
                   <div class="contact-info">
-                    <div>
-                      <i class="fa-regular fa-envelope"></i
-                      >elle@gmail.com
-                    </div>
-                    <div>
-                      <i class="fa-solid fa-phone"></i>09181234567
-                    </div>
+                    <div><i class="fa-regular fa-envelope"></i>elle@gmail.com</div>
+                    <div><i class="fa-solid fa-phone"></i>09181234567</div>
                   </div>
                 </td>
                 <td style="font-weight: 500">Room 101</td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 20, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 20, 2026</div>
                   <div style="color: #64748b">6:00 PM</div>
                 </td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 22, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 22, 2026</div>
                   <div style="color: #64748b">6:00 PM</div>
                 </td>
                 <td style="font-weight: 600">₱600</td>
@@ -1527,7 +1429,6 @@
                 </td>
               </tr>
 
-              <!-- Tenant 3 -->
               <tr>
                 <td>
                   <div class="name-cell">
@@ -1537,25 +1438,16 @@
                 </td>
                 <td>
                   <div class="contact-info">
-                    <div>
-                      <i class="fa-regular fa-envelope"></i
-                      >mau@gmail.com
-                    </div>
-                    <div>
-                      <i class="fa-solid fa-phone"></i>09191234567
-                    </div>
+                    <div><i class="fa-regular fa-envelope"></i>mau@gmail.com</div>
+                    <div><i class="fa-solid fa-phone"></i>09191234567</div>
                   </div>
                 </td>
                 <td style="font-weight: 500">Room 201</td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 20, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 20, 2026</div>
                 </td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 21, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 21, 2026</div>
                 </td>
                 <td style="font-weight: 600">₱600</td>
                 <td><span class="badge-status active">Active</span></td>
@@ -1568,7 +1460,6 @@
                 </td>
               </tr>
 
-              <!-- Tenant 4 -->
               <tr>
                 <td>
                   <div class="name-cell">
@@ -1578,25 +1469,16 @@
                 </td>
                 <td>
                   <div class="contact-info">
-                    <div>
-                      <i class="fa-regular fa-envelope"></i
-                      >gabriel@gmail.com
-                    </div>
-                    <div>
-                      <i class="fa-solid fa-phone"></i>09201234567
-                    </div>
+                    <div><i class="fa-regular fa-envelope"></i>gabriel@gmail.com</div>
+                    <div><i class="fa-solid fa-phone"></i>09201234567</div>
                   </div>
                 </td>
                 <td style="font-weight: 500">Room 101</td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 20, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 20, 2026</div>
                 </td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Mar 25, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Mar 25, 2026</div>
                 </td>
                 <td style="font-weight: 600">₱1,000</td>
                 <td><span class="badge-status active">Active</span></td>
@@ -1609,7 +1491,6 @@
                 </td>
               </tr>
 
-              <!-- Tenant 5 -->
               <tr>
                 <td>
                   <div class="name-cell">
@@ -1619,25 +1500,16 @@
                 </td>
                 <td>
                   <div class="contact-info">
-                    <div>
-                      <i class="fa-regular fa-envelope"></i
-                      >francis@gmail.com
-                    </div>
-                    <div>
-                      <i class="fa-solid fa-phone"></i>09211234567
-                    </div>
+                    <div><i class="fa-regular fa-envelope"></i>francis@gmail.com</div>
+                    <div><i class="fa-solid fa-phone"></i>09211234567</div>
                   </div>
                 </td>
                 <td style="font-weight: 500">Room 203</td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Jan 15, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Jan 15, 2026</div>
                 </td>
                 <td class="date-cell">
-                  <div>
-                    <i class="fa-regular fa-calendar"></i>Jan 22, 2026
-                  </div>
+                  <div><i class="fa-regular fa-calendar"></i>Jan 22, 2026</div>
                 </td>
                 <td style="font-weight: 600">₱4,200</td>
                 <td><span class="badge-status inactive">Inactive</span></td>
@@ -1655,7 +1527,6 @@
       </main>
     </div>
 
-    <!-- ========== TENANT DETAILS MODAL ========== -->
     <div class="modal-overlay" id="detailsModal">
       <div class="modal-box">
         <div class="modal-header">
@@ -1663,7 +1534,6 @@
           <i class="fa-solid fa-xmark close-modal-btn" onclick="closeDetailsModal()"></i>
         </div>
         <div class="modal-body">
-          <!-- Profile Subcard -->
           <div class="view-user-card">
             <div class="view-user-left">
               <div class="view-user-avatar">N</div>
@@ -1676,7 +1546,6 @@
             <span class="badge-status active">Active</span>
           </div>
 
-          <!-- Metadata Grid -->
           <div class="meta-grid-2">
             <div class="meta-box">
               <div class="label">Valid ID Type</div>
@@ -1690,17 +1559,13 @@
 
           <div class="id-section-title">Valid ID</div>
 
-          <!-- ID Images Container -->
           <div class="id-cards-grid">
             <div class="id-card-wrapper">
               <div class="id-card-sublabel">
                 <i class="fa-regular fa-address-card"></i> FRONT SIDE
               </div>
               <div class="id-image-frame">
-                <img
-                  src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=300"
-                  alt="Front Side ID"
-                />
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=300" alt="Front Side ID" />
               </div>
             </div>
 
@@ -1709,10 +1574,7 @@
                 <i class="fa-regular fa-address-card"></i> BACK SIDE
               </div>
               <div class="id-image-frame">
-                <img
-                  src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=300"
-                  alt="Back Side ID"
-                />
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=300" alt="Back Side ID" />
               </div>
             </div>
           </div>
@@ -1722,7 +1584,6 @@
       </div>
     </div>
 
-    <!-- ========== EDIT TENANT MODAL ========== -->
     <div class="modal-overlay" id="editModal">
       <div class="modal-box">
         <div class="modal-header">
@@ -1730,13 +1591,11 @@
           <i class="fa-solid fa-xmark close-modal-btn" onclick="closeEditModal()"></i>
         </div>
         <div class="modal-body">
-          <!-- Full Name -->
           <div class="form-group">
             <label>Tenant Full Name</label>
             <input type="text" class="form-control" value="Nicole Custorio" />
           </div>
 
-          <!-- Email & Mobile -->
           <div class="form-row-2">
             <div class="form-group">
               <label>Email Address</label>
@@ -1748,7 +1607,6 @@
             </div>
           </div>
 
-          <!-- Move-In & Time-In -->
           <div class="form-row-2">
             <div class="form-group">
               <label>Move-In Date</label>
@@ -1766,7 +1624,6 @@
             </div>
           </div>
 
-          <!-- Move-Out & Time-Out -->
           <div class="form-row-2">
             <div class="form-group">
               <label>Move-Out Date</label>
@@ -1784,7 +1641,6 @@
             </div>
           </div>
 
-          <!-- Rent Rate & Status -->
           <div class="form-row-2">
             <div class="form-group">
               <label>Rent Rate (₱)</label>
@@ -1802,7 +1658,6 @@
             </div>
           </div>
 
-          <!-- Footer Buttons -->
           <div class="modal-actions-footer">
             <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
             <button class="btn-save" onclick="closeEditModal()">Save Changes</button>
@@ -1811,10 +1666,8 @@
       </div>
     </div>
 
-    <!-- ========== JAVASCRIPT LOGIC ========== -->
     <script>
       window.addEventListener("DOMContentLoaded", () => {
-        // Sidebar Collapse Toggle
         const sidebar = document.getElementById("sidebar");
         const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
 
@@ -1823,7 +1676,6 @@
           sidebar.classList.toggle("collapsed");
         });
 
-        // Top Header Profile Dropdown
         const profileTrigger = document.getElementById("profileTrigger");
         const profileDropdown = document.getElementById("profileDropdown");
 
@@ -1840,17 +1692,13 @@
         });
 
         document.addEventListener("click", (e) => {
-          if (
-            !profileDropdown.contains(e.target) &&
-            !profileTrigger.contains(e.target)
-          ) {
+          if (!profileDropdown.contains(e.target) && !profileTrigger.contains(e.target)) {
             profileDropdown.classList.remove("show");
             profileTrigger.classList.remove("active");
           }
         });
       });
 
-      // Modal Handlers
       function openDetailsModal() {
         document.getElementById("detailsModal").classList.add("active");
       }
@@ -1867,7 +1715,6 @@
         document.getElementById("editModal").classList.remove("active");
       }
 
-      // Close modal on clicking outside background overlay
       window.onclick = function (event) {
         const detailsModal = document.getElementById("detailsModal");
         const editModal = document.getElementById("editModal");

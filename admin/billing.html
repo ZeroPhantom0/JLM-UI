@@ -5,17 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JLM Cozy Cabin - Billing & Payments</title>
 
-  <!-- Google Fonts & FontAwesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     :root {
@@ -31,7 +24,6 @@
       --sidebar-width: 250px;
       --sidebar-collapsed-width: 80px;
 
-      /* Metric & Badge Colors */
       --mint-bg: #d1fae5;
       --mint-text: #059669;
       --mint-icon-bg: #a7f3d0;
@@ -247,7 +239,6 @@
       background-color: rgba(255, 255, 255, 0.06);
     }
 
-    /* Billing Active State Highlight */
     .nav-item.active {
       color: #ffaa6e;
       background-color: var(--bg-dark-nav-active);
@@ -594,7 +585,6 @@
       gap: 24px;
     }
 
-    /* Page Header Title Section */
     .billing-page-header {
       display: flex;
       align-items: center;
@@ -626,7 +616,6 @@
       margin-top: 2px;
     }
 
-    /* Summary Metric Cards */
     .billing-cards-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -668,7 +657,6 @@
       margin-top: 2px;
     }
 
-    /* Invoices Table Panel */
     .table-panel {
       background: var(--card-bg);
       border-radius: 20px;
@@ -680,7 +668,6 @@
       gap: 20px;
     }
 
-    /* Filter Controls Row */
     .table-filters {
       display: flex;
       align-items: center;
@@ -725,7 +712,6 @@
       min-width: 160px;
     }
 
-    /* Invoices Table */
     .table-wrapper {
       width: 100%;
       overflow-x: auto;
@@ -778,7 +764,6 @@
       color: #0f172a;
     }
 
-    /* Badges */
     .status-badge {
       display: inline-block;
       padding: 4px 14px;
@@ -794,7 +779,6 @@
     .status-badge.pending { background: var(--status-pending-bg); color: var(--status-pending-text); }
     .status-badge.paid { background: var(--status-paid-bg); color: var(--status-paid-text); }
 
-    /* Action Icon Buttons */
     .action-group {
       display: flex;
       align-items: center;
@@ -813,7 +797,6 @@
       transform: scale(1.1);
     }
 
-    /* ========== MODALS GENERAL STYLES ========== */
     .modal-backdrop {
       position: fixed;
       top: 0;
@@ -890,7 +873,6 @@
       gap: 16px;
     }
 
-    /* Modal Form Inputs */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -968,7 +950,6 @@
       background: #092042;
     }
 
-    /* SPECIFIC MODAL STYLES: SUMMARY MODAL */
     .summary-hero-card {
       background: #fff8f5;
       border-radius: 14px;
@@ -1048,7 +1029,6 @@
       font-weight: 600;
     }
 
-    /* SPECIFIC MODAL STYLES: RECEIPT MODAL */
     .receipt-dashed-box {
       border: 1.5px dashed #f97316;
       background: #fffdfb;
@@ -1205,15 +1185,15 @@
         </div>
       </a>
 
-      <a href="#" class="nav-item" title="Services">
+      <!-- Services: direct link to maintenance.html -->
+      <a href="services/maintenance.html" class="nav-item" title="Services">
         <div class="nav-left">
           <i class="fa-solid fa-wrench"></i>
           <span class="nav-text">Services</span>
         </div>
-        <i class="fa-solid fa-chevron-down nav-arrow"></i>
+        <i class="fa-solid fa-chevron-right nav-arrow"></i>
       </a>
 
-      <!-- Billing (Active Highlighted) -->
       <a href="billing.html" class="nav-item active" title="Billing">
         <div class="nav-left">
           <i class="fa-solid fa-credit-card"></i>
@@ -1281,10 +1261,7 @@
 
     <div class="sidebar-footer">
       <div class="user-footer-info">
-        <img
-          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-          alt="Leah Agujar"
-        />
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Agujar" />
         <div class="user-footer-text">
           <h4>Leah Agujar</h4>
           <p>admin</p>
@@ -1298,7 +1275,6 @@
 
   <!-- ========== MAIN WRAPPER ========== -->
   <div class="main-wrapper">
-    <!-- Top Header -->
     <header class="top-header">
       <div class="header-left">
         <div class="header-title">Billing & Payments</div>
@@ -1322,20 +1298,13 @@
             <h4>Leah Administrator</h4>
             <p>Admin</p>
           </div>
-          <img
-            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-            alt="Leah Administrator"
-          />
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
           <i class="fa-solid fa-chevron-down"></i>
         </div>
 
-        <!-- PROFILE DROPDOWN CARD -->
         <div class="profile-dropdown-card" id="profileDropdown">
           <div class="dropdown-user-header">
-            <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120"
-              alt="Leah Administrator"
-            />
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
             <div class="dropdown-user-info">
               <h4>Leah Administrator</h4>
               <p>leah.admin@jlmcozycabin.com</p>
@@ -1364,10 +1333,7 @@
       </div>
     </header>
 
-    <!-- ========== BILLING CONTENT CONTAINER ========== -->
     <div class="billing-container">
-      
-      <!-- Page Title -->
       <div class="billing-page-header">
         <div class="header-icon-badge">
           <i class="fa-solid fa-credit-card"></i>
@@ -1378,9 +1344,7 @@
         </div>
       </div>
 
-      <!-- Metrics Row -->
       <div class="billing-cards-grid">
-        <!-- Collected this month -->
         <div class="summary-card">
           <div class="summary-card-icon" style="background: var(--mint-icon-bg); color: var(--mint-text);">
             <i class="fa-solid fa-circle-check"></i>
@@ -1391,7 +1355,6 @@
           </div>
         </div>
 
-        <!-- Pending Payments -->
         <div class="summary-card">
           <div class="summary-card-icon" style="background: var(--yellow-icon-bg); color: var(--yellow-text);">
             <i class="fa-regular fa-calendar"></i>
@@ -1402,7 +1365,6 @@
           </div>
         </div>
 
-        <!-- Overdue -->
         <div class="summary-card">
           <div class="summary-card-icon" style="background: var(--pink-icon-bg); color: var(--pink-text);">
             <i class="fa-solid fa-circle-exclamation"></i>
@@ -1414,7 +1376,6 @@
         </div>
       </div>
 
-      <!-- Invoices Table Section -->
       <div class="table-panel">
         <div class="table-filters">
           <div class="table-search-box">
@@ -1452,7 +1413,6 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Row 1: Unpaid -->
               <tr>
                 <td>
                   <div class="tn-code">tn-101</div>
@@ -1482,7 +1442,6 @@
                 </td>
               </tr>
 
-              <!-- Row 2: Overdue -->
               <tr>
                 <td>
                   <div class="tn-code">tn-102</div>
@@ -1512,7 +1471,6 @@
                 </td>
               </tr>
 
-              <!-- Row 3: Partial -->
               <tr>
                 <td>
                   <div class="tn-code">tn-103</div>
@@ -1542,7 +1500,6 @@
                 </td>
               </tr>
 
-              <!-- Row 4: Pending -->
               <tr>
                 <td>
                   <div class="tn-code">inv-104</div>
@@ -1572,7 +1529,6 @@
                 </td>
               </tr>
 
-              <!-- Row 5: Paid (ONLY THIS HAS RECEIPT ICON) -->
               <tr>
                 <td>
                   <div class="tn-code">tn-105</div>
@@ -1605,11 +1561,10 @@
           </table>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ========== MODAL 1: EDIT INVOICE MODAL ========== -->
+  <!-- MODAL 1: EDIT INVOICE -->
   <div class="modal-backdrop" id="editModal">
     <div class="modal-card">
       <div class="modal-header">
@@ -1681,7 +1636,7 @@
     </div>
   </div>
 
-  <!-- ========== MODAL 2: INVOICE SUMMARY MODAL ========== -->
+  <!-- MODAL 2: INVOICE SUMMARY -->
   <div class="modal-backdrop" id="summaryModal">
     <div class="modal-card">
       <div class="modal-header">
@@ -1761,7 +1716,7 @@
     </div>
   </div>
 
-  <!-- ========== MODAL 3: PAYMENT RECEIPT MODAL ========== -->
+  <!-- MODAL 3: PAYMENT RECEIPT -->
   <div class="modal-backdrop" id="paymentModal">
     <div class="modal-card">
       <div class="modal-header">
@@ -1867,9 +1822,7 @@
     </div>
   </div>
 
-  <!-- ========== JAVASCRIPT LOGIC ========== -->
   <script>
-    // Helper Modal Controls
     function openModal(id) {
       document.getElementById(id).classList.add('show');
     }
@@ -1879,7 +1832,6 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      // 1. Sidebar Collapse Functionality
       const sidebar = document.getElementById("sidebar");
       const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
 
@@ -1888,7 +1840,6 @@
         sidebar.classList.toggle("collapsed");
       });
 
-      // 2. Profile Dropdown Toggle
       const profileTrigger = document.getElementById("profileTrigger");
       const profileDropdown = document.getElementById("profileDropdown");
 
@@ -1911,23 +1862,18 @@
         }
       });
 
-      // 3. Modal Trigger Event Listeners
-      // View Summary (Eye Icons)
       document.querySelectorAll('.icon-view').forEach(btn => {
         btn.addEventListener('click', () => openModal('summaryModal'));
       });
 
-      // Edit Invoice (Pencil Icons)
       document.querySelectorAll('.icon-edit').forEach(btn => {
         btn.addEventListener('click', () => openModal('editModal'));
       });
 
-      // Payment Receipt (Only triggers on Paid status icon)
       document.querySelectorAll('.icon-payment').forEach(btn => {
         btn.addEventListener('click', () => openModal('paymentModal'));
       });
 
-      // Close Modals on Backdrop Click
       document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
         backdrop.addEventListener('click', (e) => {
           if (e.target === backdrop) {
