@@ -1,0 +1,690 @@
+/* =========================
+   IDENTITY VERIFICATION PAGE
+========================= */
+
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body.identity-page {
+    margin: 0;
+    min-height: 100vh;
+    background: #001D4C;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.identity-container {
+    min-height: 100vh;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1.2fr;
+}
+
+
+/* =========================
+   LEFT SIDE
+========================= */
+
+.identity-left {
+    height: 100vh;
+
+    position: sticky;
+    top: 0;
+
+    padding: 70px 9%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #001D4C;
+    color: #ffffff;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.identity-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.identity-logo {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+    color: #001D4C;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.identity-brand strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.identity-brand span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #D0D9E8;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   LEFT INTRO
+========================= */
+
+.identity-intro {
+    margin: auto 0;
+
+    max-width: 500px;
+}
+
+.identity-intro h1 {
+    margin: 0 0 12px;
+
+    color: #FF8904;
+
+    font-size: 40px;
+    line-height: 1.1;
+    font-weight: 700;
+}
+
+.identity-intro > p {
+    max-width: 430px;
+
+    margin: 0 0 50px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+    line-height: 1.45;
+}
+
+
+/* =========================
+   STEPS
+========================= */
+
+.identity-step {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 30px;
+}
+
+.step-icon {
+    width: 53px;
+    height: 53px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+    color: #FF8904;
+
+    font-size: 20px;
+}
+
+.identity-step.completed .step-icon {
+    border-radius: 16px;
+
+    background: #FF8904;
+    color: #ffffff;
+}
+
+.identity-step.active .step-icon {
+    background: #ffffff;
+    color: #FF8904;
+}
+
+.step-content strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.step-content span {
+    display: block;
+
+    color: #D0D9E8;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   HELP
+========================= */
+
+.identity-help {
+    max-width: 485px;
+}
+
+.help-line {
+    width: 100%;
+    height: 1px;
+
+    margin-bottom: 38px;
+
+    background: #FF8904;
+}
+
+.identity-help p {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 14px;
+}
+
+.identity-help strong {
+    font-weight: 700;
+}
+
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.identity-right {
+    height: 100vh;
+
+    padding: 60px 6%;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    background: #ffffff;
+
+    border-radius: 28px 0 0 28px;
+
+    overflow-y: auto;
+}
+
+.identity-form-container {
+    width: 100%;
+    max-width: 675px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.identity-form-container h2 {
+    margin: 0 0 8px;
+
+    color: #111A30;
+
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.identity-subtitle {
+    margin: 0 0 55px;
+
+    color: #7187A5;
+
+    font-size: 18px;
+}
+
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.identity-form-group {
+    margin-bottom: 30px;
+}
+
+.identity-form-group > label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #344560;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   ID SELECT
+========================= */
+
+.identity-select-wrapper {
+    position: relative;
+
+    width: 100%;
+}
+
+.identity-select-wrapper select {
+    width: 100%;
+    height: 60px;
+
+    padding: 0 50px 0 24px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: 1px solid #C8D4E2;
+    border-radius: 16px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #7187A5;
+
+    font-family: inherit;
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.identity-select-wrapper i {
+    position: absolute;
+
+    right: 22px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #C9C9C9;
+
+    font-size: 14px;
+
+    pointer-events: none;
+}
+
+.identity-select-wrapper select:focus {
+    border-color: #FF8904;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 137, 4, 0.12);
+}
+
+
+/* =========================
+   UPLOAD BOX
+========================= */
+
+.upload-box {
+    width: 100%;
+    min-height: 230px;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0;
+
+    padding: 35px;
+
+    border: 2px dashed #C8D4E2;
+    border-radius: 18px;
+
+    background: #F8FAFC;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.upload-box > i {
+    display: block;
+
+    margin-bottom: 16px;
+
+    color: #8EA2BF;
+
+    font-size: 44px;
+
+    line-height: 1;
+}
+
+.upload-box strong {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #344560;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+.upload-box span {
+    display: block;
+
+    color: #7187A5;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+.upload-box:hover {
+    border-color: #FF8904;
+
+    background: #FFF9F2;
+}
+
+
+/* =========================
+   SECURITY NOTICE
+========================= */
+
+.security-notice {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin: 4px 0 20px;
+
+    padding: 20px;
+
+    border: 1px solid #A9D0FF;
+    border-radius: 16px;
+
+    background: #F0F7FF;
+
+    color: #2454A6;
+}
+
+.security-notice > i {
+    flex-shrink: 0;
+
+    margin-top: 2px;
+
+    color: #1769FF;
+
+    font-size: 21px;
+}
+
+.security-notice p {
+    margin: 0;
+
+    color: #2454A6;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   AGREEMENT
+========================= */
+
+.verification-agreement {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+
+    padding: 18px 20px;
+
+    border: 1px solid #DCE4ED;
+    border-radius: 16px;
+
+    background: #F8FAFC;
+
+    color: #344560;
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    cursor: pointer;
+}
+
+.verification-agreement input {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    margin-top: 2px;
+
+    accent-color: #40516C;
+
+    cursor: pointer;
+}
+
+.verification-agreement a {
+    color: #FF8904;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.verification-agreement a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   BOTTOM ACTIONS
+========================= */
+
+.identity-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 10px;
+}
+
+.previous-step-btn {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 0;
+
+    border: none;
+
+    background: transparent;
+    color: #40516C;
+
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.previous-step-btn:hover {
+    color: #FF8904;
+}
+
+.submit-finish-btn {
+    min-width: 240px;
+
+    padding: 17px 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #FF8904;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    box-shadow:
+        0 8px 20px rgba(255, 137, 4, 0.18);
+}
+
+.submit-finish-btn:hover {
+    transform: translateY(-2px);
+
+    opacity: 0.94;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .identity-container {
+        grid-template-columns: 1fr;
+    }
+
+    .identity-left {
+        height: auto;
+        min-height: auto;
+
+        position: relative;
+
+        padding: 40px 8%;
+    }
+
+    .identity-intro {
+        margin: 60px 0;
+    }
+
+    .identity-right {
+        height: auto;
+        min-height: auto;
+
+        padding: 55px 8%;
+
+        border-radius: 28px 28px 0 0;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .identity-left {
+        padding: 30px 6%;
+    }
+
+    .identity-intro {
+        margin: 45px 0;
+    }
+
+    .identity-intro h1 {
+        font-size: 34px;
+    }
+
+    .identity-right {
+        padding: 45px 6%;
+    }
+
+    .identity-form-container h2 {
+        font-size: 27px;
+    }
+
+    .identity-subtitle {
+        font-size: 16px;
+        margin-bottom: 45px;
+    }
+
+    .upload-box {
+        min-height: 200px;
+    }
+
+    .identity-actions {
+        align-items: stretch;
+
+        flex-direction: column-reverse;
+    }
+
+    .submit-finish-btn {
+        width: 100%;
+    }
+
+    .previous-step-btn {
+        justify-content: center;
+    }
+
+}
+
+.identity-brand .identity-logo {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.identity-brand .identity-logo img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover;
+    display: block;
+}

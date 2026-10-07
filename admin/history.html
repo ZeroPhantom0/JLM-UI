@@ -1,0 +1,2320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JLM Cozy Cabin - History</title>
+
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --bg-dark-sidebar: #02122b;
+        --bg-dark-nav-active: #092042;
+        --primary-orange: #f97316;
+        --primary-orange-hover: #ea580c;
+        --bg-app: #f4f6f9;
+        --card-bg: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --sidebar-width: 250px;
+        --sidebar-collapsed-width: 80px;
+
+        /* Metric Colors */
+        --mint-bg: #dcfce7;
+        --mint-text: #15803d;
+        --blue-bg: #e0f2fe;
+        --blue-text: #0369a1;
+        --yellow-bg: #fef9c3;
+        --yellow-text: #a16207;
+        --pink-bg: #ffe4e6;
+        --pink-text: #be123c;
+        --purple-bg: #f3e8ff;
+        --purple-text: #7e22ce;
+
+        /* Status Colors */
+        --status-paid-bg: #dcfce7;
+        --status-paid-text: #16a34a;
+        --status-approved-bg: #e0f2fe;
+        --status-approved-text: #0284c7;
+        --status-rejected-bg: #ffe4e6;
+        --status-rejected-text: #e11d48;
+        --status-completed-bg: #dcfce7;
+        --status-completed-text: #16a34a;
+        --status-cancelled-bg: #f1f5f9;
+        --status-cancelled-text: #475569;
+        --status-expired-bg: #fef9c3;
+        --status-expired-text: #ca8a04;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html, body {
+        height: 100%;
+        width: 100%;
+        background: var(--bg-app);
+        color: var(--text-main);
+        overflow-x: hidden;
+      }
+
+      body {
+        display: flex;
+      }
+
+      /* ========== SIDEBAR STYLES ========== */
+      .sidebar {
+        width: var(--sidebar-width);
+        background-color: var(--bg-dark-sidebar);
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-x: hidden;
+      }
+
+      .sidebar.collapsed {
+        width: var(--sidebar-collapsed-width);
+      }
+
+      .brand-header {
+        padding: 20px 18px 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      .brand-logo-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-logo {
+        width: 38px;
+        height: 38px;
+        background: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-orange);
+        font-size: 18px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        flex-shrink: 0;
+      }
+
+      .brand-title {
+        transition: opacity 0.2s ease, max-width 0.3s ease;
+        overflow: hidden;
+      }
+
+      .brand-title h3 {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #ffffff;
+      }
+
+      .brand-title p {
+        font-size: 11px;
+        color: #8fa0b5;
+      }
+
+      .menu-toggle-btn {
+        color: #8fa0b5;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 6px;
+        transition: color 0.2s, background-color 0.2s;
+      }
+
+      .menu-toggle-btn:hover {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .sidebar.collapsed .brand-title,
+      .sidebar.collapsed .admin-pill span,
+      .sidebar.collapsed .nav-text,
+      .sidebar.collapsed .nav-arrow,
+      .sidebar.collapsed .user-footer-text {
+        opacity: 0;
+        display: none;
+        pointer-events: none;
+      }
+
+      .sidebar.collapsed .brand-header {
+        justify-content: center;
+        padding: 20px 10px 14px 10px;
+      }
+
+      .sidebar.collapsed .brand-logo-group {
+        display: none;
+      }
+
+      .admin-pill {
+        background-color: var(--primary-orange);
+        margin: 4px 14px 16px 14px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 14px;
+        color: #ffffff;
+        box-shadow: 0 2px 6px rgba(249, 115, 22, 0.25);
+        flex-shrink: 0;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar.collapsed .admin-pill {
+        justify-content: center;
+        padding: 10px 0;
+        margin: 4px 12px 16px 12px;
+      }
+
+      .admin-pill i {
+        font-size: 16px;
+      }
+
+      .nav-menu {
+        list-style: none;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .nav-menu::-webkit-scrollbar {
+        width: 4px;
+      }
+      .nav-menu::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 12px;
+        color: #94a3b8;
+        border-radius: 10px;
+        font-size: 13.5px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        position: relative;
+      }
+
+      .sidebar.collapsed .nav-item {
+        justify-content: center;
+        padding: 12px;
+      }
+
+      .nav-item:hover {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.06);
+      }
+
+      .nav-item.active {
+        color: #ffaa6e;
+        background-color: var(--bg-dark-nav-active);
+        font-weight: 600;
+        border-left: 3px solid var(--primary-orange);
+      }
+
+      .nav-item.active .nav-text {
+        color: #f97316;
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .sidebar.collapsed .nav-left {
+        gap: 0;
+        justify-content: center;
+      }
+
+      .nav-left i {
+        width: 20px;
+        text-align: center;
+        font-size: 15px;
+      }
+
+      .nav-arrow {
+        font-size: 11px;
+        color: #64748b;
+      }
+
+      .sidebar-footer {
+        padding: 14px 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        background: var(--bg-dark-sidebar);
+        white-space: nowrap;
+      }
+
+      .sidebar.collapsed .sidebar-footer {
+        justify-content: center;
+        padding: 14px 8px;
+      }
+
+      .user-footer-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .user-footer-info img {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1.5px solid #ffffff;
+        flex-shrink: 0;
+      }
+
+      .user-footer-text h4 {
+        font-size: 13px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.2;
+      }
+
+      .user-footer-text p {
+        font-size: 11px;
+        color: #8fa0b5;
+      }
+
+      .logout-btn {
+        color: #8fa0b5;
+        font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .logout-btn:hover {
+        color: #ffffff;
+      }
+
+      .sidebar.collapsed .logout-btn {
+        display: none;
+      }
+
+      /* ========== MAIN WRAPPER & TOP HEADER ========== */
+      .main-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .top-header {
+        background: #ffffff;
+        padding: 14px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .header-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+      }
+
+      .search-box {
+        background: #f1f5f9;
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 240px;
+      }
+
+      .search-box i {
+        color: #94a3b8;
+        font-size: 13px;
+      }
+
+      .search-box input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%;
+        font-size: 13px;
+        color: var(--text-main);
+      }
+
+      .notification-bell {
+        position: relative;
+        font-size: 18px;
+        color: #e11d48;
+        cursor: pointer;
+      }
+
+      .notification-bell .badge-dot {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 7px;
+        height: 7px;
+        background: #e11d48;
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+      }
+
+      .header-divider {
+        width: 1px;
+        height: 24px;
+        background-color: #cbd5e1;
+      }
+
+      .header-profile-trigger {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+        user-select: none;
+      }
+
+      .header-profile-trigger:hover {
+        background-color: #f1f5f9;
+      }
+
+      .header-profile-text {
+        text-align: right;
+      }
+
+      .header-profile-text h4 {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-main);
+        line-height: 1.2;
+      }
+
+      .header-profile-text p {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+
+      .header-profile-trigger img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .header-profile-trigger i {
+        font-size: 11px;
+        color: #64748b;
+        transition: transform 0.2s ease;
+      }
+
+      .header-profile-trigger.active i {
+        transform: rotate(180deg);
+      }
+
+      .profile-dropdown-card {
+        position: absolute;
+        top: calc(100% + 12px);
+        right: 0;
+        width: 270px;
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        display: none;
+        flex-direction: column;
+        z-index: 2000;
+        overflow: hidden;
+        animation: fadeInDropdown 0.2s ease-out forwards;
+      }
+
+      .profile-dropdown-card.show {
+        display: flex;
+      }
+
+      @keyframes fadeInDropdown {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .dropdown-user-header {
+        padding: 16px;
+        background: #f8fafc;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .dropdown-user-header img {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .dropdown-user-info h4 {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+
+      .dropdown-user-info p {
+        font-size: 11px;
+        color: #64748b;
+        margin-top: 2px;
+      }
+
+      .dropdown-user-info .role-badge {
+        display: inline-block;
+        margin-top: 4px;
+        padding: 2px 8px;
+        background: #ffedd5;
+        color: #c2410c;
+        font-size: 10px;
+        font-weight: 700;
+        border-radius: 10px;
+      }
+
+      .dropdown-links {
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #334155;
+        text-decoration: none;
+        transition: all 0.15s ease;
+        cursor: pointer;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f1f5f9;
+        color: #0f172a;
+      }
+
+      .dropdown-item i {
+        font-size: 14px;
+        width: 16px;
+        text-align: center;
+        color: #64748b;
+      }
+
+      .dropdown-item.logout {
+        color: #e11d48;
+        border-top: 1px solid #f1f5f9;
+        margin-top: 4px;
+        border-radius: 0 0 8px 8px;
+      }
+
+      .dropdown-item.logout:hover {
+        background-color: #fff1f2;
+        color: #be123c;
+      }
+
+      .dropdown-item.logout i {
+        color: #e11d48;
+      }
+
+      /* ========== HISTORY PAGE STYLES ========== */
+      .history-container {
+        padding: 24px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .page-header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .page-title-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .page-title-group h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .page-title-group h1 i {
+        color: #16a34a;
+        font-size: 22px;
+      }
+
+      .page-title-group p {
+        font-size: 13.5px;
+        color: var(--text-muted);
+      }
+
+      .all-rooms-filter {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #475569;
+        cursor: pointer;
+        padding: 6px 12px;
+        border-radius: 8px;
+        transition: background 0.2s;
+      }
+
+      .all-rooms-filter:hover {
+        background: #e2e8f0;
+      }
+
+      .all-rooms-filter i {
+        font-size: 16px;
+      }
+
+      /* Metrics Row */
+      .history-metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      .history-metric-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 20px 22px;
+        border: 1px solid #edf2f7;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .history-metric-card.dark-card {
+        background: #0b1d3a;
+        color: #ffffff;
+        border: none;
+      }
+
+      .history-metric-card.dark-card .metric-label,
+      .history-metric-card.dark-card .metric-subtext {
+        color: #8fa0b5;
+      }
+
+      .history-metric-card.dark-card .metric-value {
+        color: #ffffff;
+      }
+
+      .history-metric-card .metric-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .history-metric-card .metric-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+      }
+
+      .history-metric-card .metric-value {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+
+      .history-metric-card .metric-subtext {
+        font-size: 11px;
+        color: #94a3b8;
+        margin-top: 4px;
+      }
+
+      .history-metric-card .metric-icon-box {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .history-metric-card.dark-card .metric-icon-box {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+      }
+
+      /* Filter Bar */
+      .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        background: #ffffff;
+        padding: 12px 16px;
+        border-radius: 16px;
+        border: 1px solid #edf2f7;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      }
+
+      .filter-btn {
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: none;
+        background: transparent;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .filter-btn:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+      }
+
+      .filter-btn.active {
+        background: #0b1d3a;
+        color: #ffffff;
+        box-shadow: 0 2px 6px rgba(11, 29, 58, 0.2);
+      }
+
+      .filter-btn i {
+        font-size: 13px;
+      }
+
+      .search-filter-wrapper {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      .search-filter-input {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 10px 16px;
+        transition: border 0.2s;
+      }
+
+      .search-filter-input:focus-within {
+        border-color: #94a3b8;
+      }
+
+      .search-filter-input i {
+        color: #94a3b8;
+        font-size: 15px;
+      }
+
+      .search-filter-input input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%;
+        font-size: 13.5px;
+        color: #0f172a;
+      }
+
+      .sort-dropdown {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #334155;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .sort-dropdown i {
+        font-size: 12px;
+        color: #64748b;
+      }
+
+      /* Records Header */
+      .records-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13.5px;
+        color: #64748b;
+        font-weight: 500;
+      }
+
+      .export-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #16a34a;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .export-btn:hover {
+        color: #15803d;
+      }
+
+      .export-btn i {
+        font-size: 14px;
+      }
+
+      /* History Record List */
+      .history-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .history-item {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #edf2f7;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        transition: all 0.2s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .history-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 22px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .history-item-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .history-item-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+        background: var(--mint-bg);
+        color: var(--mint-text);
+      }
+
+      .history-item-icon.payment { background: var(--mint-bg); color: var(--mint-text); }
+      .history-item-icon.reservation { background: var(--blue-bg); color: var(--blue-text); }
+      .history-item-icon.maintenance { background: #e0f2fe; color: #0284c7; }
+      .history-item-icon.room-change { background: #f3e8ff; color: #7e22ce; }
+      .history-item-icon.stay-extension { background: #fef9c3; color: #ca8a04; }
+
+      .history-item-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .history-item-title-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .history-item-title-row h4 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .history-item-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 12.5px;
+        color: #64748b;
+        flex-wrap: wrap;
+      }
+
+      .history-item-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .history-item-meta i {
+        font-size: 12px;
+        color: #94a3b8;
+      }
+
+      .history-item-desc {
+        font-size: 13.5px;
+        color: #334155;
+        font-weight: 500;
+        margin-top: 2px;
+      }
+
+      .history-item-date {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 4px;
+      }
+
+      .history-item-date i {
+        font-size: 11px;
+      }
+
+      .history-item-date .amount {
+        color: #16a34a;
+        font-weight: 700;
+      }
+
+      .history-item-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-shrink: 0;
+      }
+
+      .status-badge {
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status-badge i {
+        font-size: 12px;
+      }
+
+      .status-badge.paid { background: var(--status-paid-bg); color: var(--status-paid-text); }
+      .status-badge.approved { background: var(--status-approved-bg); color: var(--status-approved-text); }
+      .status-badge.rejected { background: var(--status-rejected-bg); color: var(--status-rejected-text); }
+      .status-badge.completed { background: var(--status-completed-bg); color: var(--status-completed-text); }
+      .status-badge.cancelled { background: var(--status-cancelled-bg); color: var(--status-cancelled-text); }
+      .status-badge.expired { background: var(--status-expired-bg); color: var(--status-expired-text); }
+
+      .history-item-right .chevron-icon {
+        color: #94a3b8;
+        font-size: 14px;
+        transition: transform 0.2s ease;
+      }
+
+      .history-item.expanded .history-item-header .chevron-icon {
+        transform: rotate(180deg);
+      }
+
+      /* Expanded Details Panel */
+      .history-item-details {
+        display: none;
+        padding: 0 22px 22px 22px;
+        border-top: 1px solid #f1f5f9;
+        background: #fafbfc;
+      }
+
+      .history-item.expanded .history-item-details {
+        display: block;
+      }
+
+      .details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding-top: 16px;
+      }
+
+      .detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: #f8fafc;
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 1px solid #f1f5f9;
+      }
+
+      .detail-item .label {
+        font-size: 11px;
+        color: #94a3b8;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+
+      .detail-item .value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      /* Responsive */
+      @media (max-width: 1100px) {
+        .history-metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .history-container {
+          padding: 16px;
+        }
+        .history-metrics-grid {
+          grid-template-columns: 1fr;
+        }
+        .filter-bar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .search-filter-wrapper {
+          flex-direction: column;
+        }
+        .history-item-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .history-item-right {
+          width: 100%;
+          justify-content: space-between;
+        }
+        .details-grid {
+          grid-template-columns: 1fr;
+        }
+        .top-header {
+          padding: 12px 16px;
+        }
+        .search-box {
+          width: 160px;
+        }
+        .header-profile-text {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Brand Header -->
+    <div class="brand-header">
+      <div class="brand-logo-group">
+        <div class="brand-logo">
+          <i class="fa-solid fa-house-key"></i>
+        </div>
+        <div class="brand-title">
+          <h3>JLM Cozy Cabin</h3>
+          <p>Admin Portal</p>
+        </div>
+      </div>
+      <!-- Toggle Hamburger Icon -->
+      <div class="menu-toggle-btn" id="sidebarToggleBtn" title="Toggle Navigation">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </div>
+
+    <!-- Administrator Orange Pill -->
+    <div class="admin-pill">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span>Administrator</span>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <ul class="nav-menu">
+      <a href="dashboard.html" class="nav-item" title="Dashboard">
+        <div class="nav-left">
+          <i class="fa-solid fa-border-all"></i>
+          <span class="nav-text">Dashboard</span>
+        </div>
+      </a>
+
+      <a href="rooms.html" class="nav-item" title="Rooms">
+        <div class="nav-left">
+          <i class="fa-solid fa-bed"></i>
+          <span class="nav-text">Rooms</span>
+        </div>
+      </a>
+
+      <a href="tenants.html" class="nav-item" title="Tenants">
+        <div class="nav-left">
+          <i class="fa-solid fa-users"></i>
+          <span class="nav-text">Tenants</span>
+        </div>
+      </a>
+
+      <!-- Services: direct link to maintenance.html -->
+      <a href="services/maintenance.html" class="nav-item" title="Services">
+        <div class="nav-left">
+          <i class="fa-solid fa-wrench"></i>
+          <span class="nav-text">Services</span>
+        </div>
+        <i class="fa-solid fa-chevron-right nav-arrow"></i>
+      </a>
+
+      <a href="billing.html" class="nav-item" title="Billing">
+        <div class="nav-left">
+          <i class="fa-solid fa-credit-card"></i>
+          <span class="nav-text">Billing</span>
+        </div>
+      </a>
+
+      <a href="reservations.html" class="nav-item" title="Reservations">
+        <div class="nav-left">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span class="nav-text">Reservations</span>
+        </div>
+      </a>
+
+      <a href="messages.html" class="nav-item" title="Messages">
+        <div class="nav-left">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span class="nav-text">Messages</span>
+        </div>
+      </a>
+
+      <a href="announcements.html" class="nav-item" title="Announcements">
+        <div class="nav-left">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span class="nav-text">Announcements</span>
+        </div>
+      </a>
+
+      <a href="virtual-tour.html" class="nav-item" title="Virtual Room Tour">
+        <div class="nav-left">
+          <i class="fa-solid fa-camera"></i>
+          <span class="nav-text">Virtual Room Tour</span>
+        </div>
+      </a>
+
+      <a href="reports.html" class="nav-item" title="Reports">
+        <div class="nav-left">
+          <i class="fa-regular fa-file-lines"></i>
+          <span class="nav-text">Reports</span>
+        </div>
+      </a>
+
+      <a href="history.html" class="nav-item active" title="History">
+        <div class="nav-left">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span class="nav-text">History</span>
+        </div>
+        <i class="fa-solid fa-chevron-right nav-arrow"></i>
+      </a>
+
+      <a href="audit-logs.html" class="nav-item" title="Audit Logs">
+        <div class="nav-left">
+          <i class="fa-solid fa-shield-check"></i>
+          <span class="nav-text">Audit Logs</span>
+        </div>
+      </a>
+
+      <a href="settings.html" class="nav-item" title="Settings">
+        <div class="nav-left">
+          <i class="fa-solid fa-gear"></i>
+          <span class="nav-text">Settings</span>
+        </div>
+      </a>
+    </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-footer-info">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Agujar" />
+          <div class="user-footer-text">
+            <h4>Leah Agujar</h4>
+            <p>admin</p>
+          </div>
+        </div>
+        <div class="logout-btn" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN WRAPPER ========== -->
+    <div class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="header-title">History</div>
+        </div>
+
+        <div class="header-right">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search..." />
+          </div>
+
+          <div class="notification-bell">
+            <i class="fa-solid fa-bell"></i>
+            <span class="badge-dot"></span>
+          </div>
+
+          <div class="header-divider"></div>
+
+          <div class="header-profile-trigger" id="profileTrigger">
+            <div class="header-profile-text">
+              <h4>Leah Administrator</h4>
+              <p>Admin</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+
+          <div class="profile-dropdown-card" id="profileDropdown">
+            <div class="dropdown-user-header">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120" alt="Leah Administrator" />
+              <div class="dropdown-user-info">
+                <h4>Leah Administrator</h4>
+                <p>leah.admin@jlmcozycabin.com</p>
+                <span class="role-badge">Super Admin</span>
+              </div>
+            </div>
+            <div class="dropdown-links">
+              <a class="dropdown-item" href="#account">
+                <i class="fa-regular fa-circle-user"></i>
+                <span>Account Settings</span>
+              </a>
+              <a class="dropdown-item" href="#preferences">
+                <i class="fa-solid fa-sliders"></i>
+                <span>System Preferences</span>
+              </a>
+              <a class="dropdown-item" href="#activity">
+                <i class="fa-solid fa-user-clock"></i>
+                <span>My Activity Log</span>
+              </a>
+              <a class="dropdown-item logout" href="#logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ========== HISTORY CONTENT ========== -->
+      <div class="history-container">
+        
+        <!-- Page Header -->
+        <div class="page-header-section">
+          <div class="page-title-group">
+            <h1><i class="fa-solid fa-chart-line"></i> System History</h1>
+            <p>Complete transaction and activity history for all tenants</p>
+          </div>
+          <div class="all-rooms-filter">
+            <i class="fa-solid fa-building"></i>
+            <span>All Rooms & Tenants</span>
+          </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="history-metrics-grid">
+          <!-- Total Payments (Dark Card) -->
+          <div class="history-metric-card dark-card">
+            <div class="metric-header">
+              <span class="metric-label">Total Payments</span>
+              <div class="metric-icon-box">₱</div>
+            </div>
+            <div class="metric-value">₱60,210</div>
+            <div class="metric-subtext">16 transactions</div>
+          </div>
+
+          <!-- Past Reservations -->
+          <div class="history-metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Past Reservations</span>
+              <div class="metric-icon-box" style="background: var(--blue-bg); color: var(--blue-text);">
+                <i class="fa-regular fa-calendar-check"></i>
+              </div>
+            </div>
+            <div class="metric-value">10</div>
+            <div class="metric-subtext">All statuses</div>
+          </div>
+
+          <!-- Service Requests -->
+          <div class="history-metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Service Requests</span>
+              <div class="metric-icon-box" style="background: var(--mint-bg); color: var(--mint-text);">
+                <i class="fa-regular fa-circle-check"></i>
+              </div>
+            </div>
+            <div class="metric-value">11</div>
+            <div class="metric-subtext">Completed</div>
+          </div>
+
+          <!-- Approved Requests -->
+          <div class="history-metric-card">
+            <div class="metric-header">
+              <span class="metric-label">Approved Requests</span>
+              <div class="metric-icon-box" style="background: #e0f2fe; color: #0284c7;">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+              </div>
+            </div>
+            <div class="metric-value">14</div>
+            <div class="metric-subtext">Room/stay changes</div>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar" id="filterBar">
+          <button class="filter-btn active" data-filter="all">
+            <i class="fa-solid fa-wave-square"></i> All
+          </button>
+          <button class="filter-btn" data-filter="payment">
+            <i class="fa-solid fa-peso-sign"></i> Payments
+          </button>
+          <button class="filter-btn" data-filter="reservation">
+            <i class="fa-regular fa-calendar-check"></i> Reservations
+          </button>
+          <button class="filter-btn" data-filter="maintenance">
+            <i class="fa-solid fa-wrench"></i> Maintenance
+          </button>
+          <button class="filter-btn" data-filter="room-change">
+            <i class="fa-solid fa-house"></i> Room Changes
+          </button>
+          <button class="filter-btn" data-filter="stay-extension">
+            <i class="fa-regular fa-calendar-plus"></i> Stay Extensions
+          </button>
+
+          <div class="search-filter-wrapper">
+            <div class="search-filter-input">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="recordSearch" placeholder="Search by tenant, room, or description..." />
+            </div>
+            <div class="sort-dropdown">
+              <i class="fa-regular fa-calendar"></i>
+              <span>Newest First</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Records Header -->
+        <div class="records-header">
+          <span id="recordCount">Showing 21 of 21 total records</span>
+          <div class="export-btn">
+            <i class="fa-solid fa-download"></i>
+            <span>Export History</span>
+          </div>
+        </div>
+
+        <!-- History List -->
+        <div class="history-list" id="historyList">
+
+          <!-- Record 1: Payment -->
+          <div class="history-item" data-category="payment">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon payment">
+                  <i class="fa-solid fa-peso-sign"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Rent - Feb 2026</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Elle Dela Cruz</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 101</span>
+                  </div>
+                  <div class="history-item-desc">Payment of ₱500 via over the counter</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 20, 2026 · 06:29 PM <span class="amount">₱500</span>
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge paid"><i class="fa-regular fa-circle-check"></i> Paid</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Invoice ID</span>
+                  <span class="value">inv-105</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Elle Dela Cruz</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">101</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Amount</span>
+                  <span class="value">₱500</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Payment Method</span>
+                  <span class="value">OVER THE COUNTER</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reference Number</span>
+                  <span class="value">OTC-20260215-0018</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Paid Date</span>
+                  <span class="value">Apr 20, 2026</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 2: Payment -->
+          <div class="history-item" data-category="payment">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon payment">
+                  <i class="fa-solid fa-peso-sign"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Rent - February 2026</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Mau Santos</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 102</span>
+                  </div>
+                  <div class="history-item-desc">Payment of ₱1,500 via bank transfer</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 01, 2026 · 06:29 PM <span class="amount">₱1,500</span>
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge paid"><i class="fa-regular fa-circle-check"></i> Paid</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Invoice ID</span>
+                  <span class="value">inv-112</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Mau Santos</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">102</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Amount</span>
+                  <span class="value">₱1,500</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Payment Method</span>
+                  <span class="value">BANK TRANSFER</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reference Number</span>
+                  <span class="value">BT-20260205-8821</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 3: Payment -->
+          <div class="history-item" data-category="payment">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon payment">
+                  <i class="fa-solid fa-peso-sign"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Rent - February 2026</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Gabby Maningo</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 201</span>
+                  </div>
+                  <div class="history-item-desc">Payment of ₱800 via over the counter</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Mar 29, 2026 · 06:29 PM <span class="amount">₱800</span>
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge paid"><i class="fa-regular fa-circle-check"></i> Paid</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Invoice ID</span>
+                  <span class="value">inv-118</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Gabby Maningo</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">201</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Amount</span>
+                  <span class="value">₱800</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Payment Method</span>
+                  <span class="value">OVER THE COUNTER</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reference Number</span>
+                  <span class="value">OTC-20260310-0042</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 4: Payment -->
+          <div class="history-item" data-category="payment">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon payment">
+                  <i class="fa-solid fa-peso-sign"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Rent - February 2026</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Elle Dela Cruz</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 101</span>
+                  </div>
+                  <div class="history-item-desc">Payment of ₱300 via gcash</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Mar 27, 2026 · 06:29 PM <span class="amount">₱300</span>
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge paid"><i class="fa-regular fa-circle-check"></i> Paid</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Invoice ID</span>
+                  <span class="value">inv-120</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Elle Dela Cruz</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">101</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Amount</span>
+                  <span class="value">₱300</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Payment Method</span>
+                  <span class="value">GCASH</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reference Number</span>
+                  <span class="value">GC-20260327-0912</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 5: Reservation -->
+          <div class="history-item" data-category="reservation">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon reservation">
+                  <i class="fa-regular fa-calendar-check"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Reservation - Room 204</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Ramon Bautista</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 204</span>
+                  </div>
+                  <div class="history-item-desc">Barkada Room reservation approved</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 29, 2026 · 06:29 PM <span class="amount">₱100</span>
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge approved"><i class="fa-regular fa-circle-check"></i> Approved</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Reservation ID</span>
+                  <span class="value">res-204</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Ramon Bautista</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">204</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Amount</span>
+                  <span class="value">₱100</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 6: Reservation -->
+          <div class="history-item" data-category="reservation">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon reservation">
+                  <i class="fa-regular fa-calendar-check"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Reservation - Room 103</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Jenny Villanueva</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 103</span>
+                  </div>
+                  <div class="history-item-desc">Bedspace reservation rejected</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 24, 2026 · 06:29 PM <span class="amount">₱2,500</span>
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge rejected"><i class="fa-regular fa-circle-xmark"></i> Rejected</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Reservation ID</span>
+                  <span class="value">res-103</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Jenny Villanueva</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">103</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Amount</span>
+                  <span class="value">₱2,500</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 7: Reservation -->
+          <div class="history-item" data-category="reservation">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon reservation">
+                  <i class="fa-regular fa-calendar-check"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Reservation - Room 202</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Lito Cruz</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 202</span>
+                  </div>
+                  <div class="history-item-desc">Solo Room reservation expired</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 19, 2026 · 06:29 PM <span class="amount">₱700</span>
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge expired"><i class="fa-regular fa-clock"></i> Expired</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Reservation ID</span>
+                  <span class="value">res-202</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Lito Cruz</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">202</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Amount</span>
+                  <span class="value">₱700</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 8: Maintenance -->
+          <div class="history-item" data-category="maintenance">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon maintenance">
+                  <i class="fa-solid fa-wrench"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Light Fixture Broken</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Mike Callado</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 104</span>
+                  </div>
+                  <div class="history-item-desc">Hallway light flickering.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 29, 2026 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge completed"><i class="fa-regular fa-circle-check"></i> Completed</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">mnt-104</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Mike Callado</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">104</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Description</span>
+                  <span class="value">Hallway light flickering.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 9: Maintenance -->
+          <div class="history-item" data-category="maintenance">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon maintenance">
+                  <i class="fa-solid fa-wrench"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Aircon Filter Cleaning</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Gabby Maningo</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 201</span>
+                  </div>
+                  <div class="history-item-desc">AC unit blowing dusty air.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 14, 2026 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge completed"><i class="fa-regular fa-circle-check"></i> Completed</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">mnt-201</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Gabby Maningo</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">201</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Description</span>
+                  <span class="value">AC unit blowing dusty air.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 10: Maintenance -->
+          <div class="history-item" data-category="maintenance">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon maintenance">
+                  <i class="fa-solid fa-wrench"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Paint Touch-up Request</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Elle Dela Cruz</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 101</span>
+                  </div>
+                  <div class="history-item-desc">Wall paint chipped near entrance.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Feb 23, 2026 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge cancelled"><i class="fa-regular fa-circle-xmark"></i> Cancelled</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">mnt-101</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Elle Dela Cruz</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">101</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Description</span>
+                  <span class="value">Wall paint chipped near entrance.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 11: Room Change -->
+          <div class="history-item" data-category="room-change">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon room-change">
+                  <i class="fa-solid fa-house"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Room Change: 102 → 204</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Mau Santos</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 102</span>
+                  </div>
+                  <div class="history-item-desc">Prefer higher floor for better view.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 27, 2026 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge approved"><i class="fa-regular fa-circle-check"></i> Approved</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">rmc-102</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Mau Santos</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">From Unit</span>
+                  <span class="value">102</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">To Unit</span>
+                  <span class="value">204</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 12: Room Change -->
+          <div class="history-item" data-category="room-change">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon room-change" style="background: #ffe4e6; color: #be123c;">
+                  <i class="fa-solid fa-house"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Room Change: 104 → 202</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Gabby Maningo</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 104</span>
+                  </div>
+                  <div class="history-item-desc">Noise from upper floors.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 24, 2026 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge rejected"><i class="fa-regular fa-circle-xmark"></i> Rejected</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">rmc-104</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Gabby Maningo</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">From Unit</span>
+                  <span class="value">104</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">To Unit</span>
+                  <span class="value">202</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 13: Room Change -->
+          <div class="history-item" data-category="room-change">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon room-change">
+                  <i class="fa-solid fa-house"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Room Change: 203 → 201</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Nicole Custorio</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 203</span>
+                  </div>
+                  <div class="history-item-desc">Prefer lower floor for easier access.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Feb 03, 2026 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge approved"><i class="fa-regular fa-circle-check"></i> Approved</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">rmc-203</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Nicole Custorio</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">From Unit</span>
+                  <span class="value">203</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">To Unit</span>
+                  <span class="value">201</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 14: Stay Extension -->
+          <div class="history-item" data-category="stay-extension">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon stay-extension">
+                  <i class="fa-regular fa-calendar-plus"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Stay Extension - Room 102</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Mau Santos</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 102</span>
+                  </div>
+                  <div class="history-item-desc">New apartment not ready yet.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Apr 26, 2026 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge approved"><i class="fa-regular fa-circle-check"></i> Approved</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">ext-102</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Mau Santos</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">102</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reason</span>
+                  <span class="value">New apartment not ready yet.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 15: Stay Extension -->
+          <div class="history-item" data-category="stay-extension">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon stay-extension">
+                  <i class="fa-regular fa-calendar-plus"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Stay Extension - Room 104</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Gabby Maningo</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 104</span>
+                  </div>
+                  <div class="history-item-desc">Relocating for work in 3 months.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Dec 15, 2025 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge approved"><i class="fa-regular fa-circle-check"></i> Approved</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">ext-104</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Gabby Maningo</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">104</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reason</span>
+                  <span class="value">Relocating for work in 3 months.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Record 16: Stay Extension -->
+          <div class="history-item" data-category="stay-extension">
+            <div class="history-item-header">
+              <div class="history-item-left">
+                <div class="history-item-icon stay-extension" style="background: #ffe4e6; color: #be123c;">
+                  <i class="fa-regular fa-calendar-plus"></i>
+                </div>
+                <div class="history-item-info">
+                  <div class="history-item-title-row">
+                    <h4>Stay Extension - Room 103</h4>
+                  </div>
+                  <div class="history-item-meta">
+                    <span><i class="fa-regular fa-user"></i> Elle Dela Cruz</span>
+                    <span><i class="fa-solid fa-door-open"></i> Room 103</span>
+                  </div>
+                  <div class="history-item-desc">Requested short extension while house hunting.</div>
+                  <div class="history-item-date">
+                    <i class="fa-regular fa-clock"></i> Jun 18, 2025 · 06:29 PM
+                  </div>
+                </div>
+              </div>
+              <div class="history-item-right">
+                <span class="status-badge rejected"><i class="fa-regular fa-circle-xmark"></i> Rejected</span>
+                <i class="fa-solid fa-chevron-down chevron-icon"></i>
+              </div>
+            </div>
+            <div class="history-item-details">
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="label">Request ID</span>
+                  <span class="value">ext-103</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Tenant</span>
+                  <span class="value">Elle Dela Cruz</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Unit</span>
+                  <span class="value">103</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Reason</span>
+                  <span class="value">Requested short extension while house hunting.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== JAVASCRIPT LOGIC ========== -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // -------------------------------------------------------------
+        // 1. SIDEBAR COLLAPSE TOGGLE
+        // -------------------------------------------------------------
+        const sidebar = document.getElementById("sidebar");
+        const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
+
+        sidebarToggleBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          sidebar.classList.toggle("collapsed");
+        });
+
+        // -------------------------------------------------------------
+        // 2. PROFILE DROPDOWN TOGGLE
+        // -------------------------------------------------------------
+        const profileTrigger = document.getElementById("profileTrigger");
+        const profileDropdown = document.getElementById("profileDropdown");
+
+        profileTrigger.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isOpen = profileDropdown.classList.contains("show");
+          profileDropdown.classList.toggle("show");
+          profileTrigger.classList.toggle("active");
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!profileDropdown.contains(e.target) && !profileTrigger.contains(e.target)) {
+            profileDropdown.classList.remove("show");
+            profileTrigger.classList.remove("active");
+          }
+        });
+
+        // -------------------------------------------------------------
+        // 3. EXPANDABLE HISTORY ITEMS
+        // -------------------------------------------------------------
+        const historyItems = document.querySelectorAll(".history-item");
+        historyItems.forEach((item) => {
+          const header = item.querySelector(".history-item-header");
+          header.addEventListener("click", () => {
+            item.classList.toggle("expanded");
+          });
+        });
+
+        // -------------------------------------------------------------
+        // 4. FILTERING FUNCTIONALITY
+        // -------------------------------------------------------------
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const recordCountSpan = document.getElementById("recordCount");
+        const searchInput = document.getElementById("recordSearch");
+
+        function filterRecords() {
+          const activeFilter = document.querySelector(".filter-btn.active").getAttribute("data-filter");
+          const searchTerm = searchInput.value.toLowerCase().trim();
+          let visibleCount = 0;
+
+          historyItems.forEach((item) => {
+            const category = item.getAttribute("data-category");
+            const textContent = item.textContent.toLowerCase();
+
+            const matchesCategory = activeFilter === "all" || category === activeFilter;
+            const matchesSearch = searchTerm === "" || textContent.includes(searchTerm);
+
+            if (matchesCategory && matchesSearch) {
+              item.style.display = "flex";
+              visibleCount++;
+            } else {
+              item.style.display = "none";
+              item.classList.remove("expanded"); // collapse hidden items
+            }
+          });
+
+          recordCountSpan.textContent = `Showing ${visibleCount} of ${historyItems.length} total records`;
+        }
+
+        filterButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            // Remove active class from all buttons
+            filterButtons.forEach((b) => b.classList.remove("active"));
+            // Add active class to clicked button
+            btn.classList.add("active");
+            // Apply filter
+            filterRecords();
+          });
+        });
+
+        // Search input event listener
+        searchInput.addEventListener("input", filterRecords);
+
+        // Initialize count on load
+        filterRecords();
+      });
+    </script>
+  </body>
+</html>

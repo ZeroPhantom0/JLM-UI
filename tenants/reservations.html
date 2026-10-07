@@ -484,6 +484,135 @@
       cursor: pointer;
     }
 
+    /* ===== MY RESERVATIONS LIST ===== */
+    .my-reservations-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .my-reservations-header {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-color);
+      background: #fff;
+    }
+
+    .my-reservations-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .my-reservations-header h3 i {
+      color: #00a86b;
+    }
+
+    .reservation-list-item {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .reservation-list-item:last-child {
+      border-bottom: none;
+    }
+
+    .res-item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .res-item-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .res-item-title-row h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .res-status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .res-status-badge.pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .res-status-badge.approved {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .res-status-badge.rejected {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+
+    .res-item-subtext {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .res-item-note {
+      background: #f0fdf4;
+      color: #166534;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .res-item-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .res-item-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: #00a86b;
+    }
+
+    .res-item-price-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ROOMS GRID */
     .rooms-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -801,7 +930,11 @@
       cursor: pointer;
     }
 
-    /* RESERVE MODAL */
+    /* ================= REDESIGNED RESERVE MODAL ================= */
+    .reserve-modal-card {
+      max-width: 580px;
+    }
+
     .reserve-header-card {
       background: #ecfdf5;
       border-radius: 12px;
@@ -823,234 +956,287 @@
     .reserve-header-info p { font-size: 11px; color: #047857; }
     .reserve-header-info h5 { font-size: 13px; font-weight: 800; color: #059669; margin-top: 2px; }
 
-    .form-section-title {
-      font-size: 13px;
+    .reserve-form-section {
+      margin-bottom: 20px;
+    }
+
+    .reserve-form-section-title {
+      font-size: 14px;
       font-weight: 700;
       margin-bottom: 12px;
       color: var(--text-dark);
     }
 
-    .form-grid-2 {
+    .reserve-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 16px;
       margin-bottom: 12px;
     }
 
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 4px; }
-    .form-group label span { color: #ef4444; }
+    .reserve-form-group { margin-bottom: 12px; }
+    .reserve-form-group label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; }
+    .reserve-form-group label span { color: #ef4444; }
 
-    .form-input {
+    .reserve-input {
       width: 100%;
-      padding: 8px 12px;
+      padding: 10px 14px;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      font-size: 12px;
+      font-size: 13px;
       outline: none;
       background: #fff;
+      color: #1e293b;
     }
 
-    .form-input[readonly] { background: #f8fafc; color: #64748b; }
-
-    .option-callout {
-      background: #eff6ff;
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 16px;
+    .reserve-input:focus {
+      border-color: #3b82f6;
     }
 
-    .checkbox-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 12px;
+    .reserve-input[readonly] { background: #f8fafc; color: #64748b; }
+
+    .duration-text {
+      font-size: 13px;
       font-weight: 600;
-      color: #1e40af;
+      color: #475569;
+      margin-bottom: 16px;
+      padding-left: 4px;
     }
 
-    .checkbox-row input { margin-top: 2px; }
-    .checkbox-sub { font-size: 10px; color: #3b82f6; margin-left: 21px; margin-top: 2px; }
+    /* Solo Room Options Callout */
+    .solo-options-callout {
+      background: #eff6ff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
 
-    .file-upload-box {
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 6px 10px;
+    .solo-options-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: #fff;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 10px;
     }
 
-    .btn-choose-file {
-      background: #f1f5f9;
-      border: 1px solid var(--border-color);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
+    .solo-options-header i {
+      font-size: 16px;
+    }
+
+    .checkbox-custom {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: #1e40af;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .checkbox-custom input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #1e40af;
+      margin-top: 2px;
       cursor: pointer;
     }
 
-    .file-name { font-size: 11px; color: #94a3b8; }
-
-    .charges-summary-card {
-      background: #ecfdf5;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
+    .checkbox-sub-text {
+      font-size: 12px;
+      color: #3b82f6;
+      margin-left: 28px;
+      margin-top: 4px;
+      font-weight: 400;
     }
 
-    .charges-title {
-      font-size: 13px;
+    /* Summary of Charges */
+    .summary-charges-card {
+      background: #ecfdf5;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .summary-charges-title {
+      font-size: 14px;
       font-weight: 700;
       color: #065f46;
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 10px;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
-    .charge-line {
+    .summary-charges-title i {
+      font-size: 16px;
+    }
+
+    .charge-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 11px;
+      font-size: 12px;
       color: #047857;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
-    .charge-line.highlight {
-      font-size: 12px;
+    .charge-row.total-highlight {
+      font-size: 14px;
       font-weight: 800;
       color: #059669;
-      border-top: 1px dashed #a7f3d0;
-      padding-top: 6px;
+      border-top: 1px solid #a7f3d0;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    .charge-row.remaining-balance {
+      font-size: 14px;
+      font-weight: 800;
+      color: #047857;
       margin-top: 6px;
     }
 
-    .charge-line.total-rem {
-      font-size: 12px;
-      font-weight: 800;
-      color: #047857;
-    }
-
-    .payment-verify-box {
+    /* Payment Verification Required */
+    .payment-verification-box {
       background: #fffbeb;
       border: 1px solid #fef08a;
       border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
     }
 
-    .verify-title {
-      font-size: 12px;
+    .payment-verification-title {
+      font-size: 14px;
       font-weight: 700;
       color: #854d0e;
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    .verify-sub { font-size: 11px; color: #a16207; margin-bottom: 8px; }
+    .payment-verification-title i {
+      font-size: 16px;
+    }
 
-    .gcash-details-row {
+    .payment-verification-sub {
+      font-size: 12px;
+      color: #a16207;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .gcash-info-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 11px;
-      margin-bottom: 4px;
+      font-size: 12px;
+      margin-bottom: 6px;
     }
 
-    .gcash-details-row span { color: #a16207; }
-    .gcash-details-row strong { color: #713f12; }
+    .gcash-info-row span {
+      color: #a16207;
+    }
+
+    .gcash-info-row strong {
+      color: #713f12;
+      font-weight: 700;
+    }
 
     .btn-copy-gcash {
-      background: var(--primary-orange);
+      background: #f97316;
       color: white;
       border: none;
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       border-radius: 8px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin: 10px 0;
+      gap: 8px;
+      margin: 14px 0;
+      transition: background 0.2s;
     }
 
-    .important-notice {
+    .btn-copy-gcash:hover {
+      background: #ea580c;
+    }
+
+    .upload-file-area {
+      border: 1px dashed #fcd34d;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+
+    .btn-choose-file-orange {
+      background: #fff;
+      border: 1px solid #fcd34d;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #d97706;
+      cursor: pointer;
+    }
+
+    .file-name-text {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .upload-hint-text {
+      font-size: 11px;
+      color: #a16207;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .important-notice-box {
       background: #fef3c7;
       border-radius: 8px;
-      padding: 10px 12px;
+      padding: 12px;
       display: flex;
       align-items: flex-start;
       gap: 8px;
-      font-size: 11px;
+      font-size: 12px;
       color: #92400e;
-      line-height: 1.4;
-      margin-top: 10px;
+      line-height: 1.5;
     }
 
-    .important-reminders-box {
-      background: #eff6ff;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 16px;
-      margin-bottom: 24px;
+    .important-notice-box i {
+      margin-top: 2px;
+      flex-shrink: 0;
     }
 
-    .reminders-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #2563eb;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 10px;
+    .important-notice-box strong {
+      color: #78350f;
     }
 
-    .reminders-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .reminders-list li {
-      font-size: 11px;
-      color: #3b82f6;
-      line-height: 1.4;
-      position: relative;
-      padding-left: 12px;
-    }
-
-    .reminders-list li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: #3b82f6;
-      font-weight: bold;
-    }
-
-    .reminders-list li strong {
-      color: #1d4ed8;
-      font-weight: 700;
-    }
-
-    .modal-submit-actions {
+    /* Modal Footer */
+    .modal-footer-actions {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: 12px;
-      margin-top: 16px;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #f1f5f9;
     }
 
-    .btn-cancel {
+    .btn-modal-cancel {
       background: transparent;
       border: none;
       color: #64748b;
@@ -1060,15 +1246,20 @@
       padding: 8px 16px;
     }
 
-    .btn-submit-reservation {
+    .btn-modal-submit {
       background: #02122c;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 24px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-modal-submit:hover {
+      opacity: 0.9;
     }
 
     .sidebar-overlay {
@@ -1132,7 +1323,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .form-grid-2 {
+      .reserve-grid-2 {
         grid-template-columns: 1fr;
       }
 
@@ -1189,7 +1380,7 @@
   <ul class="nav-menu">
     <!-- Dashboard -->
     <li class="nav-item">
-      <a href="index.html" class="nav-item-header">
+      <a href="dashboard.html" class="nav-item-header">
         <div class="nav-item-left">
           <i class="fa-solid fa-border-all"></i>
           <span class="nav-text">Dashboard</span>
@@ -1366,6 +1557,66 @@
         <strong>How Reservations Work</strong><br>
         Browse available rooms below, view the 360° virtual tour, then submit your reservation details. <strong>Your reservation will be reviewed by the admin. You'll be notified once approved.</strong>
       </p>
+    </div>
+
+    <!-- MY RESERVATIONS SECTION -->
+    <div class="my-reservations-card">
+      <div class="my-reservations-header">
+        <h3><i class="fa-regular fa-calendar-check"></i> My Reservations</h3>
+      </div>
+
+      <!-- Reservation Item 1 -->
+      <div class="reservation-list-item">
+        <div class="res-item-left">
+          <div class="res-item-title-row">
+            <h4>Solo Room (Deluxe) - Room 102</h4>
+            <span class="res-status-badge pending"><i class="fa-regular fa-clock"></i> Pending Review</span>
+          </div>
+          <div class="res-item-subtext">
+            <span>Move-in: Apr 8, 2026 · Submitted: Apr 1, 2026</span>
+          </div>
+        </div>
+        <div class="res-item-right">
+          <div class="res-item-price">₱500.00</div>
+          <div class="res-item-price-label">deposit</div>
+        </div>
+      </div>
+
+      <!-- Reservation Item 2 -->
+      <div class="reservation-list-item">
+        <div class="res-item-left">
+          <div class="res-item-title-row">
+            <h4>Solo Room - Unit 101</h4>
+            <span class="res-status-badge approved"><i class="fa-regular fa-circle-check"></i> Approved</span>
+          </div>
+          <div class="res-item-subtext">
+            <span>Move-in: Sep 13, 2025 · Submitted: Aug 29, 2025</span>
+          </div>
+          <div class="res-item-note">Approved. Successfully moved in on Jan 15, 2023.</div>
+        </div>
+        <div class="res-item-right">
+          <div class="res-item-price">₱4,500</div>
+          <div class="res-item-price-label">deposit</div>
+        </div>
+      </div>
+
+      <!-- Reservation Item 3 -->
+      <div class="reservation-list-item">
+        <div class="res-item-left">
+          <div class="res-item-title-row">
+            <h4>Solo Room - Unit 201</h4>
+            <span class="res-status-badge rejected"><i class="fa-regular fa-circle-xmark"></i> Rejected</span>
+          </div>
+          <div class="res-item-subtext">
+            <span>Move-in: Aug 24, 2025 · Submitted: Aug 9, 2025</span>
+          </div>
+        </div>
+        <div class="res-item-right">
+          <div class="res-item-price">₱4,800</div>
+          <div class="res-item-price-label">deposit</div>
+        </div>
+      </div>
+
     </div>
 
     <!-- AVAILABLE ROOMS FILTER ROW -->
@@ -1735,15 +1986,16 @@
   </div>
 </div>
 
-<!-- ===== RESERVE MODAL ===== -->
+<!-- ===== REDESIGNED RESERVE MODAL ===== -->
 <div class="modal-overlay" id="reserveModal">
-  <div class="modal-card">
+  <div class="modal-card reserve-modal-card">
     <button class="modal-close-btn" onclick="closeModal('reserveModal')"><i class="fa-solid fa-xmark"></i></button>
 
     <h3 class="details-header-title" id="mReserveTitle">Reserve - Solo Room (Deluxe)</h3>
 
+    <!-- Room Header Card -->
     <div class="reserve-header-card">
-      <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80" alt="Deluxe Room">
+      <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80" alt="Room">
       <div class="reserve-header-info">
         <h4 id="mReserveRoomName">Solo Room - Deluxe</h4>
         <p id="mReserveRoomLoc">Floor 2 · Room 102</p>
@@ -1751,145 +2003,158 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label>Tenant Name</label>
-      <input type="text" class="form-input" value="Elle Dela Cruz" readonly>
+    <!-- Reservation Information Section -->
+    <div class="reserve-form-section">
+      <div class="reserve-form-section-title">Reservation Information</div>
+
+      <div class="reserve-grid-2">
+        <div class="reserve-form-group">
+          <label>Check-in Date <span>*</span></label>
+          <input type="text" class="reserve-input" placeholder="mm/dd/yyyy">
+        </div>
+        <div class="reserve-form-group">
+          <label>Check-in Time <span>*</span></label>
+          <input type="text" class="reserve-input" placeholder="00:00 AM/PM">
+        </div>
+      </div>
+
+      <div class="reserve-grid-2">
+        <div class="reserve-form-group">
+          <label>Check-out Date <span>*</span></label>
+          <input type="text" class="reserve-input" placeholder="mm/dd/yyyy">
+        </div>
+        <div class="reserve-form-group">
+          <label>Check-out Time <span>*</span></label>
+          <input type="text" class="reserve-input" placeholder="00:00 AM/PM">
+        </div>
+      </div>
+
+      <p class="duration-text">Total Stay Duration: 2 nights</p>
     </div>
 
-    <div class="form-grid-2">
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="text" class="form-input" value="elle.delacruz@gmail.com" readonly>
+    <!-- Solo Room Options -->
+    <div class="solo-options-callout">
+      <div class="solo-options-header">
+        <i class="fa-regular fa-user"></i>
+        Solo Room Options
       </div>
-      <div class="form-group">
-        <label>Contact Number</label>
-        <input type="text" class="form-input" value="09121450368" readonly>
-      </div>
+      <label class="checkbox-custom">
+        <input type="checkbox" checked>
+        <span>I will have a companion (max 2 persons total)</span>
+      </label>
+      <p class="checkbox-sub-text">Extra mattress fee: ₱150.00 per companion</p>
     </div>
 
-    <div class="form-section-title">Reservation Information</div>
-
-    <div class="form-grid-2">
-      <div class="form-group">
-        <label>Check-in Date <span>*</span></label>
-        <input type="text" class="form-input" placeholder="mm/dd/yyyy">
-      </div>
-      <div class="form-group">
-        <label>Check-in Time <span>*</span></label>
-        <input type="text" class="form-input" placeholder="00:00 AM/PM">
-      </div>
-    </div>
-
-    <div class="form-grid-2">
-      <div class="form-group">
-        <label>Check-out Date <span>*</span></label>
-        <input type="text" class="form-input" placeholder="mm/dd/yyyy">
-      </div>
-      <div class="form-group">
-        <label>Check-out Time <span>*</span></label>
-        <input type="text" class="form-input" placeholder="00:00 AM/PM">
-      </div>
-    </div>
-
-    <p style="font-size:11px; font-weight:700; color:#475569; margin-bottom:12px;">Total Stay Duration: 2 nights</p>
-
-    <div class="option-callout">
-      <div class="checkbox-row">
-        <input type="checkbox" id="companionCheck" checked>
-        <label for="companionCheck" style="margin:0; font-size:12px; font-weight:700; color:#1e40af;">Solo Room Options</label>
-      </div>
-      <p class="checkbox-sub">I will have a companion (max 2 persons total)<br>Extra mattress fee: ₱500.00 per companion</p>
-    </div>
-
-    <div class="form-group">
-      <label>Purpose of Stay <span>*</span></label>
-      <input type="text" class="form-input" placeholder="Select purpose..">
-    </div>
-
-    <div class="form-section-title">Supporting Documents</div>
-
-    <div class="form-group">
-      <label>Valid ID Upload <span>*</span></label>
-      <div class="file-upload-box">
-        <button class="btn-choose-file">Choose File</button>
-        <span class="file-name">No file chosen</span>
-      </div>
-      <span style="font-size:10px; color:#94a3b8; display:block; margin-top:4px;">Upload a clear photo of your government-issued ID</span>
-    </div>
-
-    <div class="form-group">
+    <!-- Additional Notes -->
+    <div class="reserve-form-group">
       <label>Additional Notes</label>
-      <textarea class="form-input" style="height:60px; resize:none;" placeholder="Any special requirements or questions for the admin..."></textarea>
+      <textarea class="reserve-input" style="height: 70px; resize: none;" placeholder="Any special requirements or questions for the admin..."></textarea>
     </div>
 
-    <div class="charges-summary-card">
-      <div class="charges-title"><i class="fa-solid fa-peso-sign"></i> Summary of Charges</div>
-      <div class="charge-line">
-        <span>Total Rent:</span>
+    <!-- Payment Option Selection -->
+    <div class="reserve-form-section">
+      <label style="font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 10px; display: block;">Payment Option <span style="color: #ef4444;">*</span></label>
+      
+      <div class="reserve-grid-2">
+        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 14px; text-align: center;">
+          <div style="font-size: 13px; font-weight: 700; color: #059669; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px;">
+            <i class="fa-solid fa-circle-dot"></i> 50% Down Payment
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+            <span style="color: #047857;">Pay Now:</span>
+            <strong style="color: #065f46;">₱550.00</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; border-top: 1px dashed #a7f3d0; padding-top: 6px;">
+            <span style="color: #047857;">Remaining Balance:</span>
+            <strong style="color: #059669;">₱550.00</strong>
+          </div>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-align: center;">
+          <div style="font-size: 13px; font-weight: 700; color: #64748b; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px;">
+            <i class="fa-regular fa-circle"></i> Full Payment
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+            <span style="color: #64748b;">Pay Now:</span>
+            <strong style="color: #334155;">₱1,100.00</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 12px; border-top: 1px dashed #e2e8f0; padding-top: 6px;">
+            <span style="color: #64748b;">Remaining Balance:</span>
+            <strong style="color: #334155;">₱0.00</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary of Charges -->
+    <div class="summary-charges-card">
+      <div class="summary-charges-title"><i class="fa-solid fa-peso-sign"></i> Summary of Charges</div>
+      <div class="charge-row">
+        <span>Room Rate</span>
         <strong>₱950.00</strong>
       </div>
-      <div class="charge-line">
+      <div class="charge-row">
+        <span>₱950/day x (1) day(s)</span>
+        <strong>₱950.00</strong>
+      </div>
+      <div class="charge-row">
         <span>Companion Fee:</span>
-        <strong>₱500.00</strong>
+        <strong>₱150.00</strong>
       </div>
-      <div class="charge-line">
-        <span>Reservation Fee (Downpayment):</span>
-        <strong>₱100.00</strong>
+      <div class="charge-row total-highlight">
+        <span>Total Charges:</span>
+        <strong>₱1,100.00</strong>
       </div>
-      <div class="charge-line highlight">
+      <div class="charge-row">
+        <span>50% (Down Payment):</span>
+        <strong>₱550.00</strong>
+      </div>
+      <div class="charge-row">
         <span>Amount to Settle:</span>
-        <strong style="color:#059669; font-size:14px;">₱100.00</strong>
+        <strong>₱550.00</strong>
       </div>
-      <div class="charge-line total-rem" style="margin-top:6px;">
+      <div class="charge-row remaining-balance">
         <span>Remaining Balance:</span>
-        <strong>₱1,150.00</strong>
+        <strong>₱550.00</strong>
       </div>
     </div>
 
-    <div class="payment-verify-box">
-      <div class="verify-title"><i class="fa-solid fa-mobile-screen-button"></i> Payment Verification Required</div>
-      <div class="verify-sub"><strong>Reservation Fee: ₱100.00</strong><br>Pay via GCash to secure your reservation</div>
+    <!-- Payment Verification Required -->
+    <div class="payment-verification-box">
+      <div class="payment-verification-title">
+        <i class="fa-solid fa-mobile-screen-button"></i> Payment Verification Required
+      </div>
+      <div class="payment-verification-sub">Pay via GCash to secure your reservation</div>
 
-      <div class="gcash-details-row">
+      <div class="gcash-info-row">
         <span>Account Name:</span>
         <strong>Leah Agujar</strong>
       </div>
-      <div class="gcash-details-row">
+      <div class="gcash-info-row">
         <span>GCash Number:</span>
         <strong>0917-123-4567</strong>
       </div>
 
       <button class="btn-copy-gcash"><i class="fa-regular fa-copy"></i> Copy GCash Number</button>
 
-      <div class="form-group" style="margin:0;">
-        <label style="color:#854d0e;">Upload Proof of Payment <span>*</span></label>
-        <div class="file-upload-box" style="background:#fff;">
-          <button class="btn-choose-file">Choose File</button>
-          <span class="file-name">No file chosen</span>
-        </div>
-        <span style="font-size:10px; color:#a16207; display:block; margin-top:4px;"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload a screenshot of your GCash payment receipt</span>
+      <div class="upload-file-area">
+        <button class="btn-choose-file-orange">Choose File</button>
+        <span class="file-name-text">No file chosen</span>
+      </div>
+      <div class="upload-hint-text">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i> Upload a screenshot of your GCash payment receipt
       </div>
 
-      <div class="important-notice">
-        <i class="fa-solid fa-circle-info" style="margin-top:2px;"></i>
-        <span><strong>Important:</strong> You must upload your payment proof before submitting your reservation. Your reservation will be marked as "Pending Verification" until the admin confirms your payment.</span>
+      <div class="important-notice-box">
+        <i class="fa-solid fa-circle-info"></i>
+        <span><strong>Important:</strong> You must upload your payment proof before submitting your reservation. Your payment and reservation will be reviewed by the admin. You will be notified once your reservation is approved or rejected.</span>
       </div>
     </div>
 
-    <div class="important-reminders-box">
-      <div class="reminders-header">
-        <i class="fa-solid fa-circle-info"></i> Important Reminders:
-      </div>
-      <ul class="reminders-list">
-        <li><strong>Admin Verification:</strong> Your reservation and proof of payment will be reviewed within 12–24 hours. You will receive a notification once your payment has been verified.</li>
-        <li><strong>Strict Check-in Policy:</strong> You must check in on your scheduled reservation date. Failure to do so will result in an expired reservation, and you will be required to reserve the unit again.</li>
-        <li><strong>Non-Refundable:</strong> Please note that the reservation fee is non-refundable in the event of a "no-show."</li>
-      </ul>
-    </div>
-
-    <div class="modal-submit-actions">
-      <button class="btn-cancel" onclick="closeModal('reserveModal')">Cancel</button>
-      <button class="btn-submit-reservation">Submit Reservation</button>
+    <!-- Modal Footer -->
+    <div class="modal-footer-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('reserveModal')">Cancel</button>
+      <button class="btn-modal-submit">Submit Reservation</button>
     </div>
 
   </div>

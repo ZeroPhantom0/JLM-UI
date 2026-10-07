@@ -886,6 +886,254 @@
       padding-top: 6px;
     }
 
+    /* ================= PAYMENT MODAL STYLES (COPIED FROM BILLING) ================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: white;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      padding: 24px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .modal-amount-box {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-amount-box span {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .modal-amount-box h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e293b;
+      margin: 2px 0;
+    }
+
+    .modal-amount-box p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .method-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 10px;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .method-btn {
+      border: 1px solid #e2e8f0;
+      background: white;
+      border-radius: 10px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      transition: all 0.2s;
+    }
+
+    .method-btn i {
+      font-size: 18px;
+    }
+
+    .method-btn.active {
+      border-color: #3b82f6;
+      color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .payment-info-box {
+      background: #eff6ff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .gcash-info-title {
+      font-size: 11px;
+      color: #2563eb;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .gcash-number {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1d4ed8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gcash-info-sub {
+      font-size: 11px;
+      color: #3b82f6;
+      margin-top: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    .form-group label span {
+      color: #e11d48;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: #3b82f6;
+    }
+
+    .upload-area {
+      border: 1px dashed #e2e8f0;
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .notice-box {
+      background: #eff6ff;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 11px;
+      color: #2563eb;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .counter-notice {
+      background: #f0fdf4;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 11px;
+      color: #166534;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn-cancel {
+      background: none;
+      border: none;
+      color: #64748b;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background: #02122c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     /* ========== RESPONSIVE BREAKPOINTS ========== */
 
     /* Tablet & Medium Screens */
@@ -1008,7 +1256,7 @@
 
     <ul class="nav-menu">
       <li class="nav-item active">
-        <a href="index.html" class="nav-item-header">
+        <a href="dashboard.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-border-all"></i>
             <span class="nav-text">Dashboard</span>
@@ -1084,7 +1332,7 @@
 
     <div class="sidebar-footer">
       <div class="nav-item">
-        <a href="../index.html" class="nav-item-header">
+        <a href="../dashboard.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span class="nav-text">Logout</span>
@@ -1184,7 +1432,7 @@
           </div>
           <div class="balance-action">
             <p style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">1 unpaid invoice(s)</p>
-            <button class="btn-pay"><i class="fa-regular fa-credit-card"></i> Pay Now</button>
+            <button class="btn-pay" id="dashboardPayNowBtn"><i class="fa-regular fa-credit-card"></i> Pay Now</button>
           </div>
         </div>
 
@@ -1358,6 +1606,72 @@
     </div>
   </div>
 
+  <!-- ================= PAYMENT MODAL (COPIED FROM BILLING) ================= -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title">Submit Payment</h3>
+      <div class="modal-amount-box">
+        <span>Outstanding Balance</span>
+        <h2>₱600</h2>
+        <p>Due: Mar 30, 2026</p>
+      </div>
+      <div class="method-label">Payment Method</div>
+      <div class="method-grid">
+        <button class="method-btn active" data-method="gcash">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span>GCash</span>
+        </button>
+        <button class="method-btn" data-method="bank">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>Bank Transfer</span>
+        </button>
+        <button class="method-btn" data-method="counter">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Counter</span>
+        </button>
+      </div>
+
+      <div id="paymentDynamicContent">
+        <div class="payment-info-box" id="gcashNumberBox">
+          <div class="gcash-info-title">GCash Number:</div>
+          <div class="gcash-number">
+            0917-123-4567
+            <i class="fa-regular fa-copy" style="font-size:14px; cursor:pointer;" title="Copy"></i>
+          </div>
+          <div class="gcash-info-sub">Send ₱600 then enter the reference number below.</div>
+        </div>
+
+        <div class="counter-notice" id="counterNoticeBox" style="display: none;">
+          <i class="fa-solid fa-circle-info" style="margin-top:2px;"></i>
+          <span>Over-the-counter payments will be marked as paid by the admin when confirmed.</span>
+        </div>
+
+        <div class="form-group" id="refGroup">
+          <label>Reference / Transaction Number <span>*</span></label>
+          <input type="text" class="input-field" id="refInput" placeholder="e.g. GC-20260323-12345">
+        </div>
+
+        <div class="form-group" id="uploadGroup">
+          <label>Upload Receipt Screenshot <span style="color:#94a3b8; font-weight:normal;">(optional)</span></label>
+          <div class="upload-area">
+            <i class="fa-solid fa-arrow-up-from-bracket" style="margin-right:6px;"></i> Click to upload screenshot
+          </div>
+        </div>
+      </div>
+
+      <div class="notice-box">
+        <i class="fa-solid fa-circle-info" style="margin-top: 2px;"></i>
+        <span>Your payment will be reviewed by the admin. You'll be notified once verified.</span>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" id="cancelModalBtn">Cancel</button>
+        <button class="btn-submit"><i class="fa-solid fa-check"></i> Submit Payment</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ========== JAVASCRIPT ========== -->
   <script>
     (function() {
@@ -1425,6 +1739,66 @@
           }
         });
       }
+
+      // ----- PAYMENT MODAL LOGIC -----
+      const paymentModal = document.getElementById('paymentModal');
+      const dashboardPayNowBtn = document.getElementById('dashboardPayNowBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const cancelModalBtn = document.getElementById('cancelModalBtn');
+
+      if (dashboardPayNowBtn) {
+        dashboardPayNowBtn.addEventListener('click', () => {
+          paymentModal.classList.add('active');
+        });
+      }
+
+      function closePaymentModal() {
+        paymentModal.classList.remove('active');
+      }
+
+      if (closeModalBtn) closeModalBtn.addEventListener('click', closePaymentModal);
+      if (cancelModalBtn) cancelModalBtn.addEventListener('click', closePaymentModal);
+
+      if (paymentModal) {
+        paymentModal.addEventListener('click', (e) => {
+          if (e.target === paymentModal) closePaymentModal();
+        });
+      }
+
+      // Payment method switcher
+      const methodBtns = document.querySelectorAll('.method-btn');
+      const gcashNumberBox = document.getElementById('gcashNumberBox');
+      const counterNoticeBox = document.getElementById('counterNoticeBox');
+      const refGroup = document.getElementById('refGroup');
+      const uploadGroup = document.getElementById('uploadGroup');
+      const refInput = document.getElementById('refInput');
+
+      methodBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          methodBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const method = btn.getAttribute('data-method');
+          if (method === 'gcash') {
+            gcashNumberBox.style.display = 'block';
+            counterNoticeBox.style.display = 'none';
+            refGroup.style.display = 'block';
+            uploadGroup.style.display = 'block';
+            refInput.placeholder = 'e.g. GC-20260323-12345';
+          } else if (method === 'bank') {
+            gcashNumberBox.style.display = 'none';
+            counterNoticeBox.style.display = 'none';
+            refGroup.style.display = 'block';
+            uploadGroup.style.display = 'block';
+            refInput.placeholder = 'e.g. BT-20260323-78901';
+          } else if (method === 'counter') {
+            gcashNumberBox.style.display = 'none';
+            counterNoticeBox.style.display = 'flex';
+            refGroup.style.display = 'none';
+            uploadGroup.style.display = 'none';
+          }
+        });
+      });
 
     })();
   </script>

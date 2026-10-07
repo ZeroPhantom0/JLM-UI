@@ -483,6 +483,19 @@
       padding: 24px 28px;
       margin-bottom: 24px;
       box-shadow: 0 4px 12px rgba(29, 97, 242, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .instruction-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .instruction-content {
+      flex: 1;
     }
 
     .instruction-header {
@@ -561,6 +574,33 @@
       font-size: 13px;
     }
 
+    .qr-code-container {
+      background: #fff;
+      padding: 10px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 180px;
+      height: 180px;
+    }
+
+    .qr-code-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .qr-footer-text {
+      font-size: 9px;
+      color: #1e293b;
+      font-weight: 600;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
     /* PENDING PAYMENTS */
     .pending-card {
       background: white;
@@ -568,6 +608,7 @@
       border: 1px solid #f1f5f9;
       box-shadow: 0 1px 3px rgba(0,0,0,0.02);
       overflow: hidden;
+      margin-bottom: 24px;
     }
 
     .pending-header {
@@ -674,6 +715,171 @@
 
     .btn-pay-now:hover {
       background: #008f5a;
+    }
+
+    /* PAYMENT HISTORY */
+    .history-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      overflow: hidden;
+    }
+
+    .history-header {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .history-header h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .history-header-icon {
+      color: #00a86b;
+      font-size: 16px;
+    }
+
+    .history-item {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .history-item-header:hover {
+      background: #f8fafc;
+    }
+
+    .history-item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .history-item-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .history-item-title-row h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .status-paid {
+      background: #d1fae5;
+      color: #059669;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .history-item-subtext {
+      font-size: 12px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .history-item-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .history-amount {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .history-expand-icon {
+      color: #94a3b8;
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .history-expand-icon.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Payment Verified Details Panel */
+    .history-details-panel {
+      background: #f0fdf4;
+      padding: 20px 24px;
+      display: none;
+      border-top: 1px solid #dcfce7;
+    }
+
+    .history-details-panel.expanded {
+      display: block;
+    }
+
+    .verified-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #047857;
+      margin-bottom: 16px;
+    }
+
+    .verified-header i {
+      font-size: 16px;
+    }
+
+    .verified-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .verified-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .verified-item span {
+      font-size: 11px;
+      color: #059669;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .verified-item p {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #064e3b;
     }
 
     /* MODAL */
@@ -929,6 +1135,21 @@
       .summary-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      .instruction-layout {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .qr-code-container {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 12px 16px;
+      }
+      .qr-code-container img {
+        width: 80px;
+        height: 80px;
+      }
     }
 
     @media (max-width: 768px) {
@@ -1002,6 +1223,10 @@
 
       .number-box {
         font-size: 16px;
+      }
+
+      .verified-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -1228,29 +1453,38 @@
 
     <!-- GCash Instructions -->
     <div class="instruction-card">
-      <div class="instruction-header">
-        <div class="instruction-header-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-        <div>
-          <h3>GCash Payment Instructions</h3>
-          <p>Follow these steps to pay your rent via GCash</p>
+      <div class="instruction-layout">
+        <div class="instruction-content">
+          <div class="instruction-header">
+            <div class="instruction-header-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div>
+              <h3>GCash Payment Instructions</h3>
+              <p>Follow these steps to pay your rent via GCash</p>
+            </div>
+          </div>
+          <div class="instruction-steps">
+            <div class="step-item">
+              <span class="step-badge">1</span>
+              <span>Transfer to GCash number:</span>
+              <span class="number-box">
+                0917-123-4567
+                <button class="copy-btn" title="Copy Number"><i class="fa-regular fa-copy"></i></button>
+              </span>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">2</span>
+              <span>Screenshot your GCash receipt</span>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">3</span>
+              <span>Upload the screenshot using the "Pay Now" button on your invoice below</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="instruction-steps">
-        <div class="step-item">
-          <span class="step-badge">1</span>
-          <span>Transfer to GCash number:</span>
-          <span class="number-box">
-            0917-123-4567
-            <button class="copy-btn" title="Copy Number"><i class="fa-regular fa-copy"></i></button>
-          </span>
-        </div>
-        <div class="step-item">
-          <span class="step-badge">2</span>
-          <span>Screenshot your GCash receipt</span>
-        </div>
-        <div class="step-item">
-          <span class="step-badge">3</span>
-          <span>Upload the screenshot using the "Pay Now" button on your invoice below</span>
+        <div class="qr-code-container">
+          <!-- Placeholder for QR Code -->
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GCashPaymentInfo" alt="GCash QR Code">
+          <div class="qr-footer-text">LEAH A.</div>
         </div>
       </div>
     </div>
@@ -1279,6 +1513,61 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- Payment History Card (New) -->
+    <div class="history-card">
+      <div class="history-header">
+        <div class="history-header-icon"><i class="fa-solid fa-receipt"></i></div>
+        <h4>Payment History</h4>
+      </div>
+      
+      <!-- History Item 1 (Expandable) -->
+      <div class="history-item">
+        <div class="history-item-header" onclick="toggleHistoryDetails(this)">
+          <div class="history-item-left">
+            <div class="history-item-title-row">
+              <h4>Reservation Fee Mar</h4>
+              <span class="status-paid"><i class="fa-regular fa-circle-check"></i> Paid</span>
+            </div>
+            <div class="history-item-subtext">
+              <i class="fa-regular fa-circle-check" style="color:#00a86b;"></i>
+              <span>Paid: Mar 11, 2026 Over The_counter OTC-20260215-0018</span>
+            </div>
+          </div>
+          <div class="history-item-right">
+            <div class="history-amount">₱100</div>
+            <i class="fa-solid fa-chevron-down history-expand-icon"></i>
+          </div>
+        </div>
+        
+        <!-- Expandable Details Panel -->
+        <div class="history-details-panel">
+          <div class="verified-header">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Payment Verified</span>
+          </div>
+          <div class="verified-grid">
+            <div class="verified-item">
+              <span>Due Date</span>
+              <p>Mar 22, 2026</p>
+            </div>
+            <div class="verified-item">
+              <span>Paid Date</span>
+              <p>Mar 21, 2026</p>
+            </div>
+            <div class="verified-item">
+              <span>Payment Method</span>
+              <p>Over The_counter</p>
+            </div>
+            <div class="verified-item">
+              <span>Reference No.</span>
+              <p>OTC-20260215-0018</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -1439,6 +1728,20 @@
       });
     });
   })();
+
+  // 5. Function to toggle history details panel
+  function toggleHistoryDetails(headerElement) {
+    const panel = headerElement.nextElementSibling;
+    const icon = headerElement.querySelector('.history-expand-icon');
+    
+    if (panel.classList.contains('expanded')) {
+      panel.classList.remove('expanded');
+      icon.classList.remove('rotated');
+    } else {
+      panel.classList.add('expanded');
+      icon.classList.add('rotated');
+    }
+  }
 </script>
 
 </body>

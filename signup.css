@@ -1,0 +1,542 @@
+/* =========================
+   SIGN UP PAGE
+========================= */
+
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body.signup-page {
+    margin: 0;
+    min-height: 100vh;
+    background: #001D4C;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.signup-container {
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+}
+
+
+/* =========================
+   LEFT SIDE
+========================= */
+
+.signup-left {
+    padding: 42px 9%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #001D4C;
+    color: #ffffff;
+}
+
+
+/* =========================
+   BRAND
+========================= */
+
+.signup-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.signup-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.signup-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.signup-brand span {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.signup-brand span {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   LEFT INTRO
+========================= */
+
+.signup-intro {
+    max-width: 560px;
+
+    margin: auto 0;
+    padding: 70px 0;
+}
+
+.signup-intro h1 {
+    margin: 0 0 35px;
+
+    color: #ffffff;
+
+    font-size: 46px;
+    line-height: 1.05;
+    font-weight: 800;
+}
+
+.signup-intro h1 span {
+    color: #FF8904;
+}
+
+.signup-intro > p {
+    max-width: 470px;
+
+    margin: 0 0 42px;
+
+    color: #D0D9E8;
+
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   BENEFITS
+========================= */
+
+.signup-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.signup-benefit {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.signup-benefit > span {
+    width: 25px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #FF8904;
+    border-radius: 50%;
+
+    color: #FF8904;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.signup-benefit > span i {
+    display: block;
+    line-height: 1;
+}
+
+.signup-benefit p {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.signup-right {
+    min-height: 100vh;
+
+    padding: 40px 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+
+    border-radius: 28px 0 0 28px;
+}
+
+.signup-form-container {
+    width: 100%;
+    max-width: 625px;
+}
+
+
+/* =========================
+   FORM HEADER
+========================= */
+
+.signup-form-container h2 {
+    margin: 0 0 8px;
+
+    color: #111A30;
+
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.signup-subtitle {
+    margin: 0 0 35px;
+
+    color: #7187A5;
+
+    font-size: 17px;
+}
+
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.signup-form-group {
+    margin-bottom: 22px;
+}
+
+.signup-form-group label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #40516C;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   FORM ROW
+========================= */
+
+.signup-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px;
+}
+
+
+/* =========================
+   INPUT WRAPPER
+========================= */
+
+.signup-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.signup-input-icon {
+    position: absolute;
+
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #8EA2BF;
+
+    font-size: 20px;
+
+    pointer-events: none;
+}
+
+.signup-input-wrapper input {
+    width: 100%;
+    height: 60px;
+
+    padding: 0 52px;
+
+    border: 1px solid #A8A8A8;
+    border-radius: 16px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #111A30;
+
+    font-family: inherit;
+    font-size: 16px;
+
+    transition: 0.2s ease;
+}
+
+.signup-input-wrapper input::placeholder {
+    color: #929292;
+}
+
+.signup-input-wrapper input:focus {
+    border-color: #FF8904;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 137, 4, 0.12);
+}
+
+
+/* =========================
+   PASSWORD TOGGLE
+========================= */
+
+.signup-password-toggle {
+    position: absolute;
+
+    right: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+
+    color: #8EA2BF;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   TERMS & CONDITIONS
+========================= */
+
+.signup-terms {
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 2px 0 22px;
+    padding: 12px 18px;
+
+    border: 1px solid #DDE4EC;
+    border-radius: 15px;
+
+    background: #F8FAFC;
+
+    color: #40516C;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    cursor: pointer;
+}
+
+.signup-terms input {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    accent-color: #111111;
+
+    cursor: pointer;
+}
+
+.signup-terms a {
+    color: #FF8904;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.signup-terms a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   SIGN UP BUTTON
+========================= */
+
+.signup-btn {
+    width: 100%;
+
+    padding: 17px 20px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #FF8904;
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    text-decoration: none;
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    box-shadow:
+        0 8px 20px rgba(255, 137, 4, 0.18);
+}
+
+.signup-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.94;
+}
+
+
+/* =========================
+   LOGIN LINK
+========================= */
+
+.login-link-text {
+    margin: 25px 0 0;
+
+    text-align: center;
+
+    color: #52637D;
+
+    font-size: 15px;
+}
+
+.login-link-text a {
+    color: #FF8904;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.login-link-text a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 950px) {
+
+    .signup-container {
+        grid-template-columns: 1fr;
+    }
+
+    .signup-left {
+        min-height: auto;
+        padding: 35px 8%;
+    }
+
+    .signup-intro {
+        margin: 0;
+        padding: 60px 0 30px;
+    }
+
+    .signup-right {
+        min-height: auto;
+
+        border-radius: 28px 28px 0 0;
+
+        padding: 50px 8%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .signup-left {
+        padding: 30px 6%;
+    }
+
+    .signup-intro {
+        padding: 50px 0 25px;
+    }
+
+    .signup-intro h1 {
+        font-size: 36px;
+    }
+
+    .signup-intro > p {
+        font-size: 16px;
+    }
+
+    .signup-benefits {
+        gap: 18px;
+    }
+
+    .signup-benefit p {
+        font-size: 15px;
+    }
+
+    .signup-right {
+        padding: 40px 6%;
+    }
+
+    .signup-form-container h2 {
+        font-size: 28px;
+    }
+
+    .signup-subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    .signup-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .signup-input-wrapper input {
+        height: 56px;
+    }
+
+    .signup-terms {
+        align-items: flex-start;
+    }
+}
+
+.signup-brand .identity-logo {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.signup-brand .identity-logo img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover;
+    display: block;
+}

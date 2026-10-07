@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements - JLM Cozy Cabin</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -429,6 +429,7 @@
       margin-bottom: 32px;
     }
 
+    /* Standard Announcement Card */
     .announcement-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
@@ -509,6 +510,293 @@
       gap: 6px;
     }
 
+    /* ===== NEW SPECIAL OFFICIAL HOUSE RULES CARD ===== */
+    .official-rules-card {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .official-rules-header {
+      background: #f59e0b;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .official-rules-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .official-rules-header-left i {
+      font-size: 16px;
+    }
+
+    .official-rules-header-right {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .official-rules-body {
+      padding: 20px;
+    }
+
+    .official-rules-body h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    .official-rules-body p {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .official-rules-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .official-rules-footer-author {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .official-rules-footer-author i {
+      font-size: 14px;
+    }
+
+    .btn-view-rules {
+      background: #f59e0b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-view-rules:hover {
+      background: #d97706;
+    }
+
+    /* ================= MODAL STYLES ================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: white;
+      width: 100%;
+      max-width: 650px;
+      border-radius: 16px;
+      padding: 0;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: transform 0.25s ease;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .modal-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-header-icon {
+      width: 40px;
+      height: 40px;
+      background: #fef3c7;
+      color: #d97706;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .modal-header-text h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .modal-header-text p {
+      font-size: 11px;
+      font-weight: 700;
+      color: #d97706;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      color: #0f172a;
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .modal-meta strong {
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .rules-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .rule-section h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .rule-section p {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    .rule-section ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 6px;
+    }
+
+    .rule-section ul li {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.6;
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 4px;
+    }
+
+    .rule-section ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #475569;
+      font-weight: bold;
+    }
+
+    .rule-section ul li strong {
+      color: #0f172a;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: flex-end;
+      background: #f8fafc;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .btn-modal-close {
+      background: #02122c;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-modal-close:hover {
+      opacity: 0.9;
+    }
+
     @media (max-width: 768px) {
       body { flex-direction: column; }
       .sidebar { width: 100% !important; min-height: auto; }
@@ -516,12 +804,15 @@
       .search-box { display: none; }
       .metrics-grid { grid-template-columns: 1fr; }
       .content-container { padding: 16px; }
+      .official-rules-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .official-rules-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .btn-view-rules { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== NEW SIDEBAR with Announcements active + chevron-right ===== -->
+  <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar" id="sidebar">
 
     <div class="brand-header">
@@ -540,7 +831,7 @@
     <ul class="nav-menu">
       <!-- Dashboard -->
       <li class="nav-item">
-        <a href="index.html" class="nav-item-header">
+        <a href="dashboard.html" class="nav-item-header">
           <div class="nav-item-left">
             <i class="fa-solid fa-border-all"></i>
             <span class="nav-text">Dashboard</span>
@@ -589,7 +880,7 @@
         </a>
       </li>
 
-      <!-- Announcements (active) with chevron-right -->
+      <!-- Announcements (active) -->
       <li class="nav-item active">
         <a href="announcements.html" class="nav-item-header">
           <div class="nav-item-left">
@@ -646,7 +937,7 @@
   <!-- ===== MAIN WRAPPER ===== -->
   <div class="main-wrapper">
 
-    <!-- ===== NEW TOP HEADER ===== -->
+    <!-- TOP HEADER -->
     <header class="top-header">
       <div class="header-title">Announcements</div>
       
@@ -714,6 +1005,32 @@
           <option value="notice">Notice</option>
         </select>
       </div>
+
+      <!-- SPECIAL OFFICIAL HOUSE RULES CARD -->
+        <div class="official-rules-card">
+          <div class="official-rules-header">
+            <div class="official-rules-header-left">
+              <i class="fa-solid fa-file-contract"></i>
+              Official House Rules & Contract
+            </div>
+            <div class="official-rules-header-right">Sep 28, 2026</div>
+          </div>
+          <div class="official-rules-body">
+            <h3>JLM Cozy Cabin - House Rules & Boarding Contract</h3>
+            <p>
+              HOUSE RULES & BOARDING CONTRACT JLM Cozy Cabin — Effective: January 2026 1. QUIET HOURS Quiet hours are strictly observed from 10:00 PM to 7:00 AM daily. Loud music, parties, and excessive noise are prohibited during these hours. Violations are subject to warnings and eventual eviction. 2. VISITOR POLICY Visitors are allowed only between 8:00 AM and
+            </p>
+            <div class="official-rules-footer">
+              <div class="official-rules-footer-author">
+                <i class="fa-regular fa-globe"></i>
+                <span>Leah Administrator</span>
+              </div>
+              <button class="btn-view-rules" id="viewRulesBtn">
+                <i class="fa-regular fa-file-lines"></i> View Complete Rules
+              </button>
+            </div>
+          </div>
+        </div>
 
       <!-- PINNED ANNOUNCEMENTS -->
       <div class="section-title">
@@ -788,6 +1105,135 @@
 
   </div>
 
+  <!-- ================= MODAL: OFFICIAL HOUSE RULES ================= -->
+  <div class="modal-overlay" id="rulesModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-header-icon">
+            <i class="fa-solid fa-file-contract"></i>
+          </div>
+          <div class="modal-header-text">
+            <p>Official House Rules & Contract</p>
+            <h2>JLM Cozy Cabin - House Rules & Boarding Contract</h2>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeRulesModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span>Posted by <strong>Leah Administrator</strong></span>
+          <span>•</span>
+          <span>September 28, 2026</span>
+        </div>
+
+        <div class="rules-content">
+          <div class="rule-section">
+            <h4>House Rules & Boarding Contract</h4>
+            <p>By residing at JLM Cozy Cabin, tenants agree to comply with the following rules and policies:</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>No Visitors</h4>
+            <p>Visitors are not allowed inside tenant rooms or within the boarding house premises without prior approval from management.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Quiet Hours</h4>
+            <p>Quiet hours are observed from 10:00 PM to 7:00 AM. Excessive noise, disruptive behavior, loud music, and activities that may disturb other tenants are prohibited.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Cleanliness & Sanitation</h4>
+            <p>Tenants are responsible for maintaining the cleanliness of their rooms and shared areas. Garbage, food, and used dishes must be properly disposed of to prevent pests and maintain a healthy environment.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Safety & Security</h4>
+            <p>Cooking inside rooms is prohibited. Smoking, vaping, open flames, illegal substances, and other hazardous activities are strictly prohibited within the building.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Room and Property Care</h4>
+            <p>Take proper care of rooms, furniture, appliances, and other property.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Respect for Property</h4>
+            <p>Tenants must respect the belongings of others and may not use, borrow, or remove items without permission. Unauthorized attachments, decorations, or modifications to walls and property are prohibited.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Room Access Policy</h4>
+            <p>Entering another tenant's room without permission is strictly prohibited.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Room Assignment</h4>
+            <p>Tenants may only occupy their assigned room/bed.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Utilities & Facilities</h4>
+            <p>Tenants must use water, electricity, and boarding house facilities responsibly. Personal appliances may be subject to approval by management.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Guests and Additional Occupants</h4>
+            <p>Additional occupants must be properly declared and approved according to the applicable policy.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Damages and Violations</h4>
+            <p>Tenants may be responsible for damages caused by negligence or violations of the house rules.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Laundry Policy</h4>
+            <p>Clothes may only be hung in designated laundry areas. Hanging clothes in hallways, bathrooms, fire exits, or other unauthorized locations is prohibited.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Payment Obligations</h4>
+            <p>Rentals fees and other charges must be paid on or before the designated due date. Failure to comply with payment requirements may result in penalties or other actions in accordance with boarding house policies.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Move-In and Move-Out</h4>
+            <p>Tenants must comply with all move-in and move-out requirements. Personal belongings left after checkout remain the responsibility of the tenant, and JLM Cozy Cabin shall not be liable for any loss or damage.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Alcohol and Prohibited Activities</h4>
+            <p>Drinking alcoholic beverages and engaging in activities that may disturb, endanger, or inconvenience other tenants are prohibited within the premises.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>Financial Transactions</h4>
+            <p>Borrowing, lending, or requesting loans from employees is prohibited to avoid misunderstandings and disputes.</p>
+          </div>
+
+          <div class="rule-section">
+            <h4>⚠ Violations and Disciplinary Actions</h4>
+            <p>Failure to comply with these rules may result in the following:</p>
+            <ul>
+              <li><strong>First Warning:</strong> Verbal reminder</li>
+              <li><strong>Second Warning:</strong> Written notice</li>
+              <li><strong>Third Warning:</strong> Applicable penalty</li>
+              <li><strong>Final Warning:</strong> Contract cancellation, termination of stay, or other appropriate disciplinary action</li>
+            </ul>
+            <p style="margin-top: 12px;">JLM Cozy Cabin reserves the right to enforce these policies to maintain a safe, secure, and comfortable living environment for all tenants.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-modal-close" id="closeRulesModalFooterBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Sidebar toggle
     const sidebar = document.getElementById('sidebar');
@@ -831,6 +1277,39 @@
 
     searchInput.addEventListener('input', filterAnnouncements);
     prioritySelect.addEventListener('change', filterAnnouncements);
+
+    // ===== MODAL LOGIC =====
+    const rulesModal = document.getElementById('rulesModal');
+    const viewRulesBtn = document.getElementById('viewRulesBtn');
+    const closeRulesModalBtn = document.getElementById('closeRulesModalBtn');
+    const closeRulesModalFooterBtn = document.getElementById('closeRulesModalFooterBtn');
+
+    // Open Modal
+    viewRulesBtn.addEventListener('click', () => {
+      rulesModal.classList.add('active');
+    });
+
+    // Close Modal functions
+    function closeModal() {
+      rulesModal.classList.remove('active');
+    }
+
+    closeRulesModalBtn.addEventListener('click', closeModal);
+    closeRulesModalFooterBtn.addEventListener('click', closeModal);
+
+    // Close on overlay click
+    rulesModal.addEventListener('click', (e) => {
+      if (e.target === rulesModal) {
+        closeModal();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && rulesModal.classList.contains('active')) {
+        closeModal();
+      }
+    });
   </script>
 
 </body>
